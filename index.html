@@ -3,7 +3,7 @@
 <title>Central de Consulta | Matriz de Consequências</title>
 <style>
 :root{--teal:#087f7b;--teal2:#0c9992;--ink:#24323a;--muted:#667780;--bg:#f3f6f7;--line:#dce4e7;--red:#d94d58;--amber:#f1b84b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.5 "Segoe UI",Arial,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.55 "Segoe UI",Arial,sans-serif;color:var(--ink)}
 header{background:linear-gradient(120deg,#075e61,#0b918b);color:white;padding:20px 26px}
 header .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.8;font-weight:700}
 header h1{margin:3px 0;font-size:26px}header p{margin:0;color:#e4f5f3}
@@ -25,7 +25,7 @@ select:focus,input:focus,textarea:focus{outline:3px solid #0b918b22;border-color
 button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .primary{background:var(--teal);color:white}.secondary{background:#edf2f3;color:#34464e}.danger{background:#fff0f0;color:#a22d38}.small{padding:7px 10px}
 .result{margin-top:18px;display:none}.result.show{display:block}.result-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:14px}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{font-size:12px;font-weight:700;background:#e8f4f3;color:#086a67;border-radius:30px;padding:5px 9px}.severity.n5{background:#fff2c2;color:#765300}.severity.n3{background:#fde2e2;color:#a3242d}.classification{background:#edf0fa;color:#46548c}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{font-size:13px;font-weight:700;background:#e8f4f3;color:#086a67;border-radius:30px;padding:5px 9px}.severity.n5{background:#fff2c2;color:#8a6200;font-weight:800}.severity.n3{background:#fde2e2;color:#b4232d;font-weight:800}.involved.n5{color:#8a6200;font-weight:800}.involved.n3{color:#800020;font-weight:800}.classification{background:#edf0fa;color:#46548c}
 .outcomes,.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.outcome,.stat{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fcfdfd}.outcome h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:0 0 8px}.committee-note{color:var(--red);font-size:12px;font-weight:700;margin:-4px 0 8px}
 .stat strong{display:block;font-size:28px;color:var(--teal)}.stat span{color:var(--muted);font-size:12px}
 .table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:650px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;text-transform:uppercase;color:var(--muted);background:#f8fafb}
@@ -37,6 +37,8 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 .powerbi-embed iframe{position:absolute;inset:0;width:100%;max-width:100%;height:100%;border:0;overflow:hidden}
  .dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.dashboard-stats .stat{padding:10px 12px}.dashboard-stats .stat strong{font-size:23px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}.info-card{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 5px 18px #20343b08}.info-card h3{margin:0 0 8px;color:#086a67;font-size:16px}.info-card p{margin:0;color:#43545c}.info-card ul{margin:8px 0 0;padding-left:20px}.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pillar{background:#e8f4f3;border-radius:9px;padding:12px;font-weight:700;color:#086a67}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:linear-gradient(120deg,#075e61,#0b918b);color:white;border-radius:11px;padding:16px}.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:#e4f5f3}
 @media(max-width:760px){.shell{display:block}aside{width:100%;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.brand{display:none}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;margin:0;font-size:12px}.side-bottom{display:none}main{padding:15px}.grid,.outcomes,.stats,.info-grid,.pillars,.metrics{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:17px}}
+.report-table{margin-bottom:22px}.report-table h2{margin:0 0 10px}.report-table table{min-width:0}.print-actions{margin:0 0 16px}
+@media print{body{background:white;font-size:11pt}header,aside,footer,.print-actions{display:none!important}.shell,main{display:block!important;min-height:0;margin:0;padding:0;max-width:none;width:100%}.page{display:none!important}body.print-report #page-relatorio{display:block!important}body.print-consult #page-consulta{display:block!important}body.print-consult #page-consulta>*:not(.panel){display:none!important}body.print-consult #page-consulta .panel{box-shadow:none;border:0;padding:0;margin:0}body.print-consult #page-consulta .panel>.grid,body.print-consult #page-consulta .panel>.actions{display:none!important}body.print-consult #result{display:block!important;margin:0}body.print-consult .result-head button{display:none!important}.panel{box-shadow:none;border:0;padding:0}.table-wrap{overflow:visible}table{width:100%;min-width:0;font-size:9pt}th,td{padding:5px;border:1px solid #aaa}thead{display:table-header-group}tr{break-inside:avoid}.report-table{break-inside:auto}}
 
 </style></head>
 <body>
@@ -45,11 +47,8 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <aside><div class="side-logo"><img src="Logo - Comitê de trânsito (3).png" alt="Logo do Comitê de Trânsito de Tubarão"></div><div class="brand">CENTRAL DE CONSULTA</div><nav>
 <button class="active" data-page="inicio"><span class="ico">⌂</span>Comece por aqui</button>
 <button data-page="consulta"><span class="ico">⌕</span>Matriz de consequências</button>
-<button data-page="desvios"><span class="ico">⚑</span>Desvios</button>
-<button data-page="regras"><span class="ico">☷</span>Regras da matriz</button>
-<button data-page="publicos"><span class="ico">♙</span>Públicos</button>
-<button data-page="config"><span class="ico">⚙</span>Configurações <span id="adminTag" class="badge">ADM</span></button>
-</nav><div class="side-bottom">Base documental Rev. 04 • 10/08/2026<img src="Vale logo - No BG.png" alt="Logo Vale"></div></aside>
+<button data-page="relatorio"><span class="ico">▤</span>Desvios e consequências</button>
+</nav><div class="side-bottom">Base documental Rev. 04 • 09/11/2026<img src="Vale logo - No BG.png" alt="Logo Vale"></div></aside>
 <main>
 <section class="page active" id="page-inicio">
 <h2 class="page-title">Comece por aqui</h2>
@@ -74,12 +73,14 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <div><label>Histórico de ocorrência</label><select id="occurrence"><option value="first">1º evento</option><option value="second">1ª reincidência (2º evento)</option><option value="more">Demais reincidências</option></select></div></div>
 <div class="actions"><button class="secondary" id="clear">Limpar</button></div><section id="result" class="result" aria-live="polite"></section></div>
 </section>
-<section class="page" id="page-desvios"><h2 class="page-title">Desvios cadastrados</h2><p class="page-sub">Consulte os tipos de desvios existentes na matriz. A edição é restrita ao ADM.</p><div class="panel"><div id="deviationTable"></div><div class="actions" id="deviationActions"></div></div></section>
-<section class="page" id="page-regras"><h2 class="page-title">Regras da matriz</h2><p class="page-sub">Consequências por faixa de reincidência e público.</p><div class="panel"><div id="rulesTable"></div><div class="actions" id="rulesActions"></div></div></section>
-<section class="page" id="page-publicos"><h2 class="page-title">Públicos</h2><p class="page-sub">Categorias de pessoas consideradas na consulta.</p><div class="panel"><div id="publicTable"></div><div class="actions" id="publicActions"></div></div></section>
-<section class="page" id="page-config"><h2 class="page-title">Configurações</h2><p class="page-sub">Acesso administrativo, manutenção e cópia de segurança.</p><div class="panel" id="adminPanel"></div></section>
+<section class="page" id="page-relatorio">
+<h2 class="page-title">Desvios, públicos e consequências</h2>
+<p class="page-sub">Listagem completa da matriz para consulta e impressão.</p>
+<div class="actions print-actions"><button class="primary" onclick="printPage('report')">Imprimir relatório</button></div>
+<div id="reportTables"></div>
+</section>
+
 </main></div><footer>Fonte: Matriz de consequência Rev. 04 – 05/11/2026; PGS-007245, Rev. 03 – 01/06/2026, Anexo I – Matriz de Avaliação de Condutas. Ferramenta demonstrativa para validação antes de uso institucional.</footer>
-<dialog id="editDialog"><form id="editForm"><h2 id="editTitle"></h2><p class="muted" id="editHelp"></p><div class="grid" id="editFields"></div><div class="actions"><button type="button" class="secondary" id="cancelEdit">Cancelar</button><button type="submit" class="primary">Salvar alterações</button></div></form></dialog>
 <script>
 let groups = {
  A:{id:"A",potential:"N5",classification:"N5",audience:"Empregado mobilizado (veículo)",people:["Empregado mobilizado"],events:["Procedimento incompleto de transposição de PN","Veículo em condições irregulares / manutenção vencida","Não obedecer à sinalização de trânsito","Direção perigosa","Não conceder preferência ao pedestre","CNH incompatível com o tipo de veículo","Velocidade incompatível com a via","Falha de ré indevida","Falta de documentação obrigatória (CTB / Vale, quando aplicável)","Desacato a agentes de trânsito","Transporte irregular de carga","Estacionar ou parar em local irregular","Descumprir fluxo de interdição de vias","Descumprir restrição de circulação de veículos/equipamentos com velocidade inferior a 20 km/h","Exposição voluntária a risco (ex.: sentar/deitar em áreas de circulação, permanecer em pontos cegos, acessar áreas isoladas ou outras situações de exposição desnecessária a riscos operacionais)"],
@@ -191,6 +192,7 @@ function normalizeRiskExposureEventName(){
  if(changed)persist();
 }
 normalizeRiskExposureEventName();
+function printPage(mode){document.body.classList.remove("print-consult","print-report");document.body.classList.add(mode==="consult"?"print-consult":"print-report");window.print();document.body.classList.remove("print-consult","print-report")}
 function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
 function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])].sort((a,b)=>a.localeCompare(b,"pt-BR"))}
@@ -239,12 +241,22 @@ const k=occ==="first"?"first":occ==="second"?"second":"more";let pot="",items=[]
 const sp=speedEvents.find(x=>x.label===ev);if(sp){pot=sp.potential;items=sp.outcomes[k];aud=sp.audience||p}else{const g=groupForAudience(ev,p);if(!g){result.className="result show";result.innerHTML='<div class="empty">Regra não localizada para esta combinação.</div>';return}pot=g.potential;items=outcomesForAudience(g.outcomes[k]||[],p);aud=g.audience}
 const label={first:"1º evento",second:"1ª reincidência (2º evento)",more:"Demais reincidências"}[occ];
 const potentialClass=pot.trim().toUpperCase()==="N5"?"n5":pot.trim().toUpperCase()==="N3"?"n3":"";
-result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="window.print()">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong>${escapeHtml(p)}</strong><p>${escapeHtml(aud)}</p></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div><p class="muted">“Demais reincidências” contempla a 2ª reincidência (3º evento) e as seguintes.</p>`}
+result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="printPage('consult')">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong class="involved ${potentialClass}">${escapeHtml(p)}</strong></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div><p class="muted">“Demais reincidências” contempla a 2ª reincidência (3º evento) e as seguintes.</p>`}
 document.getElementById("person").addEventListener("change",consultConsequence);
 document.getElementById("occurrence").addEventListener("change",consultConsequence);
 document.getElementById("clear").addEventListener("click",()=>{deviation.value="";person.innerHTML='<option value="">Selecione primeiro o desvio</option>';person.disabled=true;occurrence.value="first";result.className="result";result.innerHTML=""});
 function requireAdmin(){if(!admin){alert("Acesso restrito. Entre na área administrativa.");go("config");return false}return true}
-function renderAll(){renderConsultOptions();document.getElementById("statDevs").textContent=allUniqueEvents().length;document.getElementById("statGroups").textContent=Object.keys(groups).length+speedEvents.length;document.getElementById("statPublics").textContent=publics.length;document.getElementById("statSpeed").textContent=speedEvents.length;renderDeviationTable();renderRules();renderPublics();renderAdmin()}
+function renderAll(){renderConsultOptions();document.getElementById("statDevs").textContent=allUniqueEvents().length;document.getElementById("statGroups").textContent=Object.keys(groups).length+speedEvents.length;document.getElementById("statPublics").textContent=publics.length;document.getElementById("statSpeed").textContent=speedEvents.length;renderReport()}
+function renderReport(){
+ const excludedReportDeviations=["Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos","Não utilização de capacete","No Show App Comitê de Trânsito"];
+ const ruleRows=[];
+ Object.values(groups).forEach(g=>(g.events||[]).forEach(ev=>ruleRows.push({ev,a:g.audience||((g.people||[]).join(", ")),p:g.potential,o:g.outcomes||{}})));
+ speedEvents.forEach(s=>ruleRows.push({ev:s.label,a:s.audience||((s.people||[]).join(", "))||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes||{}}));
+ const visibleRuleRows=ruleRows.filter(r=>!excludedReportDeviations.includes(r.ev));
+ visibleRuleRows.sort((a,b)=>a.ev.localeCompare(b.ev,"pt-BR")||a.a.localeCompare(b.a,"pt-BR"));
+ const consequenceRows=visibleRuleRows.map(r=>`<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td>${escapeHtml(r.p||"")}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td></tr>`).join("");
+ document.getElementById("reportTables").innerHTML=`<section class="report-table"><h2>Consequências por desvio e público</h2><div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Público / grupo</th><th>Potencial</th><th>1º evento</th><th>1ª reincidência</th><th>Demais reincidências</th></tr></thead><tbody>${consequenceRows}</tbody></table></div></section>`;
+}
 function renderDeviationTable(){
  const rows=[];
  Object.entries(groups).forEach(([key,g])=>g.events.forEach(ev=>rows.push({ev,a:g.audience,p:g.potential,groupKey:key})));
@@ -336,7 +348,6 @@ function openEditor(row,isRule){
  };
  dialog.showModal();
 }
-document.getElementById("cancelEdit").addEventListener("click",()=>document.getElementById("editDialog").close());
 function addPublic(){if(!requireAdmin())return;let p=prompt("Nome do público:");if(p&&!publics.includes(p)){publics.push(p);persist();renderAll()}}
 function editPublic(i){if(!requireAdmin())return;let old=publics[i],neu=prompt("Editar categoria de público:",old);if(neu&&neu!==old){publics[i]=neu;persist();renderAll()}}
 function removePublic(i){if(!requireAdmin())return;if(confirm("Excluir este público da lista geral? As regras já vinculadas não serão apagadas.")){publics.splice(i,1);persist();renderAll()}}
