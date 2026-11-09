@@ -35,7 +35,7 @@ dialog{width:min(680px,calc(100% - 30px));max-height:90vh;border:1px solid var(-
 footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);background:white}
  .powerbi-embed{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#f8fafb}
 .powerbi-embed iframe{position:absolute;inset:0;width:100%;max-width:100%;height:100%;border:0;overflow:hidden}
- .dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.dashboard-stats .stat{padding:10px 12px}.dashboard-stats .stat strong{font-size:23px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}.info-card{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 5px 18px #20343b08}.info-card h3{margin:0 0 8px;color:#086a67;font-size:16px}.info-card p{margin:0;color:#43545c}.info-card ul{margin:8px 0 0;padding-left:20px}.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pillar{background:#e8f4f3;border-radius:9px;padding:12px;font-weight:700;color:#086a67}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:linear-gradient(120deg,#075e61,#0b918b);color:white;border-radius:11px;padding:16px}.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:#e4f5f3}.criteria-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.criteria-card{background:white;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:11px;padding:17px;box-shadow:0 5px 18px #20343b08}.criteria-card h3{margin:0 0 10px;color:#086a67;font-size:16px}.criteria-card p{margin:0 0 10px;color:#43545c}.criteria-card p:last-child{margin-bottom:0}.criteria-card .criteria-docs{padding-top:9px;border-top:1px solid var(--line)}.criteria-card .criteria-docs strong{color:var(--ink)}.criteria-card.highlight{border-top-color:var(--amber)}.criteria-wide{grid-column:1/-1}
+ .dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.dashboard-stats .stat{padding:10px 12px}.dashboard-stats .stat strong{font-size:23px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}.info-card{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 5px 18px #20343b08}.info-card h3{margin:0 0 8px;color:#086a67;font-size:16px}.info-card p{margin:0;color:#43545c}.info-card ul{margin:8px 0 0;padding-left:20px}.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pillar{background:#e8f4f3;border-radius:9px;padding:12px;font-weight:700;color:#086a67}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:linear-gradient(120deg,#075e61,#0b918b);color:white;border-radius:11px;padding:16px}.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:#e4f5f3}.criteria-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.criteria-card{background:white;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:11px;padding:17px;box-shadow:0 5px 18px #20343b08}.criteria-card h3{margin:0 0 10px;color:#086a67;font-size:16px}.criteria-card p{margin:0 0 10px;color:#43545c}.criteria-card p:last-child{margin-bottom:0}.criteria-card .criteria-docs{padding-top:9px;border-top:1px solid var(--line)} .criteria-card .criteria-docs strong{color:var(--ink)}.criteria-card.highlight{border-top-color:var(--amber)}.criteria-wide{grid-column:1/-1}.resource-link{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700;font-size:13px}
 @media(max-width:760px){.shell{display:block}aside{width:100%;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.brand{display:none}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;margin:0;font-size:12px}.side-bottom{display:none}main{padding:15px}.grid,.outcomes,.stats,.info-grid,.pillars,.metrics,.criteria-grid{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:17px}}
 .report-table{margin-bottom:22px}.report-table h2{margin:0 0 10px}.report-table table{min-width:0}.print-actions{margin:0 0 16px}
 @media print{body{background:white;font-size:11pt}header,aside,footer,.print-actions{display:none!important}.shell,main{display:block!important;min-height:0;margin:0;padding:0;max-width:none;width:100%}.page{display:none!important}body.print-report #page-relatorio{display:block!important}body.print-consult #page-consulta{display:block!important}body.print-criteria #page-criterios{display:block!important}body.print-consult #page-consulta>*:not(.panel){display:none!important}body.print-consult #page-consulta .panel{box-shadow:none;border:0;padding:0;margin:0}body.print-consult #page-consulta .panel>.grid,body.print-consult #page-consulta .panel>.actions{display:none!important}body.print-consult #result{display:block!important;margin:0}body.print-consult .result-head button{display:none!important}.panel{box-shadow:none;border:0;padding:0}.table-wrap{overflow:visible}table{width:100%;min-width:0;font-size:9pt}th,td{padding:5px;border:1px solid #aaa}thead{display:table-header-group}tr{break-inside:avoid}.report-table{break-inside:auto}}
@@ -49,6 +49,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <button data-page="consulta"><span class="ico">⌕</span>Matriz de consequências</button>
 <button data-page="relatorio"><span class="ico">▤</span>Desvios e consequências</button>
 <button data-page="criterios"><span class="ico">✓</span>Critérios de Acesso</button>
+<button data-page="rac02"><span class="ico">↗</span>RAC 02</button>
 </nav><div class="side-bottom">Base documental Rev. 04 • 09/11/2026<img src="Vale logo - No BG.png" alt="Logo Vale"></div></aside>
 <main>
 <section class="page active" id="page-inicio">
@@ -97,6 +98,11 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <article class="criteria-card criteria-wide"><h3>Adicionar +1 condutor(a)</h3><p>Permite incluir um(a) empregado(a) Vale (MDM) como condutor(a) adicional, sem aumentar a quantidade de veículos no site.</p><p class="criteria-docs"><strong>Documentação</strong><br>Enviar imagem do CRLV e da CNH, junto com o número da solicitação, para <a href="mailto:comite.transito.tubarao@vale.com">comite.transito.tubarao@vale.com</a>.</p></article>
 </div>
 </section>
+<section class="page" id="page-rac02">
+<h2 class="page-title">RAC 02</h2>
+<p class="page-sub">Acesse o material de referência do RAC 02.</p>
+<div class="info-card"><h3>Requisitos de Atividades Críticas — RAC 02</h3><p>Consulte o conteúdo disponível no repositório do Comitê de Trânsito.</p><p><a class="primary resource-link" href="https://github.com/comitedetransito/navale" target="_blank" rel="noopener noreferrer">Acessar RAC 02 ↗</a></p></div>
+</section>
 
 </main></div><footer>Fonte: Matriz de consequência Rev. 04 – 05/11/2026; PGS-007245, Rev. 03 – 01/06/2026, Anexo I – Matriz de Avaliação de Condutas. Ferramenta demonstrativa para validação antes de uso institucional.</footer>
 <script>
@@ -136,7 +142,7 @@ let groups = {
  first:["Notificação de advertência formal"],
  second:["Suspensão de acesso com veículo particular por 7 dias"],
  more:["Revogação de acesso por 3 meses, sendo necessário um novo cadastro."]}},
- H:{id:"H",potential:"N5",classification:"N5",audience:"Empregado Vale / contratada / fornecedor / visitante – bicicleta e autopropelido",people:["Empregado Vale","Contratada","Fornecedor","Visitante"],events:["Não utilização de capacete","Velocidade incompatível com as condições de circulação da ciclovia","Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos"],
+ H:{id:"H",potential:"N5",classification:"N5",audience:"Empregado Vale / contratada / fornecedor / visitante – bicicleta e autopropelido",people:["Empregado Vale","Contratada","Fornecedor","Visitante"],events:["Velocidade incompatível com as condições de circulação da ciclovia"],
  outcomes:{
  first:["Feedback contínuo (Vale)","Advertência formal (Contratadas / Fornecedor)","Feedback formal (visitante, quando aplicável)","Evidência SAP"],
  second:["Suspensão do acesso ao bicicletário por 15 dias","Evidência SAP"],
@@ -210,6 +216,19 @@ function normalizeRiskExposureEventName(){
  if(changed)persist();
 }
 normalizeRiskExposureEventName();
+function removeRetiredDeviations(){
+ const removed=["Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos","Não utilização de capacete"];
+ let changed=false;
+ Object.values(groups).forEach(g=>{
+  const events=g.events||[];
+  g.events=events.filter(ev=>!removed.includes(ev));
+  if(g.events.length!==events.length)changed=true;
+ });
+ const visibleHidden=hiddenDeviations.filter(ev=>!removed.includes(ev));
+ if(visibleHidden.length!==hiddenDeviations.length){hiddenDeviations=visibleHidden;changed=true}
+ if(changed)persist();
+}
+removeRetiredDeviations();
 function printPage(mode){document.body.classList.remove("print-consult","print-report","print-criteria");document.body.classList.add(mode==="consult"?"print-consult":mode==="criteria"?"print-criteria":"print-report");window.print();document.body.classList.remove("print-consult","print-report","print-criteria")}
 function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
@@ -370,6 +389,6 @@ function addPublic(){if(!requireAdmin())return;let p=prompt("Nome do público:")
 function editPublic(i){if(!requireAdmin())return;let old=publics[i],neu=prompt("Editar categoria de público:",old);if(neu&&neu!==old){publics[i]=neu;persist();renderAll()}}
 function removePublic(i){if(!requireAdmin())return;if(confirm("Excluir este público da lista geral? As regras já vinculadas não serão apagadas.")){publics.splice(i,1);persist();renderAll()}}
 function exportData(){if(!requireAdmin())return;let blob=new Blob([JSON.stringify({groups,speedEvents,publics,hiddenDeviations},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup_matriz_consequencias.json";a.click();URL.revokeObjectURL(a.href)}
-function importData(e){if(!requireAdmin())return;let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let x=JSON.parse(reader.result);if(!x.groups||!x.speedEvents||!x.publics)throw Error();groups=x.groups;speedEvents=x.speedEvents;publics=x.publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[];persist();renderAll();alert("Backup importado.")}catch(err){alert("Arquivo inválido.")}};reader.readAsText(f)}
+function importData(e){if(!requireAdmin())return;let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let x=JSON.parse(reader.result);if(!x.groups||!x.speedEvents||!x.publics)throw Error();groups=x.groups;speedEvents=x.speedEvents;publics=x.publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[];removeRetiredDeviations();persist();renderAll();alert("Backup importado.")}catch(err){alert("Arquivo inválido.")}};reader.readAsText(f)}
 renderAll();
 </script></body></html>
