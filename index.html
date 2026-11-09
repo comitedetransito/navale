@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Consulta | Matriz de Consequências</title>
+<style>
+:root{--teal:#087f7b;--teal2:#0c9992;--ink:#24323a;--muted:#667780;--bg:#f3f6f7;--line:#dce4e7;--red:#d94d58;--amber:#f1b84b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px/1.5 "Segoe UI",Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(120deg,#075e61,#0b918b);color:white;padding:20px 26px}
+header .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;opacity:.8;font-weight:700}
+header h1{margin:3px 0;font-size:26px}header p{margin:0;color:#e4f5f3}
+.shell{display:flex;min-height:calc(100vh - 105px)}aside{width:112px;flex-shrink:0;background:#f4f4f6;border-right:1px solid var(--line);padding:12px 6px}
+.side-logo{text-align:center;margin:0 auto 10px}.side-logo img{display:block;width:82px;max-width:100%;height:auto;margin:0 auto}
+.brand{display:none}
+nav button{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;background:transparent;color:#667780;padding:10px 3px;border-radius:0;border-bottom:1px solid #e4e6e8;margin:0;font-size:11px;line-height:1.25;font-weight:600;min-height:72px}
+nav button.active,nav button:hover{background:#e8f4f3;color:#066b68}nav .ico{width:auto;text-align:center;font-size:26px;line-height:1.1}
+.side-bottom{border-top:1px solid var(--line);margin-top:12px;padding:12px 3px;color:var(--muted);font-size:10px;line-height:1.3;text-align:center}.side-bottom img{display:block;width:82px;max-width:100%;height:auto;margin:12px auto 0}
+main{flex:1;max-width:1200px;margin:0 auto;padding:24px;width:100%}
+.page{display:none}.page.active{display:block}.page-title{margin:0 0 4px;font-size:23px}.page-sub{margin:0 0 20px;color:var(--muted)}
+.notice{background:#fff8e8;border:1px solid #f1d79b;border-left:5px solid var(--amber);padding:12px 15px;border-radius:9px;margin-bottom:17px}
+.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:20px;box-shadow:0 5px 18px #20343b08;margin-bottom:16px}
+.panel h2{margin:0 0 4px;font-size:19px}.sub{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}label{display:block;font-weight:650;font-size:13px;margin-bottom:6px;color:#34464e}
+select,input,textarea{width:100%;border:1px solid #cbd6da;border-radius:8px;padding:11px 12px;font:inherit;background:white;color:var(--ink)}textarea{min-height:90px;resize:vertical}
+select:focus,input:focus,textarea:focus{outline:3px solid #0b918b22;border-color:var(--teal)}
+.full{grid-column:1/-1}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.primary{background:var(--teal);color:white}.secondary{background:#edf2f3;color:#34464e}.danger{background:#fff0f0;color:#a22d38}.small{padding:7px 10px}
+.result{margin-top:18px;display:none}.result.show{display:block}.result-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:14px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{font-size:12px;font-weight:700;background:#e8f4f3;color:#086a67;border-radius:30px;padding:5px 9px}.severity.n5{background:#fff2c2;color:#765300}.severity.n3{background:#fde2e2;color:#a3242d}.classification{background:#edf0fa;color:#46548c}
+.outcomes,.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.outcome,.stat{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fcfdfd}.outcome h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:0 0 8px}.committee-note{color:var(--red);font-size:12px;font-weight:700;margin:-4px 0 8px}
+.stat strong{display:block;font-size:28px;color:var(--teal)}.stat span{color:var(--muted);font-size:12px}
+.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:650px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;text-transform:uppercase;color:var(--muted);background:#f8fafb}
+.empty{color:#8a4c22;background:#fff8ef;border:1px solid #f0d5b7;padding:13px;border-radius:9px}.muted{color:var(--muted);font-size:12px}.locked{padding:25px;text-align:center;border:1px dashed #bdcbd0;border-radius:10px}
+.badge{display:inline-block;background:#edf0fa;color:#46548c;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700}
+dialog{width:min(680px,calc(100% - 30px));max-height:90vh;border:1px solid var(--line);border-radius:13px;padding:20px;color:var(--ink)}dialog::backdrop{background:#0008}dialog h2{margin:0 0 6px}dialog .grid{margin-top:16px}dialog .actions{justify-content:flex-end}
+footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);background:white}
+ .powerbi-embed{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#f8fafb}
+.powerbi-embed iframe{position:absolute;inset:0;width:100%;max-width:100%;height:100%;border:0;overflow:hidden}
+ .dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.dashboard-stats .stat{padding:10px 12px}.dashboard-stats .stat strong{font-size:23px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}.info-card{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 5px 18px #20343b08}.info-card h3{margin:0 0 8px;color:#086a67;font-size:16px}.info-card p{margin:0;color:#43545c}.info-card ul{margin:8px 0 0;padding-left:20px}.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pillar{background:#e8f4f3;border-radius:9px;padding:12px;font-weight:700;color:#086a67}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:linear-gradient(120deg,#075e61,#0b918b);color:white;border-radius:11px;padding:16px}.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:#e4f5f3}
+@media(max-width:760px){.shell{display:block}aside{width:100%;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.brand{display:none}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;margin:0;font-size:12px}.side-bottom{display:none}main{padding:15px}.grid,.outcomes,.stats,.info-grid,.pillars,.metrics{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:17px}}
+
+</style></head>
+<body>
+<header><div class="eyebrow">COMITÊ DE TRÂNSITO</div><h1>Matriz de Consequências</h1><p>Central de consulta, regras e administração da Matriz de Consequência</p></header>
+<div class="shell">
+<aside><div class="side-logo"><img src="Logo - Comitê de trânsito (3).png" alt="Logo do Comitê de Trânsito de Tubarão"></div><div class="brand">CENTRAL DE CONSULTA</div><nav>
+<button class="active" data-page="inicio"><span class="ico">⌂</span>Comece por aqui</button>
+<button data-page="consulta"><span class="ico">⌕</span>Matriz de consequências</button>
+<button data-page="desvios"><span class="ico">⚑</span>Desvios</button>
+<button data-page="regras"><span class="ico">☷</span>Regras da matriz</button>
+<button data-page="publicos"><span class="ico">♙</span>Públicos</button>
+<button data-page="config"><span class="ico">⚙</span>Configurações <span id="adminTag" class="badge">ADM</span></button>
+</nav><div class="side-bottom">Base documental Rev. 04 • 10/08/2026<img src="Vale logo - No BG.png" alt="Logo Vale"></div></aside>
+<main>
+<section class="page active" id="page-inicio">
+<h2 class="page-title">Comece por aqui</h2>
+<p class="page-sub">Conheça o propósito, a atuação e a história do Comitê de Trânsito do site Tubarão.</p>
+<div class="info-grid">
+<div class="info-card"><h3>Alinhamento à cultura Vale</h3><h4>A vida em primeiro lugar</h4><p>A atuação do Comitê de Trânsito está diretamente conectada aos valores que orientam toda a cultura Vale, especialmente o compromisso com a vida, com a disciplina operacional e com a responsabilidade em cada decisão.</p><p>No site Tubarão, onde convivem diariamente pessoas, máquinas, veículos leves, pesados e fluxos operacionais complexos, garantir um trânsito seguro não é apenas uma obrigação técnica: é um valor intangível, essencial e inegociável.</p></div>
+<div class="info-card"><h3>Obsessão por segurança e gestão de riscos</h3><p>O Comitê nasce para reforçar que cada escolha no trânsito importa. Cada abordagem, cada critério de acesso, cada orientação e cada intervenção são expressões práticas do valor maior da empresa: pessoas em primeiro lugar.</p></div>
+</div>
+<section class="panel"><h2>Contando nossa história</h2><p>O Comitê de Trânsito do site Tubarão foi criado como resposta à necessidade de integrar iniciativas, padronizar práticas e garantir uma governança sólida para os riscos associados ao trânsito interno. Antes da estruturação formal do Comitê, as ações eram distribuídas entre áreas, com esforços importantes, mas fragmentados.</p><p>A implementação do Comitê marca um novo momento, com visão sistêmica dos riscos, fiscalização estratégica, campanhas educativas contínuas, critérios claros de acesso e tratamento padronizado dos desvios.</p><p>Com equipe dedicada, indicadores gerenciados e um fluxo de atuação bem definido, o Comitê se tornou o eixo central da governança de trânsito do site, conectando operações, lideranças, segurança e contratadas.</p></section>
+<div class="info-grid">
+<div class="info-card"><h3>O que é o Comitê de Trânsito</h3><p>A partir de 2025, o Comitê passa por uma ressignificação, reforçando que cada escolha no trânsito importa.</p><ul><li>Estrutura multidisciplinar e deliberativa composta por representantes líderes;</li><li>Governança institucionalizada que garante disciplina, direcionamento e consistência;</li><li>Atuação alinhada à cultura Vale e ao valor: a vida em primeiro lugar.</li></ul><p><strong>Mais que estrutura, um instrumento de disciplina operacional.</strong></p></div>
+<div class="info-card"><h3>Pilares estratégicos</h3><div class="pillars"><div class="pillar">Ações educativas</div><div class="pillar">Fiscalização estratégica</div><div class="pillar">Gestão de desvios e consequências</div></div></div>
+</div>
+<div class="metrics"><div class="metric"><strong>≈ 5 mil</strong><span>veículos por mês</span></div><div class="metric"><strong>2.460</strong><span>acessos por mês, em média</span></div></div>
+<div class="notice">Ambiente com alta dinâmica de mobilidade.</div>
+</section>
+<section class="page" id="page-consulta">
+<h2 class="page-title">Matriz de consequências</h2><p class="page-sub">Selecione o desvio, o público envolvido e a reincidência.</p>
+<div class="stats dashboard-stats"><div class="stat"><strong id="statDevs">0</strong><span>Tipos de desvio cadastrados</span></div><div class="stat"><strong id="statGroups">0</strong><span>Regras / grupos de aplicação</span></div><div class="stat"><strong id="statPublics">0</strong><span>Públicos cadastrados</span></div><div class="stat"><strong id="statSpeed">3</strong><span>Faixas específicas de velocidade</span></div></div>
+<div class="panel"><div class="grid"><div class="full"><label>Tipo de desvio</label><select id="deviation"><option value="">Selecione um desvio...</option></select></div>
+<div><label>Público / vínculo do envolvido</label><select id="person" disabled><option value="">Selecione primeiro o desvio</option></select></div>
+<div><label>Histórico de ocorrência</label><select id="occurrence"><option value="first">1º evento</option><option value="second">1ª reincidência (2º evento)</option><option value="more">Demais reincidências</option></select></div></div>
+<div class="actions"><button class="secondary" id="clear">Limpar</button></div><section id="result" class="result" aria-live="polite"></section></div>
+</section>
+<section class="page" id="page-desvios"><h2 class="page-title">Desvios cadastrados</h2><p class="page-sub">Consulte os tipos de desvios existentes na matriz. A edição é restrita ao ADM.</p><div class="panel"><div id="deviationTable"></div><div class="actions" id="deviationActions"></div></div></section>
+<section class="page" id="page-regras"><h2 class="page-title">Regras da matriz</h2><p class="page-sub">Consequências por faixa de reincidência e público.</p><div class="panel"><div id="rulesTable"></div><div class="actions" id="rulesActions"></div></div></section>
+<section class="page" id="page-publicos"><h2 class="page-title">Públicos</h2><p class="page-sub">Categorias de pessoas consideradas na consulta.</p><div class="panel"><div id="publicTable"></div><div class="actions" id="publicActions"></div></div></section>
+<section class="page" id="page-config"><h2 class="page-title">Configurações</h2><p class="page-sub">Acesso administrativo, manutenção e cópia de segurança.</p><div class="panel" id="adminPanel"></div></section>
+</main></div><footer>Fonte: Matriz de consequência Rev. 04 – 05/11/2026; PGS-007245, Rev. 03 – 01/06/2026, Anexo I – Matriz de Avaliação de Condutas. Ferramenta demonstrativa para validação antes de uso institucional.</footer>
+<dialog id="editDialog"><form id="editForm"><h2 id="editTitle"></h2><p class="muted" id="editHelp"></p><div class="grid" id="editFields"></div><div class="actions"><button type="button" class="secondary" id="cancelEdit">Cancelar</button><button type="submit" class="primary">Salvar alterações</button></div></form></dialog>
+<script>
+let groups = {
+ A:{id:"A",potential:"N5",classification:"N5",audience:"Empregado mobilizado (veículo)",people:["Empregado mobilizado"],events:["Procedimento incompleto de transposição de PN","Veículo em condições irregulares / manutenção vencida","Não obedecer à sinalização de trânsito","Direção perigosa","Não conceder preferência ao pedestre","CNH incompatível com o tipo de veículo","Velocidade incompatível com a via","Falha de ré indevida","Falta de documentação obrigatória (CTB / Vale, quando aplicável)","Desacato a agentes de trânsito","Transporte irregular de carga","Estacionar ou parar em local irregular","Descumprir fluxo de interdição de vias","Descumprir restrição de circulação de veículos/equipamentos com velocidade inferior a 20 km/h","Exposição voluntária a risco (ex.: sentar/deitar em áreas de circulação, permanecer em pontos cegos, acessar áreas isoladas ou outras situações de exposição desnecessária a riscos operacionais)"],
+ outcomes:{
+ first:["Feedback contínuo (Vale)","Advertência formal (Contratadas)","Evidência SAP"],
+ second:["Suspensão da credencial (Vale/Contratadas)","Feedback contínuo (Vale)","Notificação contratual (Contratadas)","Evidência SAP"],
+ more:["Revogação da credencial (Vale/Contratadas)","Revogação do Passaporte RAC 2 (condutor)","Multa contratual (Contratadas)","Evidência SAP"]}},
+ B:{id:"B",potential:"N5",classification:"N5",audience:"Empregado não mobilizado / particular / fornecedor / visitante (veículo)",people:["Empregado não mobilizado","Particular","Fornecedor","Visitante"],events:["Procedimento incompleto de transposição de PN","Veículo em condições irregulares / manutenção vencida","Não obedecer à sinalização de trânsito","Direção perigosa","Não conceder preferência ao pedestre","CNH incompatível com o tipo de veículo","Velocidade incompatível com a via","Falha de ré indevida","Falta de documentação obrigatória (CTB / Vale, quando aplicável)","Desacato a agentes de trânsito","Transporte irregular de carga","Estacionar ou parar em local irregular","Descumprir fluxo de interdição de vias","Descumprir restrição de circulação de veículos/equipamentos com velocidade inferior a 20 km/h","Exposição voluntária a risco (ex.: sentar/deitar em áreas de circulação, permanecer em pontos cegos, acessar áreas isoladas ou outras situações de exposição desnecessária a riscos operacionais)"],
+ outcomes:{
+ first:["Feedback contínuo (Vale)","Advertência formal (fornecedor)","Feedback formal (visitante)","Evidência SAP"],
+ second:["Suspensão da credencial (Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"],
+ more:["Revogação da credencial (Vale/fornecedor/visitante)","Advertência formal (empregado Vale)","Multa contratual (fornecedor)","Advertência formal (visitante)","Evidência SAP"]}},
+ C:{id:"C",potential:"N5",classification:"N5",audience:"Empregados mobilizados e não mobilizados (veículo)",people:["Empregado mobilizado","Empregado não mobilizado"],events:["Procedimento incompleto de transposição de PN","Veículo em condições irregulares / manutenção vencida","Não obedecer à sinalização de trânsito","Direção perigosa","Não conceder preferência ao pedestre","CNH incompatível com o tipo de veículo","Velocidade incompatível com a via","Falha de ré indevida","Falta de documentação obrigatória (CTB / Vale, quando aplicável)","Desacato a agentes de trânsito","Transporte irregular de carga","Estacionar ou parar em local irregular","Descumprir fluxo de interdição de vias","Descumprir restrição de circulação de veículos/equipamentos com velocidade inferior a 20 km/h","Exposição voluntária a risco (ex.: sentar/deitar em áreas de circulação, permanecer em pontos cegos, acessar áreas isoladas ou outras situações de exposição desnecessária a riscos operacionais)"],
+ outcomes:{
+ first:["Feedback contínuo (Vale)","Advertência formal (Contratadas)","Evidência SAP"],
+ second:["Suspensão da credencial (Vale/Contratadas)","Feedback contínuo (Vale)","Notificação contratual (Contratadas)","Evidência SAP"],
+ more:["Revogação da credencial (Vale/Contratadas)","Revogação do Passaporte RAC 2 (condutor)","Multa contratual (Contratadas)","Evidência SAP"]}},
+ D:{id:"D",potential:"N3",classification:"N3",audience:"Empregado não mobilizado / particular / fornecedor / visitante (veículo)",people:["Empregado não mobilizado","Particular","Fornecedor","Visitante"],events:["Uso de celular durante a condução","Não realizar parada obrigatória na PN (mín. 3 segundos com o veículo parado)"],
+ outcomes:{
+ first:["Comitê Pela Vida (Vale)","Comitê Pela Vida (fornecedor)","Feedback formal (visitante)","Evidência SAP"],
+ second:["Suspensão da credencial (Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"],
+ more:["Suspensão da credencial (empregado Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"]}},
+ E:{id:"E",potential:"N3",classification:"N3",audience:"Empregado mobilizado Vale – cinto de segurança (motorista/passageiro)",people:["Empregado mobilizado Vale"],events:["Não utilização do cinto de segurança (condutor)"],
+ outcomes:{
+ first:["Comitê Pela Vida","Evidência SAP"],
+ second:["Suspensão da credencial","Comitê Pela Vida","Evidência SAP"],
+ more:["Suspensão da credencial","Comitê Pela Vida","Evidência SAP"]}},
+ F:{id:"F",potential:"N3",classification:"N3",audience:"Empregado mobilizado Contratadas – cinto de segurança (motorista/passageiro)",people:["Empregado mobilizado Contratadas"],events:["Não utilização do cinto de segurança (condutor)"],
+ outcomes:{
+ first:["Comitê Pela Vida","Notificação contratual à contratada","Evidência SAP"],
+ second:["Suspensão da credencial","Comitê Pela Vida + Notificação contratual","Evidência SAP"],
+ more:["Suspensão da credencial","Comitê Pela Vida + Notificação contratual","Evidência SAP"]}},
+ G:{id:"G",potential:"N5",classification:"N5",audience:"Particular (No Show App Comitê de Trânsito)",people:["Particular"],events:["No Show App Comitê de Trânsito"],
+ outcomes:{
+ first:["Notificação de advertência formal"],
+ second:["Suspensão de acesso com veículo particular por 7 dias"],
+ more:["Revogação de acesso por 3 meses, sendo necessário um novo cadastro."]}},
+ H:{id:"H",potential:"N5",classification:"N5",audience:"Empregado Vale / contratada / fornecedor / visitante – bicicleta e autopropelido",people:["Empregado Vale","Contratada","Fornecedor","Visitante"],events:["Não utilização de capacete","Velocidade incompatível com as condições de circulação da ciclovia","Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos"],
+ outcomes:{
+ first:["Feedback contínuo (Vale)","Advertência formal (Contratadas / Fornecedor)","Feedback formal (visitante, quando aplicável)","Evidência SAP"],
+ second:["Suspensão do acesso ao bicicletário por 15 dias","Evidência SAP"],
+ more:["Suspensão do acesso ao bicicletário por 3 meses","Evidência SAP"]}},
+ I:{id:"I",potential:"N5",classification:"N5",audience:"Próprios / contratadas / fornecedor / visitante – pedestres",people:["Empregado Vale","Contratada","Fornecedor","Visitante"],events:["Utilizar celular ou outro dispositivo eletrônico durante a travessia de vias","Cruzar vias fora das faixas ou pontos de travessia definidos","Não respeitar sinalização de trânsito para pedestres"],
+ outcomes:{first:[],second:[],more:[]}}
+};
+let speedEvents = [
+ {id:"speed1",label:"Excesso de velocidade (>7% e <=20%)",potential:"N5",classification:"N5",audience:"Públicos de veículos – N5",people:["Empregado mobilizado Vale","Empregado mobilizado Contratadas","Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],outcomes:{first:["Advertência escrita"],second:["Advertência escrita"],more:["Aplicar Comitê Pela Vida"]}},
+ {id:"speed2",label:"Excesso de velocidade (>20% <=50%)",potential:"N3",classification:"N3",audience:"Empregado não mobilizado Vale / Fornecedor / Visitante",people:["Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],outcomes:{first:["Advertência escrita"],second:["Suspensão RAC 2"],more:["Aplicar Comitê Pela Vida"]}},
+ {id:"speed3",label:"Excesso de velocidade (>50% e/ou >120km/h)",potential:"N3",classification:"N3",audience:"Empregado não mobilizado Vale / Fornecedor / Visitante",people:["Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],outcomes:{first:["Aplicar Comitê Pela Vida"],second:["Aplicar Comitê Pela Vida"],more:["Aplicar Comitê Pela Vida"]}}
+];
+
+const KEY="matrizConsequenciasV1";
+let hiddenDeviations=[];
+let admin=false;
+let publics=["Empregado mobilizado","Empregado mobilizado Vale","Empregado mobilizado Contratadas","Empregado não mobilizado","Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante","Empregado Vale","Contratada","Particular","Fornecedor","Visitante"];
+function normalizeCommitteeConsequences(){
+ const normalize=list=>{
+  if(!Array.isArray(list))return;
+  list.forEach((item,index)=>{list[index]=String(item).replace(/(?:Aplicar +)?Comit[eê] +Pela +Vida/gi,"Aplicar Comitê pela Vida")});
+  list.sort((a,b)=>Number(/Aplicar Comitê pela Vida/i.test(b))-Number(/Aplicar Comitê pela Vida/i.test(a)));
+ };
+ Object.values(groups).forEach(g=>Object.values(g.outcomes||{}).forEach(normalize));
+ speedEvents.forEach(rule=>Object.values(rule.outcomes||{}).forEach(normalize));
+}
+function persist(){normalizeCommitteeConsequences();localStorage.setItem(KEY,JSON.stringify({groups,speedEvents,publics,hiddenDeviations}))}
+function restore(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x){groups=x.groups||groups;speedEvents=x.speedEvents||speedEvents;publics=x.publics||publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[]}}catch(e){}}
+restore();
+normalizeCommitteeConsequences();
+persist();
+function normalizeConsequences(){
+ const revision="matrizConsequenciasRev04Atualizada2";
+ if(localStorage.getItem(revision)==="1")return;
+ const revised={
+  A:{first:["Feedback contínuo (Vale)","Advertência formal (Contratadas)","Evidência SAP"],second:["Suspensão da credencial (Vale/Contratadas)","Feedback contínuo (Vale)","Notificação contratual (Contratadas)","Evidência SAP"],more:["Revogação da credencial (Vale/Contratadas)","Revogação do Passaporte RAC 2 (condutor)","Multa contratual (Contratadas)","Evidência SAP"]},
+  B:{first:["Feedback contínuo (Vale)","Advertência formal (fornecedor)","Feedback formal (visitante)","Evidência SAP"],second:["Suspensão da credencial (Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"],more:["Revogação da credencial (Vale/fornecedor/visitante)","Advertência formal (empregado Vale)","Multa contratual (fornecedor)","Advertência formal (visitante)","Evidência SAP"]},
+  C:{first:["Feedback contínuo (Vale)","Advertência formal (Contratadas)","Evidência SAP"],second:["Suspensão da credencial (Vale/Contratadas)","Feedback contínuo (Vale)","Notificação contratual (Contratadas)","Evidência SAP"],more:["Revogação da credencial (Vale/Contratadas)","Revogação do Passaporte RAC 2 (condutor)","Multa contratual (Contratadas)","Evidência SAP"]},
+  D:{first:["Comitê Pela Vida (Vale)","Comitê Pela Vida (fornecedor)","Feedback formal (visitante)","Evidência SAP"],second:["Suspensão da credencial (Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"],more:["Suspensão da credencial (empregado Vale/fornecedor/visitante)","Feedback contínuo (Vale)","Notificação contratual (fornecedor)","Feedback formal (visitante)","Evidência SAP"]},
+  E:{first:["Comitê Pela Vida","Evidência SAP"],second:["Suspensão da credencial","Comitê Pela Vida","Evidência SAP"],more:["Suspensão da credencial","Comitê Pela Vida","Evidência SAP"]},
+  F:{first:["Comitê Pela Vida","Notificação contratual à contratada","Evidência SAP"],second:["Suspensão da credencial","Comitê Pela Vida + Notificação contratual","Evidência SAP"],more:["Suspensão da credencial","Comitê Pela Vida + Notificação contratual","Evidência SAP"]}
+ };
+ Object.entries(revised).forEach(([key,outcomes])=>{if(groups[key])groups[key].outcomes=outcomes});
+ const speedRules={speed1:{label:"Excesso de velocidade (>7% e <=20%)",potential:"N5",audience:"Públicos de veículos – N5",people:["Empregado mobilizado Vale","Empregado mobilizado Contratadas","Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],first:["Advertência escrita"],second:["Advertência escrita"],more:["Aplicar Comitê Pela Vida"]},speed2:{label:"Excesso de velocidade (>20% <=50%)",potential:"N3",audience:"Empregado não mobilizado Vale / Fornecedor / Visitante",people:["Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],first:["Advertência escrita"],second:["Suspensão RAC 2"],more:["Aplicar Comitê Pela Vida"]},speed3:{label:"Excesso de velocidade (>50% e/ou >120km/h)",potential:"N3",audience:"Empregado não mobilizado Vale / Fornecedor / Visitante",people:["Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"],first:["Aplicar Comitê Pela Vida"],second:["Aplicar Comitê Pela Vida"],more:["Aplicar Comitê Pela Vida"]}};
+ speedEvents.forEach(rule=>{const updated=speedRules[rule.id];if(updated){rule.label=updated.label;rule.potential=updated.potential;rule.audience=updated.audience;rule.people=updated.people;rule.outcomes={first:updated.first,second:updated.second,more:updated.more}}});
+ if(groups.F){groups.F.audience="Empregado mobilizado Contratadas – cinto de segurança (motorista/passageiro)";groups.F.people=["Empregado mobilizado Contratadas"]}
+ publics=publics.map(p=>p==="Empregado mobilizado de contratada"?"Empregado mobilizado Contratadas":p);
+ ["Empregado mobilizado Vale","Empregado mobilizado Contratadas","Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante"].forEach(p=>{if(!publics.includes(p))publics.push(p)});
+ const passengerEvent="Não utilização do cinto de segurança (passageiro)";
+ [["J","Empregado mobilizado Vale"],["K","Empregado mobilizado Contratadas"]].forEach(([id,audience])=>{
+  if(!groups[id])groups[id]={id,potential:"N3",classification:"N3",audience,people:[audience],events:[passengerEvent],outcomes:{first:["Advertência escrita"],second:["Advertência escrita"],more:["Comitê Pela Vida"]}};
+ });
+ localStorage.setItem(revision,"1");persist();
+}
+normalizeConsequences();
+function normalizeSeatbeltEventNames(){
+ const revision="matrizConsequenciasNomesCintoAtualizados1";
+ if(localStorage.getItem(revision)==="1")return;
+ Object.values(groups).forEach(g=>{
+  g.events=g.events.map(ev=>ev==="Não utilização do cinto de segurança"?"Não utilização do cinto de segurança (condutor)":ev==="Falta do uso do cinto de segurança (passageiro)"?"Não utilização do cinto de segurança (passageiro)":ev);
+ });
+ localStorage.setItem(revision,"1");
+ persist();
+}
+normalizeSeatbeltEventNames();
+function normalizeRiskExposureEventName(){
+ const oldName="Exposição voluntária a risco (sentar/deitar no chão em áreas de circulação)";
+ const newName="Exposição voluntária a risco (ex.: sentar/deitar em áreas de circulação, permanecer em pontos cegos, acessar áreas isoladas ou outras situações de exposição desnecessária a riscos operacionais)";
+ let changed=false;
+ Object.values(groups).forEach(g=>{g.events=g.events.map(ev=>{if(ev===oldName){changed=true;return newName}return ev})});
+ if(changed)persist();
+}
+normalizeRiskExposureEventName();
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])].sort((a,b)=>a.localeCompare(b,"pt-BR"))}
+function uniqueEvents(){return allUniqueEvents().filter(event=>!hiddenDeviations.includes(event))}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function renderConsultOptions(){const d=document.getElementById("deviation"),old=d.value;d.innerHTML='<option value="">Selecione um desvio...</option>'+uniqueEvents().map(x=>`<option>${escapeHtml(x)}</option>`).join("");if(uniqueEvents().includes(old))d.value=old}
+function matchingGroups(event){return Object.values(groups).filter(g=>g.events.includes(event))}
+const audienceNames={mobilizedVale:"Empregado mobilizado Vale",mobilizedContractor:"Empregado mobilizado Contratadas",nonMobilizedVale:"Empregado não mobilizado Vale",supplier:"Empregado não mobilizado Fornecedor",visitor:"Empregado não mobilizado Visitante"};
+function audiencesForEvent(event){
+ const keys=Object.entries(groups).filter(([,g])=>g.events.includes(event)).map(([key])=>key);
+ if(keys.some(k=>["A","B","C"].includes(k)))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
+ if(keys.includes("D"))return [audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
+ if(keys.includes("J")||keys.includes("K"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor].filter(a=>keys.some(k=>groups[k].people.includes(a)));
+ if(keys.includes("E")||keys.includes("F"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor].filter(a=>keys.some(k=>groups[k].people.includes(a)));
+ if(keys.includes("G"))return ["Particular"];
+ if(keys.includes("H")||keys.includes("I"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
+ const speedRule=speedEvents.find(x=>x.label===event);
+ if(speedRule?.potential==="N3")return [audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
+ if(speedRule)return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
+ return [...new Set(matchingGroups(event).flatMap(g=>g.people))];
+}
+function groupForAudience(event,audience){
+ const keys=Object.keys(groups).filter(key=>groups[key].events.includes(event));
+ if(keys.some(k=>["A","B","C"].includes(k))){
+  if(audience===audienceNames.mobilizedVale)return groups.A;
+  if(audience===audienceNames.mobilizedContractor)return groups.C||groups.A;
+  if([audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor,"Particular"].includes(audience))return groups.B||groups.C;
+ }
+ if((keys.includes("J")||keys.includes("K"))&&["J","K"].some(key=>keys.includes(key)&&groups[key].people.includes(audience)))return groups[["J","K"].find(key=>keys.includes(key)&&groups[key].people.includes(audience))];
+ if(audience===audienceNames.mobilizedVale&&keys.includes("E"))return groups.E;
+ if(audience===audienceNames.mobilizedContractor&&keys.includes("F"))return groups.F;
+ return keys.length?groups[keys[0]]:null;
+}
+function outcomesForAudience(items,audience){
+ const a=audience.toLowerCase();
+ if(a.includes("contratada"))return items.filter(x=>/sap|contratad|credencial|passaporte|advertência|notificação contratual|comitê pela vida/i.test(x)&&!/vale\)/i.test(x));
+ if(a.includes("fornecedor"))return items.filter(x=>/sap|fornecedor|credencial|advertência formal|notificação contratual|comitê pela vida/i.test(x)&&!/visitante|empregado vale/i.test(x));
+ if(a.includes("visitante"))return items.filter(x=>/sap|visitante|credencial/i.test(x));
+ if(a.includes("empregado"))return items.filter(x=>/sap|vale|empregado|credencial|passaporte|comitê pela vida|advertência/i.test(x)&&!/fornecedor|visitante|contratad/i.test(x));
+ return items;
+}
+document.getElementById("deviation").addEventListener("change",()=>{const val=deviation.value;person.innerHTML='<option value="">Selecione...</option>';person.disabled=!val;result.className="result";result.innerHTML="";if(!val)return;audiencesForEvent(val).forEach(p=>person.add(new Option(p,p)))});
+function renderList(items){return items&&items.length?'<ul>'+items.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ul>':'<div class="empty">Não há consequência cadastrada para esta combinação. Encaminhe para validação da área responsável.</div>'}
+function consultConsequence(){const ev=deviation.value,p=person.value,occ=occurrence.value;if(!ev||!p)return
+const k=occ==="first"?"first":occ==="second"?"second":"more";let pot="",items=[],aud=p;
+const sp=speedEvents.find(x=>x.label===ev);if(sp){pot=sp.potential;items=sp.outcomes[k];aud=sp.audience||p}else{const g=groupForAudience(ev,p);if(!g){result.className="result show";result.innerHTML='<div class="empty">Regra não localizada para esta combinação.</div>';return}pot=g.potential;items=outcomesForAudience(g.outcomes[k]||[],p);aud=g.audience}
+const label={first:"1º evento",second:"1ª reincidência (2º evento)",more:"Demais reincidências"}[occ];
+const potentialClass=pot.trim().toUpperCase()==="N5"?"n5":pot.trim().toUpperCase()==="N3"?"n3":"";
+result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="window.print()">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong>${escapeHtml(p)}</strong><p>${escapeHtml(aud)}</p></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div><p class="muted">“Demais reincidências” contempla a 2ª reincidência (3º evento) e as seguintes.</p>`}
+document.getElementById("person").addEventListener("change",consultConsequence);
+document.getElementById("occurrence").addEventListener("change",consultConsequence);
+document.getElementById("clear").addEventListener("click",()=>{deviation.value="";person.innerHTML='<option value="">Selecione primeiro o desvio</option>';person.disabled=true;occurrence.value="first";result.className="result";result.innerHTML=""});
+function requireAdmin(){if(!admin){alert("Acesso restrito. Entre na área administrativa.");go("config");return false}return true}
+function renderAll(){renderConsultOptions();document.getElementById("statDevs").textContent=allUniqueEvents().length;document.getElementById("statGroups").textContent=Object.keys(groups).length+speedEvents.length;document.getElementById("statPublics").textContent=publics.length;document.getElementById("statSpeed").textContent=speedEvents.length;renderDeviationTable();renderRules();renderPublics();renderAdmin()}
+function renderDeviationTable(){
+ const rows=[];
+ Object.entries(groups).forEach(([key,g])=>g.events.forEach(ev=>rows.push({ev,a:g.audience,p:g.potential,groupKey:key})));
+ speedEvents.forEach(s=>rows.push({ev:s.label,a:s.audience||"Todos os públicos cadastrados",p:s.potential,speed:true}));
+ rows.sort((a,b)=>a.ev.localeCompare(b.ev,"pt-BR"));
+  document.getElementById("deviationTable").innerHTML='<div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Grupo de aplicação</th><th>Potencial</th><th>Status</th><th>Ações</th></tr></thead><tbody>'+ 
+ rows.map((r,i)=>{const hidden=hiddenDeviations.includes(r.ev);return `<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td>${escapeHtml(r.p)}</td><td><span class="badge">${hidden?"Oculto":"Visível"}</span></td><td>${admin?`<button class="secondary small" onclick="toggleDeviationVisibility(${i})">${hidden?"Exibir":"Ocultar"}</button> <button class="secondary small" onclick="editDeviation(${i})">Editar</button> <button class="danger small" onclick="deleteDeviation(${i})">Excluir</button>`:"—"}</td></tr>`}).join("")+'</tbody></table></div>';
+ document.getElementById("deviationActions").innerHTML=admin?'<button class="primary" onclick="addDeviation()">+ Adicionar desvio</button>':'';
+ window._deviationRows=rows;
+}
+function renderRules(){
+ let rows=[];Object.entries(groups).forEach(([key,g])=>g.events.forEach(ev=>rows.push({ev,a:g.audience,p:g.potential,o:g.outcomes,groupKey:key})));
+ speedEvents.forEach(s=>rows.push({ev:s.label,a:s.audience||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes,speed:true}));
+ document.getElementById("rulesTable").innerHTML='<div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Público / grupo</th><th>Potencial</th><th>1º evento</th><th>1ª reincidência</th><th>Demais reincidências</th><th>Ações</th></tr></thead><tbody>'+
+ rows.map((r,i)=>`<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td>${escapeHtml(r.p)}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td><td>${admin?`<button class="secondary small" onclick="editRule(${i})">Editar</button> <button class="danger small" onclick="deleteRule(${i})">Excluir</button>`:"—"}</td></tr>`).join("")+'</tbody></table></div>';
+ document.getElementById("rulesActions").innerHTML=admin?'<span class="muted">Edite ou exclua uma regra específica de desvio e público.</span>':'';
+ window._ruleRows=rows;
+}
+function renderPublics(){
+ document.getElementById("publicTable").innerHTML='<div class="table-wrap"><table><thead><tr><th>Categoria de público</th><th>Status</th><th>Ações</th></tr></thead><tbody>'+
+ publics.map((p,i)=>`<tr><td>${escapeHtml(p)}</td><td><span class="badge">Ativo</span></td><td>${admin?`<button class="secondary small" onclick="editPublic(${i})">Editar</button> <button class="danger small" onclick="removePublic(${i})">Excluir</button>`:"—"}</td></tr>`).join("")+'</tbody></table></div>';
+ document.getElementById("publicActions").innerHTML=admin?'<button class="primary" onclick="addPublic()">+ Adicionar público</button>':'';
+}
+function renderAdmin(){const el=document.getElementById("adminPanel");if(!admin){el.innerHTML=`<div class="locked"><h2>Área restrita</h2><p>Entre com a senha de administrador para cadastrar, editar ou excluir desvios, públicos e regras da matriz.</p><button class="primary" onclick="loginAdmin()">Acessar como ADM</button><p class="muted">Primeiro acesso: será solicitado que você crie uma senha administrativa.</p></div>`}else{el.innerHTML=`<span class="badge">SESSÃO ADM ATIVA</span><h2 style="margin-top:12px">Gerenciar matriz</h2><p class="sub">As alterações ficam salvas neste navegador.</p><div class="actions"><button class="primary" onclick="addDeviation()">+ Cadastrar desvio</button><button class="secondary" onclick="addPublic()">+ Cadastrar público</button><button class="secondary" onclick="changePassword()">Alterar senha ADM</button><button class="secondary" onclick="exportData()">Exportar backup JSON</button><button class="secondary" onclick="document.getElementById('importFile').click()">Importar backup</button><button class="danger" onclick="logoutAdmin()">Sair da área ADM</button></div><input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(event)"><p class="muted">Backup recomendado antes de qualquer alteração relevante.</p>`}}
+function loginAdmin(){let saved=localStorage.getItem("matrizAdminPass");if(!saved){let p=prompt("Primeiro acesso: crie uma senha ADM (mínimo 8 caracteres).");if(!p||p.length<8){alert("A senha deve ter pelo menos 8 caracteres.");return}localStorage.setItem("matrizAdminPass",p);alert("Senha inicial cadastrada neste navegador. Faça login novamente.");return}let p=prompt("Digite a senha de administrador:");if(p===saved){admin=true;renderAll()}else alert("Senha incorreta.")}
+function logoutAdmin(){admin=false;renderAll()}
+function changePassword(){if(!requireAdmin())return;let p=prompt("Nova senha ADM (mínimo 8 caracteres):");if(p&&p.length>=8){localStorage.setItem("matrizAdminPass",p);alert("Senha alterada neste navegador.")}else alert("Senha não alterada. Use ao menos 8 caracteres.")}
+function addDeviation(){if(!requireAdmin())return;let ev=prompt("Nome do novo desvio:");if(!ev)return;let keys=Object.keys(groups);let key=prompt("Identificador do grupo de regra:\n"+keys.join(", "));if(!groups[key]){alert("Grupo inválido. Cadastre em um grupo existente.");return}if(!groups[key].events.includes(ev))groups[key].events.push(ev);persist();renderAll()}
+function toggleDeviationVisibility(i){if(!requireAdmin())return;const ev=window._deviationRows[i].ev;if(hiddenDeviations.includes(ev))hiddenDeviations=hiddenDeviations.filter(x=>x!==ev);else hiddenDeviations.push(ev);persist();renderAll()}
+function editDeviation(i){if(!requireAdmin())return;openEditor(window._deviationRows[i],false)}
+function deleteDeviation(i){if(!requireAdmin())return;let ev=window._deviationRows[i].ev;if(!confirm("Excluir o desvio '"+ev+"' e suas associações/regras? Esta ação não poderá ser desfeita sem backup."))return;Object.values(groups).forEach(g=>g.events=g.events.filter(x=>x!==ev));speedEvents=speedEvents.filter(x=>x.label!==ev);hiddenDeviations=hiddenDeviations.filter(x=>x!==ev);persist();renderAll()}
+function editRule(i){if(!requireAdmin())return;openEditor(window._ruleRows[i],true)}
+function deleteRule(i){if(!requireAdmin())return;let r=window._ruleRows[i];if(!confirm("Excluir esta regra para '"+r.ev+"' / '"+r.a+"'?"))return;if(r.speed){speedEvents=speedEvents.filter(x=>x.label!==r.ev)}else{let g=groups[r.groupKey];g.events=g.events.filter(x=>x!==r.ev)}persist();renderAll()}
+function audienceChoices(){
+ const choices=[{name:"Todos os públicos cadastrados",people:null}];
+ function add(name,people){if(!choices.some(c=>c.name===name&&JSON.stringify(c.people)===JSON.stringify(people)))choices.push({name,people:people&&[...people]})}
+ Object.values(groups).forEach(g=>add(g.audience,g.people));
+ speedEvents.forEach(s=>{if(s.audience&&s.people)add(s.audience,s.people)});
+ publics.forEach(p=>add(p,[p]));
+ return choices;
+}
+function replaceGroupRule(key,oldEvent,newEvent,changes){
+ const old=groups[key], id="edit_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+ const copy={...old,...changes,id,events:[newEvent],outcomes:{first:[...changes.outcomes.first],second:[...changes.outcomes.second],more:[...changes.outcomes.more]}};
+ old.events=old.events.filter(e=>e!==oldEvent);
+ const entries=[];
+ Object.entries(groups).forEach(([k,g])=>{if(k===key)entries.push([id,copy]);entries.push([k,g])});
+ groups=Object.fromEntries(entries);
+}
+function openEditor(row,isRule){
+ const target=row.speed?speedEvents.find(s=>s.label===row.ev):groups[row.groupKey];
+ if(!target)return;
+ const choices=audienceChoices();
+ const currentName=row.speed?(target.audience||"Todos os públicos cadastrados"):target.audience;
+ const currentPeople=row.speed?(target.people||null):target.people;
+ let selected=choices.findIndex(c=>c.name===currentName&&JSON.stringify(c.people)===JSON.stringify(currentPeople));
+ if(selected<0){choices.push({name:currentName,people:currentPeople});selected=choices.length-1}
+ const fields=document.getElementById("editFields");
+ const eventField=isRule?`<select id="editEvent" required>${allUniqueEvents().map(ev=>`<option value="${escapeHtml(ev)}"${ev===row.ev?" selected":""}>${escapeHtml(ev)}</option>`).join("")}</select>`:`<input id="editEvent" required value="${escapeHtml(row.ev)}">`;
+ fields.innerHTML=`<div class="full"><label for="editEvent">Desvio</label>${eventField}</div><div class="full"><label for="editAudience">${isRule?"Público / grupo":"Grupo de aplicação"}</label><select id="editAudience">${choices.map((c,i)=>`<option value="${i}"${i===selected?" selected":""}>${escapeHtml(c.name)}</option>`).join("")}</select></div><div><label for="editPotential">Potencial</label><input id="editPotential" required value="${escapeHtml(target.potential)}"></div>`+(isRule?[['first','1º evento'],['second','1ª reincidência'],['more','Demais reincidências']].map(([key,label])=>`<div class="full"><label for="edit_${key}">${label} (uma consequência por linha)</label><textarea id="edit_${key}">${escapeHtml((target.outcomes[key]||[]).join("\n"))}</textarea></div>`).join(""):"");
+ document.getElementById("editTitle").textContent=isRule?"Editar regra":"Editar desvio";
+ document.getElementById("editHelp").textContent=isRule?"As alterações afetam somente esta associação de desvio e público. A classificação permanece inalterada.":"O nome é alterado em todas as associações do desvio; grupo e potencial afetam apenas esta linha. A classificação permanece inalterada.";
+ const dialog=document.getElementById("editDialog"),form=document.getElementById("editForm");
+ form.onsubmit=e=>{
+  e.preventDefault();
+  if(!requireAdmin())return;
+  const ev=document.getElementById("editEvent").value.trim(),potential=document.getElementById("editPotential").value.trim(),choice=choices[Number(document.getElementById("editAudience").value)];
+  if(!ev||!potential){alert("Informe o desvio e o potencial.");return}
+  if(!isRule&&ev!==row.ev&&allUniqueEvents().includes(ev)){alert("Já existe um desvio com esse nome.");return}
+  if(isRule&&ev!==row.ev&&speedEvents.some(s=>s.label===ev)){alert("Esse desvio já possui uma regra específica de velocidade. Edite essa regra diretamente.");return}
+  const people=choice.people?[...choice.people]:null;
+  const outcomes=isRule?Object.fromEntries(["first","second","more"].map(k=>[k,document.getElementById("edit_"+k).value.split(/\r?\n/).map(v=>v.trim()).filter(Boolean)])):target.outcomes;
+  if((isRule&&ev!==row.ev)||choice.name!==currentName||JSON.stringify(people)!==JSON.stringify(currentPeople)){
+   const overlap=matchingGroups(isRule?ev:row.ev).some(g=>g!==target&&g.people.some(p=>(people||publics).includes(p)));
+   if(overlap&&!confirm("Já existe outra regra para este desvio e público. A consulta seguirá a ordem das regras cadastradas. Deseja continuar?"))return;
+  }
+  if(!isRule&&ev!==row.ev){Object.values(groups).forEach(g=>g.events=g.events.map(x=>x===row.ev?ev:x));speedEvents.forEach(s=>{if(s.label===row.ev)s.label=ev});hiddenDeviations=hiddenDeviations.map(x=>x===row.ev?ev:x)}
+  if(row.speed&&(!isRule||ev===row.ev)){
+   target.potential=potential;target.outcomes=outcomes;
+   if(people){target.audience=choice.name;target.people=people}else{delete target.audience;delete target.people}
+  }else if(row.speed){
+   speedEvents=speedEvents.filter(s=>s!==target);
+   const id="edit_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+   groups={[id]:{id,potential,classification:target.classification,audience:choice.name,people:people||[...publics],events:[ev],outcomes},...groups};
+  }else{
+   replaceGroupRule(row.groupKey,isRule?row.ev:ev,ev,{potential,audience:choice.name,people:people||[...publics],outcomes});
+  }
+  persist();dialog.close();document.getElementById("clear").click();renderAll();
+ };
+ dialog.showModal();
+}
+document.getElementById("cancelEdit").addEventListener("click",()=>document.getElementById("editDialog").close());
+function addPublic(){if(!requireAdmin())return;let p=prompt("Nome do público:");if(p&&!publics.includes(p)){publics.push(p);persist();renderAll()}}
+function editPublic(i){if(!requireAdmin())return;let old=publics[i],neu=prompt("Editar categoria de público:",old);if(neu&&neu!==old){publics[i]=neu;persist();renderAll()}}
+function removePublic(i){if(!requireAdmin())return;if(confirm("Excluir este público da lista geral? As regras já vinculadas não serão apagadas.")){publics.splice(i,1);persist();renderAll()}}
+function exportData(){if(!requireAdmin())return;let blob=new Blob([JSON.stringify({groups,speedEvents,publics,hiddenDeviations},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup_matriz_consequencias.json";a.click();URL.revokeObjectURL(a.href)}
+function importData(e){if(!requireAdmin())return;let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let x=JSON.parse(reader.result);if(!x.groups||!x.speedEvents||!x.publics)throw Error();groups=x.groups;speedEvents=x.speedEvents;publics=x.publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[];persist();renderAll();alert("Backup importado.")}catch(err){alert("Arquivo inválido.")}};reader.readAsText(f)}
+renderAll();
+</script></body></html>
