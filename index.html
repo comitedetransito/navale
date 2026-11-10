@@ -10,6 +10,7 @@ header h1{margin:3px 0;font-size:26px}header p{margin:0;color:#e4f5f3}
 .shell{display:flex;min-height:calc(100vh - 105px)}aside{width:112px;flex-shrink:0;background:#f4f4f6;border-right:1px solid var(--line);padding:12px 6px}
 .side-logo{text-align:center;margin:0 auto 10px}.side-logo img{display:block;width:82px;max-width:100%;height:auto;margin:0 auto}
 .brand{display:none}
+.golden-rules{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.golden-rules img{display:block;width:180px;max-width:100%;height:auto;object-fit:contain}.golden-rules div{flex:1;min-width:200px}.golden-rules h3{margin:0 0 8px;color:var(--teal)}.golden-rules p{margin:0;color:var(--muted)}
 nav button{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;background:transparent;color:#667780;padding:10px 3px;border-radius:0;border-bottom:1px solid #e4e6e8;margin:0;font-size:11px;line-height:1.25;font-weight:600;min-height:72px}
 nav button.active,nav button:hover{background:#e8f4f3;color:#066b68}nav .ico{display:flex;width:30px;height:30px;flex:0 0 30px;align-items:center;justify-content:center;text-align:center;font-size:24px;line-height:1}
 .side-bottom{border-top:1px solid var(--line);margin-top:12px;padding:12px 3px;color:var(--muted);font-size:10px;line-height:1.3;text-align:center}.side-bottom img{display:block;width:82px;max-width:100%;height:auto;margin:12px auto 0}
@@ -33,7 +34,7 @@ button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;font-size:13
 .badge{display:inline-block;background:#edf0fa;color:#46548c;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700}
 dialog{width:min(680px,calc(100% - 30px));max-height:90vh;border:1px solid var(--line);border-radius:13px;padding:20px;color:var(--ink)}dialog::backdrop{background:#0008}dialog h2{margin:0 0 6px}dialog .grid{margin-top:16px}dialog .actions{justify-content:flex-end}
 footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);background:white}
-.icon-defs{position:absolute;width:0;height:0;overflow:hidden}.ico svg,.criteria-icon svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.criteria-icon{color:#087f7b}.ico{color:inherit}
+.icon-defs{position:absolute;width:0;height:0;overflow:hidden}.ico svg,.criteria-icon svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.criteria-icon{color:#087f7b}.ico{color:inherit}.rules-menu-icon{display:block;width:30px;height:30px;object-fit:contain}
 
  .powerbi-embed{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:9px;background:#f8fafb}
 .powerbi-embed iframe{position:absolute;inset:0;width:100%;max-width:100%;height:100%;border:0;overflow:hidden}
@@ -49,6 +50,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></symbol>
 <symbol id="i-report" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 12h7M9 16h7"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><path d="M12 2a10 10 0 1 0 10 10"/></symbol>
+<symbol id="i-golden-rules" viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 5 8.5 9 10 4-1.5 9-5 9-10V6z"/><path d="m7 10 2-1v7m-2 0h4"/><rect x="13" y="9" width="4" height="7" rx="2"/></symbol>
 <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.3"/><path d="m5.6 5.6 4.8 4.8m8-4.8-4.8 4.8m-1.6 2.3v6.1"/></symbol>
 <symbol id="i-leadership" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3.5 19v-1a5.5 5.5 0 0 1 11 0v1zM17 4.5a3 3 0 0 1 0 5.8M17 13a4 4 0 0 1 3.5 4v2"/></symbol>
 <symbol id="i-family" viewBox="0 0 24 24"><circle cx="8" cy="7" r="2.7"/><circle cx="16" cy="7" r="2.7"/><path d="M2.5 19v-1a5.5 5.5 0 0 1 11 0v1zm9 0v-1a5.5 5.5 0 0 1 10 0v1z"/><path d="M12 11.5v3"/></symbol>
@@ -68,6 +70,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <button data-page="relatorio"><span class="ico"><svg aria-hidden="true"><use href="#i-report"/></svg></span>Desvios e consequências</button>
 <button data-page="criterios"><span class="ico"><svg aria-hidden="true"><use href="#i-check"/></svg></span>Critérios de Acesso</button>
 <button data-page="rac02"><span class="ico"><svg aria-hidden="true"><use href="#i-wheel"/></svg></span>RAC 02</button>
+<button data-page="regras-ouro"><span class="ico"><img src="regras-ouro.svg" alt="" class="rules-menu-icon"></span>Regras de Ouro</button>
 </nav><div class="side-bottom">Base documental Rev. 04 • 09/11/2026<img src="Vale logo - No BG.png" alt="Logo Vale"></div></aside>
 <main>
 <section class="page active" id="page-inicio">
@@ -84,6 +87,10 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 </div>
 <div class="metrics"><div class="metric"><strong>≈ 5 mil</strong><span>veículos por mês</span></div><div class="metric"><strong>2.460</strong><span>acessos por mês, em média</span></div></div>
 <div class="notice">Ambiente com alta dinâmica de mobilidade.</div>
+<section class="panel golden-rules" aria-labelledby="goldenRulesTitle">
+<img src="Regras de ouro-icone.webp" alt="Ícone das 10 Regras de Ouro da Segurança Vale">
+<div><h3 id="goldenRulesTitle">10 Regras de Ouro da Segurança</h3><p>A vida em primeiro lugar: segurança em cada decisão.</p></div>
+</section>
 </section>
 <section class="page" id="page-consulta">
 <h2 class="page-title">Matriz de consequências</h2><p class="page-sub">Selecione o desvio, o público envolvido e a reincidência.</p>
@@ -96,7 +103,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <section class="page" id="page-relatorio">
 <h2 class="page-title">Desvios, públicos e consequências</h2>
 <p class="page-sub">Listagem completa da matriz para consulta e impressão.</p>
-<div class="actions print-actions"><button class="primary" onclick="printPage('report')">Imprimir relatório</button></div>
+<div class="panel print-actions"><div class="grid"><div><label for="reportDeviation">Desvio</label><select id="reportDeviation"><option value="">Todos os desvios</option></select></div><div><label for="reportPublic">Público</label><select id="reportPublic"><option value="">Todos os públicos</option></select></div><div class="full"><label for="reportConsequence">Consequência</label><select id="reportConsequence"><option value="">Todas as consequências</option></select></div></div><div class="actions"><button class="secondary" id="reportClear">Limpar filtros</button><button class="primary" onclick="printPage('report')">Imprimir relatório</button></div></div>
 <div id="reportTables"></div>
 </section>
 <section class="page" id="page-criterios">
@@ -114,6 +121,14 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <article class="criteria-card highlight"><h3><span class="criteria-icon" aria-hidden="true"><svg><use href="#i-clock"/></svg></span>Credencial de turno</h3><p>Concedida a empregados(as) que atuam em regime de turno, com acesso permitido entre 18h e 7h. Finais de semana e feriados têm acesso liberado. Não permite uso no horário administrativo.</p><p class="criteria-docs"><strong>Documentação</strong><br>Enviar imagem do CRLV e da CNH, junto com o número da solicitação, para <a href="mailto:comite.transito.tubarao@vale.com">comite.transito.tubarao@vale.com</a>.</p></article>
 <article class="criteria-card"><h3><span class="criteria-icon" aria-hidden="true"><svg><use href="#i-target"/></svg></span>Função estratégica</h3><p>Concedido a empregados(as) em funções estratégicas, mediante análise e aprovação do VP 2, conforme vagas disponíveis.</p><p class="criteria-docs"><strong>Documentação</strong><br>Enviar imagem do CRLV e da CNH, junto com o número da solicitação, para <a href="mailto:comite.transito.tubarao@vale.com">comite.transito.tubarao@vale.com</a>.</p></article>
 <article class="criteria-card criteria-wide"><h3><span class="criteria-icon" aria-hidden="true"><svg><use href="#i-driver"/></svg></span>Adicionar +1 condutor(a)</h3><p>Permite incluir um(a) empregado(a) Vale (MDM) como condutor(a) adicional, sem aumentar a quantidade de veículos no site.</p><p class="criteria-docs"><strong>Documentação</strong><br>Enviar imagem do CRLV e da CNH, junto com o número da solicitação, para <a href="mailto:comite.transito.tubarao@vale.com">comite.transito.tubarao@vale.com</a>.</p></article>
+</div>
+</section>
+<section class="page" id="page-regras-ouro">
+<h2 class="page-title">10 Regras de Ouro da Segurança</h2>
+<p class="page-sub">A vida em primeiro lugar: segurança em cada decisão.</p>
+<div class="panel golden-rules">
+<img src="regras-ouro.svg" alt="Ícone vetorizado das 10 Regras de Ouro da Segurança Vale">
+<div><h3>Regras de Ouro</h3><p>Um compromisso com a vida e a prevenção de riscos. A imagem é a versão vetorizada do símbolo, a mesma usada no menu.</p><p><a class="primary resource-link" href="https://comitedetransito.github.io/navale/10-regras-de-ouro-Vale.pdf" target="_blank" rel="noopener noreferrer">Abrir 10 Regras de Ouro (PDF) ↗</a></p></div>
 </div>
 </section>
 <section class="page" id="page-rac02">
@@ -307,13 +322,29 @@ function renderAll(){renderConsultOptions();document.getElementById("statDevs").
 function renderReport(){
  const excludedReportDeviations=["Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos","Não utilização de capacete","No Show App Comitê de Trânsito"];
  const ruleRows=[];
- Object.values(groups).forEach(g=>(g.events||[]).forEach(ev=>ruleRows.push({ev,a:g.audience||((g.people||[]).join(", ")),p:g.potential,o:g.outcomes||{}})));
- speedEvents.forEach(s=>ruleRows.push({ev:s.label,a:s.audience||((s.people||[]).join(", "))||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes||{}}));
+ Object.values(groups).forEach(g=>(g.events||[]).forEach(ev=>ruleRows.push({ev,a:g.audience||((g.people||[]).join(", ")),p:g.potential,o:g.outcomes||{},people:g.people||[]})));
+ speedEvents.forEach(s=>ruleRows.push({ev:s.label,a:s.audience||((s.people||[]).join(", "))||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes||{},people:s.people||[]}));
  const visibleRuleRows=ruleRows.filter(r=>!excludedReportDeviations.includes(r.ev));
  visibleRuleRows.sort((a,b)=>a.ev.localeCompare(b.ev,"pt-BR")||a.a.localeCompare(b.a,"pt-BR"));
- const consequenceRows=visibleRuleRows.map(r=>{const potential=String(r.p||"").trim().toUpperCase(),potentialClass=potential==="N5"?"potential-n5":potential==="N3"?"potential-n3":"";return `<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td class="${potentialClass}">${escapeHtml(r.p||"")}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td></tr>`}).join("");
- document.getElementById("reportTables").innerHTML=`<section class="report-table"><h2>Consequências por desvio e público</h2><div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Público / grupo</th><th>Potencial</th><th>1º evento</th><th>1ª reincidência</th><th>Demais reincidências</th></tr></thead><tbody>${consequenceRows}</tbody></table></div></section>`;
+ const allOutcomes=r=>[...(r.o.first||[]),...(r.o.second||[]),...(r.o.more||[])];
+ fillSelect("reportDeviation","Todos os desvios",[...new Set(visibleRuleRows.map(r=>r.ev))]);
+ fillSelect("reportPublic","Todos os públicos",[...new Set(visibleRuleRows.flatMap(r=>r.people))]);
+ fillSelect("reportConsequence","Todas as consequências",[...new Set(visibleRuleRows.flatMap(allOutcomes))]);
+ const f={ev:document.getElementById("reportDeviation").value,pub:document.getElementById("reportPublic").value,cons:document.getElementById("reportConsequence").value};
+ const filteredRows=visibleRuleRows.filter(r=>(!f.ev||r.ev===f.ev)&&(!f.pub||r.people.includes(f.pub)||r.a===f.pub)&&(!f.cons||allOutcomes(r).includes(f.cons)));
+ const activeFilters=[f.ev,f.pub,f.cons].filter(Boolean);
+ window._reportFilterInfo=(activeFilters.length?"Filtros: "+activeFilters.join(" · "):"Todos os desvios, públicos e consequências")+" — "+filteredRows.length+" regra(s)";
+ const consequenceRows=filteredRows.map(r=>{const potential=String(r.p||"").trim().toUpperCase(),potentialClass=potential==="N5"?"potential-n5":potential==="N3"?"potential-n3":"";return `<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td class="${potentialClass}">${escapeHtml(r.p||"")}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td></tr>`}).join("");
+ document.getElementById("reportTables").innerHTML=`<section class="report-table"><h2>Consequências por desvio e público</h2><p class="muted">${escapeHtml(window._reportFilterInfo)}</p><div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Público / grupo</th><th>Potencial</th><th>1º evento</th><th>1ª reincidência</th><th>Demais reincidências</th></tr></thead><tbody>${consequenceRows||'<tr><td colspan="6" class="muted">Nenhuma regra corresponde aos filtros selecionados.</td></tr>'}</tbody></table></div></section>`;
 }
+function fillSelect(id,placeholder,values){
+ const el=document.getElementById(id),old=el.value;
+ const sorted=[...values].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ el.innerHTML=`<option value="">${placeholder}</option>`+sorted.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+ if(sorted.includes(old))el.value=old;
+}
+["reportDeviation","reportPublic","reportConsequence"].forEach(id=>document.getElementById(id).addEventListener("change",renderReport));
+document.getElementById("reportClear").addEventListener("click",()=>{["reportDeviation","reportPublic","reportConsequence"].forEach(id=>document.getElementById(id).value="");renderReport()});
 function renderDeviationTable(){
  const rows=[];
  Object.entries(groups).forEach(([key,g])=>g.events.forEach(ev=>rows.push({ev,a:g.audience,p:g.potential,groupKey:key})));
