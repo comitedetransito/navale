@@ -460,11 +460,12 @@ function ensureContinuousFeedbackFirstEvent(){
   if(!appliesToMobilizedVale&&!appliesToNonMobilizedN3)return false;
   rule.outcomes=rule.outcomes||{};
   rule.outcomes.first=Array.isArray(rule.outcomes.first)?rule.outcomes.first:[];
-  if(!rule.outcomes.first.some(item=>/feedback contínuo/i.test(String(item)))){
-   rule.outcomes.first.push(consequence);
-   return true;
-  }
-  return false;
+  const normalized=rule.outcomes.first.map(item=>/feedback contínuo/i.test(String(item))?consequence:item);
+  if(!normalized.some(item=>String(item).trim().toLocaleLowerCase("pt-BR")===consequence.toLocaleLowerCase("pt-BR")))normalized.push(consequence);
+  const deduplicated=normalized.filter((item,index,list)=>list.findIndex(value=>String(value).trim().toLocaleLowerCase("pt-BR")===String(item).trim().toLocaleLowerCase("pt-BR"))===index);
+  const changed=JSON.stringify(rule.outcomes.first)!==JSON.stringify(deduplicated);
+  rule.outcomes.first=deduplicated;
+  return changed;
  };
  let changed=false;
  Object.values(groups).forEach(rule=>{if(update(rule))changed=true});
