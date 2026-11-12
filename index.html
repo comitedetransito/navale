@@ -442,6 +442,36 @@ function ensureN5ContractorPenalty(){
  if(changed)persist();
 }
 ensureN5ContractorPenalty();
+function ensureContinuousFeedbackFirstEvent(){
+ const consequence="Feedback contínuo (CSP)";
+ const update=rule=>{
+  const potential=String(rule.potential||"").trim().toUpperCase();
+  const people=rule.people||[];
+  const audience=String(rule.audience||"");
+  const appliesToMobilizedVale=potential==="N5"&&(
+   people.some(person=>/empregado mobilizado vale/i.test(person))||
+   (people.includes("Empregado mobilizado")&&/veículo/i.test(audience))||
+   rule.id==="speed1"&&people.some(person=>/empregado mobilizado vale/i.test(person))
+  );
+  const appliesToNonMobilizedN3=potential==="N3"&&(
+   people.some(person=>/empregado não mobilizado vale|empregado não mobilizado fornecedor|empregado não mobilizado visitante/i.test(person))||
+   rule.id==="D"
+  );
+  if(!appliesToMobilizedVale&&!appliesToNonMobilizedN3)return false;
+  rule.outcomes=rule.outcomes||{};
+  rule.outcomes.first=Array.isArray(rule.outcomes.first)?rule.outcomes.first:[];
+  if(!rule.outcomes.first.some(item=>/feedback contínuo/i.test(String(item)))){
+   rule.outcomes.first.push(consequence);
+   return true;
+  }
+  return false;
+ };
+ let changed=false;
+ Object.values(groups).forEach(rule=>{if(update(rule))changed=true});
+ speedEvents.forEach(rule=>{if(update(rule))changed=true});
+ if(changed)persist();
+}
+ensureContinuousFeedbackFirstEvent();
 function printPage(mode){document.body.classList.remove("print-consult","print-report","print-criteria");document.body.classList.add(mode==="consult"?"print-consult":mode==="criteria"?"print-criteria":"print-report");window.print();document.body.classList.remove("print-consult","print-report","print-criteria")}
 function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
@@ -479,8 +509,8 @@ function groupForAudience(event,audience){
 function outcomesForAudience(items,audience){
  const a=audience.toLowerCase();
  if(a.includes("contratada"))return items.filter(x=>/sap|contratad|credencial|passaporte|advertência|multa contratual|notificação contratual|comitê pela vida/i.test(x)&&!/vale\)/i.test(x));
- if(a.includes("fornecedor"))return items.filter(x=>/sap|fornecedor|credencial|advertência formal|multa contratual|notificação contratual|comitê pela vida/i.test(x)&&!/visitante|empregado vale|csp/i.test(x));
- if(a.includes("visitante"))return items.filter(x=>/sap|visitante|credencial/i.test(x));
+ if(a.includes("fornecedor"))return items.filter(x=>/sap|fornecedor|credencial|advertência formal|multa contratual|notificação contratual|comitê pela vida|feedback contínuo/i.test(x)&&!/visitante|empregado vale/i.test(x));
+ if(a.includes("visitante"))return items.filter(x=>/sap|visitante|credencial|feedback contínuo/i.test(x));
  if(a.includes("particular"))return items.filter(x=>/sap|vale|credencial|comitê pela vida|csp/i.test(x)&&!/fornecedor|visitante|contratad/i.test(x));
  if(a.includes("empregado"))return items.filter(x=>/sap|vale|empregado|credencial|passaporte|comitê pela vida|advertência|csp/i.test(x)&&!/fornecedor|visitante|contratad/i.test(x));
  return items;
