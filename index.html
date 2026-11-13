@@ -106,7 +106,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <section class="page" id="page-relatorio">
 <h2 class="page-title">Desvios, públicos e consequências</h2>
 <p class="page-sub">Listagem completa da matriz para consulta e impressão.</p>
-<div class="panel print-actions"><div class="grid"><div><label for="reportDeviation">Desvio</label><select id="reportDeviation"><option value="">Todos os desvios</option></select></div><div><label for="reportPublic">Público</label><select id="reportPublic"><option value="">Todos os públicos</option></select></div><div class="full"><label for="reportConsequence">Consequência</label><select id="reportConsequence"><option value="">Todas as consequências</option></select></div><div class="full"><label for="reportPotential">Potencial</label><select id="reportPotential"><option value="">Todos os potenciais</option><option value="N5">N5</option><option value="N3">N3</option></select></div></div><div class="actions"><button class="secondary" id="reportClear">Limpar filtros</button><button class="primary" onclick="printPage('report')">Imprimir relatório</button></div></div>
+<div class="panel print-actions"><div class="grid"><div><label id="reportDeviationLabel">Desvio</label><div class="deviation-picker"><button type="button" id="reportDeviationPickerButton" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="reportDeviationLabel reportDeviationPickerButton">Todos os desvios</button><div class="deviation-menu" id="reportDeviationPickerMenu" hidden><input id="reportDeviationSearch" type="search" placeholder="Buscar desvio..." aria-label="Buscar desvio no relatório"><div class="deviation-options" id="reportDeviationOptions" role="listbox" aria-labelledby="reportDeviationLabel"></div></div></div><select id="reportDeviation" hidden><option value="">Todos os desvios</option></select></div><div><label for="reportPublic">Público</label><select id="reportPublic"><option value="">Todos os públicos</option></select></div><div class="full"><label for="reportConsequence">Consequência</label><select id="reportConsequence"><option value="">Todas as consequências</option></select></div><div class="full"><label for="reportPotential">Potencial</label><select id="reportPotential"><option value="">Todos os potenciais</option><option value="N5">N5</option><option value="N3">N3</option></select></div></div><div class="actions"><button class="secondary" id="reportClear">Limpar filtros</button><button class="primary" onclick="printPage('report')">Imprimir relatório</button></div></div>
 <div id="reportTables"></div>
 </section>
 <section class="page" id="page-noticias">
@@ -481,16 +481,17 @@ function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.togg
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
 function speedDeviationOrder(label){return String(label).includes(">7%")?0:String(label).includes(">20%")?1:String(label).includes(">50%")?2:-1}
 function compareDeviationLabels(a,b){const orderA=speedDeviationOrder(a),orderB=speedDeviationOrder(b);return orderA>=0&&orderB>=0?orderA-orderB:String(a).localeCompare(String(b),"pt-BR")}
-function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])].sort(compareDeviationLabels)}
+function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])]} 
+function numberedEventLabel(event){const number=allUniqueEvents().indexOf(event)+1;return number>0?number+". "+event:event}
 function uniqueEvents(){return allUniqueEvents().filter(event=>!hiddenDeviations.includes(event))}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function renderDeviationPicker(){
  const select=document.getElementById("deviation"),button=document.getElementById("deviationPickerButton"),search=document.getElementById("deviationSearch"),options=document.getElementById("deviationOptions");
  const selected=select.selectedOptions[0];
- button.textContent=selected&&selected.value?selected.textContent:"Selecione um desvio...";
+ button.textContent=selected&&selected.value?numberedEventLabel(selected.textContent):"Selecione um desvio...";
  const query=search.value.trim().toLocaleLowerCase("pt-BR");
  const matches=uniqueEvents().filter(event=>event.toLocaleLowerCase("pt-BR").includes(query));
- options.innerHTML=matches.length?matches.map(event=>`<button type="button" role="option" aria-selected="${event===select.value}" data-deviation="${escapeHtml(event)}">${escapeHtml(event)}</button>`).join(""):'<div class="no-options">Nenhum desvio encontrado.</div>';
+ options.innerHTML=matches.length?matches.map(event=>`<button type="button" role="option" aria-selected="${event===select.value}" data-deviation="${escapeHtml(event)}">${escapeHtml(numberedEventLabel(event))}</button>`).join(""):'<div class="no-options">Nenhum desvio encontrado.</div>';
 }
 function renderConsultOptions(){const d=document.getElementById("deviation"),old=d.value,events=uniqueEvents();d.innerHTML='<option value="">Selecione um desvio...</option>'+events.map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join("");if(events.includes(old))d.value=old;renderDeviationPicker()}
 const deviationPickerButton=document.getElementById("deviationPickerButton"),deviationPickerMenu=document.getElementById("deviationPickerMenu"),deviationOptions=document.getElementById("deviationOptions"),deviationSearch=document.getElementById("deviationSearch");
@@ -528,7 +529,7 @@ function consultConsequence(){const ev=deviation.value,p=person.value,occ=occurr
 const k=occ,g=groupForAudience(ev,p);if(!g){result.className="result show";result.innerHTML='<div class="empty">Regra não localizada para esta combinação.</div>';return}
 const pot=g.potential,items=[...(g.outcomes[k]||[])],label=k==="first"?"1º evento":k==="second"?"1ª reincidência":"Demais reincidências";
 const potentialClass=pot.trim().toUpperCase()==="N5"?"n5":pot.trim().toUpperCase()==="N3"?"n3":"";
-result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="printPage('consult')">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong class="involved ${potentialClass}">${escapeHtml(p)}</strong></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div>`}
+result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(numberedEventLabel(ev))}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="printPage('consult')">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong class="involved ${potentialClass}">${escapeHtml(p)}</strong></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div>`}
 document.getElementById("person").addEventListener("change",consultConsequence);
 document.getElementById("occurrence").addEventListener("change",consultConsequence);
 document.getElementById("clear").addEventListener("click",()=>{deviation.value="";renderDeviationPicker();person.innerHTML='<option value="">Selecione primeiro o desvio</option>';person.disabled=true;occurrence.value="first";result.className="result";result.innerHTML=""});
@@ -540,24 +541,38 @@ function renderReport(){
  Object.values(groups).forEach(g=>(g.events||[]).forEach(ev=>ruleRows.push({ev,a:g.audience||((g.people||[]).join(", ")),p:g.potential,o:g.outcomes||{},people:g.people||[]})));
  speedEvents.forEach(s=>ruleRows.push({ev:s.label,a:s.audience||((s.people||[]).join(", "))||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes||{},people:s.people||[]}));
  const visibleRuleRows=ruleRows.filter(r=>!excludedReportDeviations.includes(r.ev));
- visibleRuleRows.sort((a,b)=>compareDeviationLabels(a.ev,b.ev)||a.a.localeCompare(b.a,"pt-BR"));
+ visibleRuleRows.sort((a,b)=>allUniqueEvents().indexOf(a.ev)-allUniqueEvents().indexOf(b.ev)||a.a.localeCompare(b.a,"pt-BR"));
  const allOutcomes=r=>[...(r.o.first||[]),...(r.o.second||[]),...(r.o.more||[])];
  fillSelect("reportDeviation","Todos os desvios",[...new Set(visibleRuleRows.map(r=>r.ev))]);
  fillSelect("reportPublic","Todos os públicos",[...new Set(visibleRuleRows.flatMap(r=>r.people))]);
  fillSelect("reportConsequence","Todas as consequências",[...new Set(visibleRuleRows.flatMap(allOutcomes))]);
+ renderReportDeviationPicker();
  const f={ev:document.getElementById("reportDeviation").value,pub:document.getElementById("reportPublic").value,cons:document.getElementById("reportConsequence").value,pot:document.getElementById("reportPotential").value};
  const filteredRows=visibleRuleRows.filter(r=>(!f.ev||r.ev===f.ev)&&(!f.pub||r.people.includes(f.pub)||r.a===f.pub)&&(!f.cons||allOutcomes(r).includes(f.cons))&&(!f.pot||String(r.p||"").trim().toUpperCase()===f.pot));
  const activeFilters=[f.ev,f.pub,f.cons,f.pot?"Potencial "+f.pot:""].filter(Boolean);
  window._reportFilterInfo=(activeFilters.length?"Filtros: "+activeFilters.join(" · "):"Todos os desvios, públicos e consequências")+" — "+filteredRows.length+" regra(s)";
- const consequenceRows=filteredRows.map(r=>{const potential=String(r.p||"").trim().toUpperCase(),potentialClass=potential==="N5"?"potential-n5":potential==="N3"?"potential-n3":"";return `<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td class="${potentialClass}">${escapeHtml(r.p||"")}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td></tr>`}).join("");
+ const consequenceRows=filteredRows.map(r=>{const potential=String(r.p||"").trim().toUpperCase(),potentialClass=potential==="N5"?"potential-n5":potential==="N3"?"potential-n3":"";return `<tr><td>${escapeHtml(numberedEventLabel(r.ev))}</td><td>${escapeHtml(r.a)}</td><td class="${potentialClass}">${escapeHtml(r.p||"")}</td><td>${escapeHtml((r.o.first||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.second||[]).join("; ")||"Não cadastrado")}</td><td>${escapeHtml((r.o.more||[]).join("; ")||"Não cadastrado")}</td></tr>`}).join("");
  document.getElementById("reportTables").innerHTML=`<section class="report-table"><h2>Consequências por desvio e público</h2><p class="muted">${escapeHtml(window._reportFilterInfo)}</p><div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Público / grupo</th><th>Potencial</th><th>1º evento</th><th>1ª reincidência</th><th>Demais reincidências</th></tr></thead><tbody>${consequenceRows||'<tr><td colspan="6" class="muted">Nenhuma regra corresponde aos filtros selecionados.</td></tr>'}</tbody></table></div></section>`;
 }
 function fillSelect(id,placeholder,values){
  const el=document.getElementById(id),old=el.value;
- const sorted=[...values].sort((a,b)=>a.localeCompare(b,"pt-BR"));
- el.innerHTML=`<option value="">${placeholder}</option>`+sorted.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+ const sorted=id==="reportDeviation"?[...values].sort((a,b)=>allUniqueEvents().indexOf(a)-allUniqueEvents().indexOf(b)):[...values].sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ el.innerHTML=`<option value="">${placeholder}</option>`+sorted.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(id==="reportDeviation"?numberedEventLabel(v):v)}</option>`).join("");
  if(sorted.includes(old))el.value=old;
 }
+function renderReportDeviationPicker(){
+ const select=document.getElementById("reportDeviation"),button=document.getElementById("reportDeviationPickerButton"),search=document.getElementById("reportDeviationSearch"),options=document.getElementById("reportDeviationOptions");
+ const selected=select.selectedOptions[0];
+ button.textContent=selected&&selected.value?numberedEventLabel(selected.value):"Todos os desvios";
+ const query=search.value.trim().toLocaleLowerCase("pt-BR");
+ const values=[...select.options].filter(option=>option.value&&numberedEventLabel(option.value).toLocaleLowerCase("pt-BR").includes(query));
+ options.innerHTML='<button type="button" role="option" aria-selected="'+(!select.value)+'" data-report-deviation="">Todos os desvios</button>'+values.map(option=>`<button type="button" role="option" aria-selected="${option.value===select.value}" data-report-deviation="${escapeHtml(option.value)}">${escapeHtml(numberedEventLabel(option.value))}</button>`).join("");
+}
+const reportDeviationPickerButton=document.getElementById("reportDeviationPickerButton"),reportDeviationPickerMenu=document.getElementById("reportDeviationPickerMenu"),reportDeviationOptions=document.getElementById("reportDeviationOptions"),reportDeviationSearch=document.getElementById("reportDeviationSearch");
+reportDeviationPickerButton.addEventListener("click",()=>{const open=reportDeviationPickerMenu.hidden;reportDeviationPickerMenu.hidden=!open;reportDeviationPickerButton.setAttribute("aria-expanded",String(open));if(open){reportDeviationSearch.value="";renderReportDeviationPicker();reportDeviationSearch.focus()}});
+reportDeviationSearch.addEventListener("input",renderReportDeviationPicker);
+reportDeviationOptions.addEventListener("click",event=>{const option=event.target.closest("button[data-report-deviation]");if(!option)return;document.getElementById("reportDeviation").value=option.dataset.reportDeviation;reportDeviationPickerMenu.hidden=true;reportDeviationPickerButton.setAttribute("aria-expanded","false");renderReport()});
+document.addEventListener("click",event=>{if(!event.target.closest("#reportDeviationPickerButton")&&!event.target.closest("#reportDeviationPickerMenu")){reportDeviationPickerMenu.hidden=true;reportDeviationPickerButton.setAttribute("aria-expanded","false")}});
 ["reportDeviation","reportPublic","reportConsequence","reportPotential"].forEach(id=>document.getElementById(id).addEventListener("change",renderReport));
 document.getElementById("reportClear").addEventListener("click",()=>{["reportDeviation","reportPublic","reportConsequence","reportPotential"].forEach(id=>document.getElementById(id).value="");renderReport()});
 function renderDeviationTable(){
@@ -757,10 +772,115 @@ function ensureSpeedDeviationRules(){
  if(changed)persist();
 }
 ensureSpeedDeviationRules();
+function applyPrintMatrix(){
+ const revision="matrizPlanilhaPrintRev02";
+ if(localStorage.getItem(revision)==="1"&&localStorage.getItem(KEY))return;
+ const categories={
+  vale:"Empregado | veículo mobilizado Vale",
+  contractor:"Empregado | veículo mobilizado Contratada",
+  nonMobilized:"Empregado | veículo não mobilizado (particular | fornecedor | visitante)",
+  all:"Empregado Vale e Contratada | Fornecedor e Visitante",
+  speed:"Empregado Vale e Contratada | Fornecedor"
+ };
+ const events=[
+  ["Condutor em veículo em movimento SEM USO DO CINTO DE SEGURANÇA","N3"],
+  ["Passageiro em veículo em movimento SEM USO DO CINTO DE SEGURANÇA","N3"],
+  ["Retirar uma ou as duas mãos do volante para USO DE CELULAR* durante a condução","N3"],
+  ["Deixar de realizar a parada obrigatória antes da PASSAGEM DE NÍVEL, permanecendo no mínimo 3 segundos com o veículo parado","N3"],
+  ["Deixar de realizar o procedimento completo de transposição de PN - vidros abaixados, som desligado e observando ambos os lados","N5"],
+  ["Conduzir veículo com manutenção preventiva vencida, em mau estado de conservação ou sem os itens de segurança obrigatórios previstos no CTB (como lâmpada queimada, pneus abaixo do TWI, entre outros)","N5"],
+  ["Não obedecer à sinalização de trânsito","N5"],
+  ["Direção perigosa, incluindo transportar carga excedente ou com risco potencial sem sinalização adequada","N5"],
+  ["Deixar de conceder preferência de passagem ao pedestre","N5"],
+  ["Conduzir veículo com categoria de CNH incompatível com a exigida para o tipo de veículo","N5"],
+  ["Transitar com o veículo em velocidade incompatível com a via.","N5"],
+  ["Transitar em marcha ré, exceto para pequenas manobras.","N5"],
+  ["Conduzir qualquer veículo mobilizado sem a documentação obrigatória exigida pelos procedimentos Vale (ex: Selo MEV, Passaporte RAC2)","N5"],
+  ["Conduzir o veículo sem os documentos obrigatório exigidos pelo CTB - Código de Trânsito Brasileiro;","N5"],
+  ["Não atender as orientações dos Agentes de Trânsito, recusar apresentação de documentos ou deixar de prestar informações necessárias à identificação do condutor e demais passageiros;","N5"],
+  ["Transportar carga irregular, incluindo materiais que possam gerar poeira fugitiva sem proteção adequada","N5"],
+  ["ESTACIONAR OU PARAR VEÍCULO em situações irregulares, como: local proibido; afastado da guia da calçada; na contramão de direção; em área de cruzamento; interrompendo o trânsito; ultrapassando o tempo permitido no estacionamento rotativo; em desacordo com vagas preferenciais ou exclusivas; fora dos pontos indicados para embarque e desembarque; sobre calçadas, faixas de pedestres, canteiros ou divisores de pista.","N5"],
+  ["Exposição voluntária ao risco de pisões e de contato com animais peçonhentos, ao permanecer deitado ou sentado no chão e em áreas de circulação.","N5","all"],
+  ["Descumprir do fluxo estabelecido para interdição de vias","N5","all"],
+  ["Descumprir a restrição de circulação de veículos e equipamentos com velocidade inferior a 20 km/h nos horários: 06h30–08h00, 11h00–13h00 e 15h30–17h00","N5","all"],
+  ["Excesso de velocidade (>7% e <=20%)","N5","speed"],
+  ["Excesso de velocidade (>20% <=50%)","N3","speed"],
+  ["Excesso de velocidade (>50% e/ou >120km/h)","N3","speed"]
+ ];
+ const committee="Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA)";
+ const committeeConductor=committee+" para o condutor.";
+ const sap="Tratar com evidencias os IDs SAP (registro|ação)";
+ const sapSingular="Tratar com a respectiva evidencia o ID SAP (registro|ação)";
+ const suspend="Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).";
+ const feedback="Aplicar registro de feedback continuo(CSP) com o empregado Vale.";
+ const nonMobilized={
+  first:[committee+". "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. Tratar com a respectiva evidencia o ID SAP (registro|ação)"],
+  second:[committee+". "+suspend+" "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante."],
+  more:[committee+". "+suspend+" "+sap+". "+feedback]
+ };
+ const n5={
+  vale:{first:[feedback+" Tratar com a respectiva evidencia o ID SAP (registro|ação)"],second:["Suspender a credencial de acesso ao site até tratar com a respectiva evidencia o ID SAP (registro|ação). "+feedback],more:["Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. "+sap]},
+  contractor:{first:["Notificar contratualmente a empresa contratada. "+sap],second:[suspend+" Notificar contratualmente a empresa contratada."],more:["Multar contratualmente a empresa contratada. Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. "+sap]},
+  nonMobilized:{first:[feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. "+sapSingular],second:[suspend+" "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante."],more:["Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. "+sap]}
+ };
+ const n3ByEvent=[
+  {
+   vale:{first:[committee+". "+sap],second:[committee+". "+suspend+" "+sap],more:[committee+". "+suspend+" "+sap]},
+   contractor:{first:[committee+". Notificar empresa contratada. "+sap],second:[committee+". "+suspend+" Notificar empresa contratada. "+sap],more:[committee+". "+suspend+" Notificar empresa contratada. "+sap]},
+   nonMobilized
+  },
+  {
+   vale:{first:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). "+sap],second:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). "+suspend+" "+sap],more:[committee+". "+suspend+" "+sap]},
+   contractor:{first:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). Notificar empresa contratada. "+sap],second:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). "+suspend+" Notificar empresa contratada. "+sap],more:[committee+". "+suspend+" Notificar empresa contratada. "+sap]},
+   nonMobilized:{first:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. "+sap],second:["Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). "+suspend+" "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante."],more:[committee+". "+suspend+" "+sap+". "+feedback]}
+  },
+  {
+   vale:{first:[committee+". "+sap],second:[committee+". "+suspend+" "+sap],more:[committee+". "+suspend+" "+sap]},
+   contractor:{first:[committee+". Notificar empresa contratada. "+sap],second:[committee+". "+suspend+" Notificar empresa contratada."],more:[suspend+" "+sap+". Ativar Comitê Pela Vida para condutor. Notificar empresa contratada."]},
+   nonMobilized
+  },
+  {
+   vale:{first:[committeeConductor+" "+sap],second:[committeeConductor+" "+suspend+" "+sap],more:[committeeConductor+" "+suspend+" "+sap]},
+   contractor:{first:[committeeConductor+" Notificar empresa contratada. "+sap],second:[committeeConductor+" "+suspend+" Notificar empresa contratada. "+sap],more:[committeeConductor+" "+suspend+" Notificar empresa contratada. "+sap]},
+   nonMobilized:{first:[committeeConductor+" "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante."],second:[committeeConductor+" "+suspend+" "+feedback+" Notificar contratualmente Fornecedor."],more:[committeeConductor+" "+suspend+" "+feedback]}
+  }
+ ];
+ const commonN5Audience={
+  first:[feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. "+sapSingular],
+  second:[suspend+" "+feedback+" Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante."],
+  more:["Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. "+sap]
+ };
+ const speedOutcomes={
+  21:{first:["Advertência Verbal"],second:["Advertência escrita"],more:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"]},
+  22:{first:["Advertência escrita"],second:["Suspensão de RAC"],more:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"]},
+  23:{first:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"],second:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"],more:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"]}
+ };
+ groups={};
+ const audienceKeys=["vale","contractor","nonMobilized"];
+ events.forEach(([event,potential,indexCategory],index)=>{
+  const eventNumber=index+1;
+  const keys=indexCategory?[indexCategory]:audienceKeys;
+  keys.forEach(key=>{
+   let outcomes;
+   if(eventNumber>=21)outcomes=speedOutcomes[eventNumber];
+   else if(potential==="N5")outcomes=key==="vale"?n5.vale:key==="contractor"?n5.contractor:key==="nonMobilized"?n5.nonMobilized:commonN5Audience;
+   else outcomes=n3ByEvent[eventNumber-1][key];
+   const audience=categories[key];
+   const id="PRINT_"+String(eventNumber).padStart(2,"0")+"_"+key;
+   groups[id]={id,potential,classification:potential,audience,people:[audience],events:[event],outcomes:JSON.parse(JSON.stringify(outcomes))};
+  });
+ });
+ speedEvents=[];
+ publics=[categories.vale,categories.contractor,categories.nonMobilized,categories.all,categories.speed];
+ hiddenDeviations=[];
+ databaseAuthoritative=true;
+ persist();
+ localStorage.setItem(revision,"1");
+}
 function normalizeDatabasePublicNames(){
  const nonMobilized="Empregado | veículo não mobilizado (Vale | Contratada | Fornecedor)";
  const allPublics="Empregado Vale e Contratada | Fornecedor e Visitante";
- const canonicalPublics=["Empregado | veículo mobilizado Vale","Empregado | veículo mobilizado Contratada",nonMobilized,allPublics];
+ const canonicalPublics=["Empregado | veículo mobilizado Vale","Empregado | veículo mobilizado Contratada",nonMobilized,allPublics,"Particular"];
  const normalize=value=>{
   const text=String(value||"").trim();
   if(/^Empregado \| veículo não mobilizado \((?:particular \| fornecedor \| visitante|vale \| fornecedor \| visitante)\)$/i.test(text))return nonMobilized;
@@ -779,5 +899,278 @@ function normalizeDatabasePublicNames(){
  persist();
 }
 normalizeDatabasePublicNames();
+applyPrintMatrix();
+
+// Base oficial Rev. 04: estes overrides impedem que as estruturas legadas acima
+// substituam os dados fornecidos no banco oficial.
+function initializeDatabaseMatrix(){
+ const revision="matrizBDRev04OfficialSeeded1";
+ const saved=localStorage.getItem(KEY);
+ if(localStorage.getItem(revision)==="1"&&saved){
+  try{
+   const data=JSON.parse(saved);
+   const events=[...Object.values(data.groups||{}).flatMap(group=>group.events||[]),...(data.speedEvents||[]).map(rule=>rule.label)];
+   if(data.groups&&Array.isArray(data.speedEvents)&&Array.isArray(data.publics)&&new Set(events).size===23){
+    groups=data.groups;speedEvents=data.speedEvents;publics=data.publics;
+    hiddenDeviations=Array.isArray(data.hiddenDeviations)?data.hiddenDeviations:[];
+    databaseAuthoritative=true;return;
+   }
+  }catch(e){}
+ }
+ const vale="Empregado | veículo mobilizado Vale";
+ const contractor="Empregado | veículo mobilizado Contratada";
+ const nonMobilized="Empregado | veículo não mobilizado (particular | fornecedor | visitante)";
+ const all="Empregado Vale e Contratada | Fornecedor e Visitante";
+ const speed="Empregado Vale e Contratada | Fornecedor";
+ const audiences=[vale,contractor,nonMobilized];
+ const committee="Aplicar Comitê Pela Vida\n(PNR-000267 -Gestão de Condutas para SSMA)";
+ const sap="Tratar com evidencias os IDs SAP (registro|ação)";
+ const sapSingular="Tratar com a respectiva evidencia o ID SAP (registro|ação)";
+ const feedback="Aplicar registro de feedback continuo(CSP) com o empregado Vale.";
+ const suspend="Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).";
+ const n3=[
+  {
+   [vale]:[
+    `${committee}. ${sap}`,
+    `${committee}. ${suspend} ${sap}`,
+    `${committee}. ${suspend} ${sap}`
+   ],
+   [contractor]:[
+    `${committee}. Notificar empresa contratada. ${sap}. `,
+    `${committee}. ${suspend} Notificar empresa contratada. ${sap}. `,
+    `${committee}. ${suspend} Notificar empresa contratada. ${sap}. `
+   ],
+   [nonMobilized]:[
+    `${committee}. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+    `${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+    `${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `
+   ]
+  },
+  {
+   [vale]:[
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${sap}`,
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend} ${sap}`,
+    `${committee}. ${suspend} ${sap}`
+   ],
+   [contractor]:[
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). Notificar empresa contratada. ${sap}. `,
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend} Notificar empresa contratada. ${sap}. `,
+    `${committee}. ${suspend} Notificar empresa contratada. ${sap}. `
+   ],
+   [nonMobilized]:[
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+    `Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+    `${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `
+   ]
+  },
+  {
+   [vale]:[
+    `${committee}. ${sap}`,
+    `${committee}. ${suspend} `,
+    `${committee}. ${suspend}`
+   ],
+   [contractor]:[
+    `${committee}. Notificar empresa contratada. ${sap}. `,
+    `${committee}. ${suspend} Notificar empresa contratada.`,
+    `${suspend} Ativar Comitê pela Vida para condutor. Notificar empresa contratada.`
+   ],
+   [nonMobilized]:[
+    `${committee}. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+    `${committee}. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+    `${committee}. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `
+   ]
+  },
+  {
+   [vale]:[
+    `${committee} para o condutor.  ${sap}`,
+    `${committee} para o condutor. ${suspend} ${sap}`,
+    `${committee} para o condutor. ${suspend} ${sap}`
+   ],
+   [contractor]:[
+    `${committee} para o condutor. Notificar empresa contratada. ${sap}. `,
+    `${committee} para o condutor. ${suspend}Notificar empresa contratada. ${sap}. `,
+    `${committee} para o condutor. ${suspend} Notificar empresa contratada. ${sap}. `
+   ],
+   [nonMobilized]:[
+    `${committee} para o condutor. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+    `${committee} para o condutor. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+    `${committee} para o condutor. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `
+   ]
+  }
+ ];
+ const n5Vale=[
+  `${feedback} ${sapSingular}`,
+  `Suspender a credencial de acesso ao site até tratar com a respectiva evidencia o ID SAP (registro|ação). ${feedback}`,
+  `Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. ${sap}`
+ ];
+ const n5Contractor=[
+  `Notificar contratualmente a empresa contratada. ${sap}`,
+  `${suspend} Notificar contratualmente a empresa contratada. `,
+  `Multar contratualmente a empresa contratada. Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. ${sap}.`
+ ];
+ const n5NonMobilized=[
+  `${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+  `${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+  `Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. ${sap}. `
+ ];
+ const deviations=[
+  "Condutor em veículo em movimento SEM USO DO CINTO DE SEGURANÇA",
+  "Passageiro em veículo em movimento SEM USO DO CINTO DE SEGURANÇA",
+  "Retirar uma ou as duas mãos do volante para USO DE CELULAR durante a condução",
+  "Deixar de realizar a parada obrigatória antes da PASSAGEM DE NÍVEL permanecendo no mínimo 3 segundos com o veículo parado",
+  "Deixar de realizar o procedimento completo de transposição de PN - vidros abaixados, som desligado e observando ambos os lados",
+  "Conduzir veículo com manutenção preventiva vencida, em mau estado de conservação ou sem os itens de segurança obrigatórios previstos no CTB",
+  "Não obedecer à sinalização de trânsito",
+  "Direção perigosa, incluindo transportar carga excedente ou com risco potencial sem sinalização adequada",
+  "Deixar de conceder preferência de passagem ao pedestre",
+  "Conduzir veículo com categoria de CNH incompatível com a exigida para o tipo de veículo",
+  "Transitar com veículo em velocidade incompatível com a via",
+  "Transitar em marcha ré, exceto para pequenas manobras",
+  "Conduzir qualquer veículo mobilizado sem a documentação obrigatória exigida pelos procedimentos Vale",
+  "Conduzir o veículo sem os documentos obrigatórios exigidos pelo CTB",
+  "Não atender às orientações dos Agentes de Trânsito",
+  "Transportar carga irregular",
+  "Estacionar ou parar veículo em situação irregular",
+  "Exposição voluntária ao risco de pisões e contato com animais peçonhentos",
+  "Descumprir do fluxo estabelecido para interdição de vias",
+  "Descumprir a restrição de circulação de veículos e equipamentos com velocidade inferior a 20 km/h",
+  "Excesso de velocidade (>7% e <=20%)",
+  "Excesso de velocidade (>20% e <=50%)",
+  "Excesso de velocidade (>50% e/ou >120 km/h)"
+ ];
+ groups={};let index=0;
+ const addRule=(event,potential,audience,texts)=>{
+  const id="REV04_"+String(++index).padStart(3,"0");
+  groups[id]={id,potential,classification:potential,audience,people:audience?[audience]:[],events:[event],outcomes:{first:texts?[texts[0]]:[],second:texts?[texts[1]]:[],more:texts?[texts[2]]:[]}};
+ };
+ deviations.forEach((event,i)=>{
+  if(i<4){audiences.forEach(audience=>addRule(event,"N3",audience,n3[i][audience]));return}
+  if(i<17){
+   const contractorConsequences=[...n5Contractor];
+   if(i<=8)contractorConsequences[1]=contractorConsequences[1].replace("a empresa contratada.","a emmpresa contratada.");
+   audiences.forEach(audience=>addRule(event,"N5",audience,audience===vale?n5Vale:audience===contractor?contractorConsequences:n5NonMobilized));
+   return;
+  }
+  if(i<20){
+   addRule(event,"N5",all,[
+    `${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+    `${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+    `Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. ${sap}. `
+   ]);return;
+  }
+  if(i===20){addRule(event,"N5",speed,["Advertência Verbal","Advertência escrita",`${committee.replace("SSMA)","SSMA )")}`]);return}
+  addRule(event,"N3","",null);
+ });
+ speedEvents=[];
+ publics=[vale,contractor,nonMobilized,all,speed];
+ hiddenDeviations=[];
+ databaseAuthoritative=true;persist();localStorage.setItem(revision,"1");
+}
+function ensureSpeedDeviationRules(){}
+function normalizeDatabasePublicNames(){}
+function applyPrintMatrix(){}
+
+// Matriz oficial recebida em Matriz_Consequencias_Rev04_Completa_Unificada.json.
+// Esta atribuição final sobrepõe os seeds legados e mantém os textos sem normalização.
+function loadOfficialRev04Matrix(){
+ const vale="Empregado | veículo mobilizado Vale";
+ const contractor="Empregado | veículo mobilizado Contratada";
+ const nonMobilized="Empregado | veículo não mobilizado  (particular | fornecedor | visitante)";
+ const all="Empregado Vale e Contratada | Fornecedor e Visitante";
+ const speed="Empregado Vale e Contratada | Fornecedor";
+ const committee="Aplicar Comitê Pela Vida\n(PNR-000267 -Gestão de Condutas para SSMA)";
+ const sap="Tratar com evidencias os IDs SAP (registro|ação)";
+ const sapSingular="Tratar com a respectiva evidencia o ID SAP (registro|ação)";
+ const feedback="Aplicar registro de feedback continuo(CSP) com o empregado Vale.";
+ const suspend="Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).";
+ const n5Vale=[
+  `${feedback} ${sapSingular}`,
+  `Suspender a credencial de acesso ao site até tratar com a respectiva evidencia o ID SAP (registro|ação). ${feedback}`,
+  `Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. ${sap}`
+ ];
+ const n5Contractor=[
+  `Notificar contratualmente a empresa contratada. ${sap}`,
+  `${suspend} Notificar contratualmente a empresa contratada. `,
+  `Multar contratualmente a empresa contratada. Revogar o passaporte de RAC2 do condutor e a credencial de acesso ao site conduzindo veículo. ${sap}.`
+ ];
+ const n5NonMobilized=[
+  `${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+  `${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+  `Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. ${sap}. `
+ ];
+ const addRule=(id,event,potential,audience,texts)=>{
+  groups[id]={id,potential,classification:potential,audience,people:[audience],events:[event],outcomes:{first:texts[0]?[texts[0]]:[],second:texts[1]?[texts[1]]:[],more:texts[2]?[texts[2]]:[]}};
+ };
+ const events=[
+  "Condutor em veículo em movimento SEM USO DO CINTO DE SEGURANÇA",
+  "Passageiro em veículo em movimento SEM USO DO CINTO DE SEGURANÇA",
+  "Retirar uma ou as duas mãos do volante para USO de CELULAR* durante a condução",
+  "Deixar de realizar a parada obrigatória antes da PASSAGEM DE NÍVEL, permanecendo no minimo 3 segundos com o veículo parado",
+  "Deixar de realizar  o procedimento completo de transposição de PN - vidros abaixados, som desligado e observando ambos os lados",
+  "Conduzir veículo com manutenção preventiva vencida, em mau estado de conservação ou sem os itens de segurança obrigatórios previstos no CTB (como lâmpada queimada, pneus abaixo do TWI, entre outros)",
+  "Não obedecer a sinalização de trânsito",
+  "Direção perigosa, incluindo transportar carga excedente ou com risco potencial sem sinalização adequada",
+  "Deixar de conceder preferência de passagem ao pedestre",
+  "Conduzir veículo com categoria de CNH incompatível com a exigida para o tipo de veículo",
+  "Ttransitar com o veículo em velocidade incompatível com a via.",
+  "Transitar em marcha ré, exceto para pequenas manobras.",
+  "Conduzir qualquer veículo mobilizado sem a documentação obrigatória exigida pelos procedimentos Vale (ex: Selo MEV, Passaporte RAC2)",
+  "Conduzir o veículo sem os documentos obrigatório exigidos pelo CTB - Código de Trânsito Brasileiro;",
+  "Não atender as orientações dos Agentes de Trânsito, recusar apresentação de documentos ou deixar de prestar informações necessárias à identificação do condutor e demais passageiros;",
+  "Transportar carga irregular, incluindo materiais que possam gerar poeira fugitiva sem proteção adequada",
+  "ESTACIONAR OU PARAR VEÍCULO em situações irregulares, como: local proibido; afastado da guia da calçada; na contramão de direção; em área de cruzamento; interrompendo o trânsito; ultrapassando o tempo permitido no estacionamento rotativo; em desacordo com vagas preferenciais ou exclusivas; fora dos pontos indicados para embarque e desembarque; sobre calçadas, faixas de pedestres, canteiros ou divisores de pista.",
+  "Exposição voluntária ao risco de pisões e de contato com animais peçonhentos, ao permanecer deitado ou sentado no chão e em áreas de circulação.",
+  "Descumprir do fluxo estabelecido para interdição de vias",
+  "Descumprir a restrição de circulação de veículos e equipamentos com velocidade inferior a 20 km/h nos horários: 06h30–08h00, 11h00–13h00 e 15h30–17h00"
+ ];
+ const n3Outcomes=[
+  {
+   [vale]:[`${committee}. ${sap}`,`${committee}. ${suspend} ${sap}`,`${committee}. ${suspend} ${sap}`],
+   [contractor]:[`${committee}. Notificar empresa contratada. ${sap}. `,`${committee}. ${suspend} Notificar empresa contratada. ${sap}. `,`${committee}. ${suspend} Notificar empresa contratada. ${sap}. `],
+   [nonMobilized]:[`${committee}. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,`${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,`${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `]
+  },
+  {
+   [vale]:[`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${sap}`,`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend} ${sap}`,`${committee}. ${suspend} ${sap}`],
+   [contractor]:[`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). Notificar empresa contratada. ${sap}. `,`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend} Notificar empresa contratada. ${sap}. `,`${committee}. ${suspend} Notificar empresa contratada. ${sap}. `],
+   [nonMobilized]:[`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,`Advertência escrita (Fica a critério do líder e/ou a medicina afastar o empregado das atividades de Risco caso seja necessário). ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,`${committee}. ${suspend.replace("(registro|ação).","(registro| ação).")} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `]
+  },
+  {
+   [vale]:[`${committee}. ${sap}`,`${committee}. ${suspend} `,`${committee}. ${suspend}`],
+   [contractor]:[`${committee}. Notificar empresa contratada. ${sap}. `,`${committee}. ${suspend} Notificar empresa contratada.`,`${suspend} Ativar Comitê pela Vida para condutor. Notificar empresa contratada.`],
+   [nonMobilized]:[`${committee}. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,`${committee}. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,`${committee}. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `]
+  },
+  {
+   [vale]:[`${committee} para o condutor.  ${sap}`,`${committee} para o condutor. ${suspend} ${sap}`,`${committee} para o condutor. ${suspend} ${sap}`],
+   [contractor]:[`${committee} para o condutor. Notificar empresa contratada. ${sap}. `,`${committee} para o condutor. ${suspend}Notificar empresa contratada. ${sap}. `,`${committee} para o condutor. ${suspend} Notificar empresa contratada. ${sap}. `],
+   [nonMobilized]:[`${committee} para o condutor. ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,`${committee} para o condutor. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,`${committee} para o condutor. ${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `]
+  }
+ ];
+ groups={};
+ const audiences=[vale,contractor,nonMobilized];
+ events.slice(0,4).forEach((event,index)=>audiences.forEach(audience=>addRule(`REV04_${String(index+1).padStart(2,"0")}_${audiences.indexOf(audience)+1}`,event,"N3",audience,n3Outcomes[index][audience])));
+ events.slice(4).forEach((event,index)=>{
+  const eventNumber=index+5;
+  const contractorOutcomes=[...n5Contractor];
+  if(eventNumber>=5&&eventNumber<=8)contractorOutcomes[1]=contractorOutcomes[1].replace("a empresa contratada.","a emmpresa contratada.");
+  if(eventNumber===6)contractorOutcomes[1]=contractorOutcomes[1].trimEnd();
+  audiences.forEach((audience,audienceIndex)=>addRule(`REV04_${String(eventNumber).padStart(2,"0")}_${audienceIndex+1}`,event,"N5",audience,audience===vale?n5Vale:audience===contractor?contractorOutcomes:n5NonMobilized));
+ });
+ const allOutcomes=[
+  `${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. ${sapSingular}`,
+  `${suspend} ${feedback} Notificar contratualmente Fornecedor. Formalizar feedback com o Visitante. `,
+  `Advertir formalmente o empregado Vale. Multar contratualmente o Fornecedor. Advertir formalmente Visitante. Revogar a credencial de acesso ao site conduzindo veículo. ${sap}. `
+ ];
+ events.slice(17,20).forEach((event,index)=>addRule(`REV04_${String(index+18).padStart(2,"0")}`,event,"N5",all,allOutcomes));
+ speedEvents=[
+  {id:"REV04_SPEED_21",label:"Excesso de velocidade (>7% e <=20%)",potential:"N5",classification:"N5",audience:speed,people:[speed],outcomes:{first:["Advertência Verbal"],second:["Advertência escrita"],more:["Aplicar Comitê Pela Vida\n(PNR-000267 -Gestão de Condutas para SSMA )"]}},
+  {id:"REV04_SPEED_22",label:"Excesso de velocidade (>20% <=50%)",potential:"N3",classification:"N3",audience:speed,people:[speed],outcomes:{first:["Advertência escrita"],second:["Suspensão de RAC"],more:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"]}},
+  {id:"REV04_SPEED_23",label:"Excesso de velocidade (>50% e/ou >120km/h)",potential:"N3",classification:"N3",audience:speed,people:[speed],outcomes:{first:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"],second:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"],more:["Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA )"]}}
+ ];
+ publics=[vale,contractor,nonMobilized,all,speed];
+ hiddenDeviations=[];
+ databaseAuthoritative=true;
+ persist();
+}
+loadOfficialRev04Matrix();
 renderAll();
 </script></body></html>
