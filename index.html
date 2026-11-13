@@ -22,6 +22,7 @@ main{flex:1;max-width:1200px;margin:0 auto;padding:24px;width:100%}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}label{display:block;font-weight:650;font-size:13px;margin-bottom:6px;color:#34464e}
 select,input,textarea{width:100%;border:1px solid #cbd6da;border-radius:8px;padding:11px 12px;font:inherit;background:white;color:var(--ink)}textarea{min-height:90px;resize:vertical}
 select:focus,input:focus,textarea:focus{outline:3px solid #0b918b22;border-color:var(--teal)}
+.deviation-picker{position:relative}.deviation-picker>button{width:100%;min-height:46px;padding:11px 38px 11px 12px;text-align:left;background:white;border:1px solid #cbd6da;border-radius:8px;color:var(--ink);font:inherit;font-weight:400;line-height:1.4;white-space:normal;overflow-wrap:anywhere;position:relative}.deviation-picker>button::after{content:"⌄";position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:18px}.deviation-picker>button:focus{outline:3px solid #0b918b22;border-color:var(--teal)}.deviation-menu{position:absolute;z-index:20;top:calc(100% + 5px);left:0;right:0;padding:9px;background:white;border:1px solid var(--line);border-radius:9px;box-shadow:0 8px 24px #20343b24}.deviation-menu[hidden]{display:none}.deviation-menu input{margin-bottom:8px}.deviation-options{max-height:320px;overflow-y:auto}.deviation-options button{display:block;width:100%;padding:9px 10px;text-align:left;background:white;border-radius:6px;font:inherit;font-weight:400;line-height:1.4;white-space:normal;overflow-wrap:anywhere;word-break:normal}.deviation-options button:hover,.deviation-options button:focus{background:#e8f4f3;color:#066b68;outline:none}.deviation-options .no-options{padding:10px;color:var(--muted);font-size:13px}
 .full{grid-column:1/-1}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
 button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;font-size:13px;cursor:pointer}
 .primary{background:var(--teal);color:white}.secondary{background:#edf2f3;color:#34464e}.danger{background:#fff0f0;color:#a22d38}.small{padding:7px 10px}
@@ -40,7 +41,7 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 .powerbi-embed iframe{position:absolute;inset:0;width:100%;max-width:100%;height:100%;border:0;overflow:hidden}
  .dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.dashboard-stats .stat{padding:10px 12px}.dashboard-stats .stat strong{font-size:23px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}.info-card{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 5px 18px #20343b08}.info-card h3{margin:0 0 8px;color:#086a67;font-size:16px}.info-card p{margin:0;color:#43545c}.news-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.news-card{overflow:hidden;background:white;border:1px solid var(--line);border-radius:13px;box-shadow:0 5px 18px #20343b08}.news-card img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;background:#f8fafb}.news-copy{padding:17px}.news-copy h3{margin:0 0 8px;color:#086a67;font-size:17px}.news-copy p{margin:0;color:#43545c}.info-card ul{margin:8px 0 0;padding-left:20px}.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pillar{background:#e8f4f3;border-radius:9px;padding:12px;font-weight:700;color:#086a67}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.metric{background:linear-gradient(120deg,#075e61,#0b918b);color:white;border-radius:11px;padding:16px}.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:#e4f5f3}.criteria-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.criteria-card{background:white;border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:11px;padding:17px;box-shadow:0 5px 18px #20343b08}.criteria-card h3{display:flex;align-items:center;gap:9px;margin:0 0 10px;color:#086a67;font-size:16px}.criteria-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;border-radius:8px;background:#e8f4f3;font-size:21px;line-height:1}.criteria-card p{margin:0 0 10px;color:#43545c}.criteria-card p:last-child{margin-bottom:0}.criteria-card .criteria-docs{padding-top:9px;border-top:1px solid var(--line)} .criteria-card .criteria-docs strong{color:var(--ink)}.criteria-card.highlight{border-top-color:var(--amber)}.criteria-wide{grid-column:1/-1}.resource-link{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:8px;font-weight:700;font-size:13px}
 @media(max-width:760px){.shell{display:block}aside{width:100%;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.brand{display:none}nav{display:flex;overflow:auto;gap:4px}nav button,nav a.nav-link{white-space:nowrap;width:auto;margin:0;font-size:12px}.side-bottom{display:none}main{padding:15px}.grid,.outcomes,.stats,.info-grid,.news-grid,.pillars,.metrics,.criteria-grid{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding:17px}}
-.report-table{margin-bottom:22px}.report-table h2{margin:0 0 10px}.report-table table{min-width:0}.report-table th,.report-table td{text-align:center;vertical-align:middle}.report-table .potential-n5{color:#805700;background:#fff0a6;font-weight:800}.report-table .potential-n3{color:#800020;background:#f6d5d9;font-weight:800}.print-actions{margin:0 0 16px}
+.report-table{margin-bottom:22px}.report-table h2{margin:0 0 10px}.report-table table{min-width:0;table-layout:fixed}.report-table th,.report-table td{text-align:center;vertical-align:middle;overflow-wrap:anywhere;word-break:normal}.report-table th:first-child,.report-table td:first-child{width:23%;text-align:left}.report-table .potential-n5{color:#805700;background:#fff0a6;font-weight:800}.report-table .potential-n3{color:#800020;background:#f6d5d9;font-weight:800}.print-actions{margin:0 0 16px}
 @media print{body{background:white;font-size:11pt}header,aside,footer,.print-actions{display:none!important}.shell,main{display:block!important;min-height:0;margin:0;padding:0;max-width:none;width:100%}.page{display:none!important}body.print-report #page-relatorio{display:block!important}body.print-consult #page-consulta{display:block!important}body.print-criteria #page-criterios{display:block!important}body.print-consult #page-consulta>*:not(.panel){display:none!important}body.print-consult #page-consulta .panel{box-shadow:none;border:0;padding:0;margin:0}body.print-consult #page-consulta .panel>.grid,body.print-consult #page-consulta .panel>.actions{display:none!important}body.print-consult #result{display:block!important;margin:0}body.print-consult .result-head button{display:none!important}.panel{box-shadow:none;border:0;padding:0}.table-wrap{overflow:visible}table{width:100%;min-width:0;font-size:9pt}th,td{padding:5px;border:1px solid #aaa}thead{display:table-header-group}tr{break-inside:avoid}.report-table{break-inside:auto}}
 
 </style></head>
@@ -97,9 +98,9 @@ footer{padding:12px 24px;color:var(--muted);font-size:11px;border-top:1px solid 
 <section class="page" id="page-consulta">
 <h2 class="page-title">Matriz de consequências</h2><p class="page-sub">Selecione o desvio, o público envolvido e a reincidência.</p>
 <div class="stats dashboard-stats"><div class="stat"><strong id="statDevs">0</strong><span>Tipos de desvio cadastrados</span></div><div class="stat"><strong id="statGroups">0</strong><span>Regras / grupos de aplicação</span></div><div class="stat"><strong id="statPublics">0</strong><span>Públicos cadastrados</span></div><div class="stat"><strong id="statSpeed">3</strong><span>Faixas específicas de velocidade</span></div></div>
-<div class="panel"><div class="grid"><div class="full"><label>Tipo de desvio</label><select id="deviation"><option value="">Selecione um desvio...</option></select></div>
+<div class="panel"><div class="grid"><div class="full"><label id="deviationLabel">Tipo de desvio</label><div class="deviation-picker"><button type="button" id="deviationPickerButton" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="deviationLabel deviationPickerButton">Selecione um desvio...</button><div class="deviation-menu" id="deviationPickerMenu" hidden><input id="deviationSearch" type="search" placeholder="Buscar desvio..." aria-label="Buscar desvio"><div class="deviation-options" id="deviationOptions" role="listbox" aria-labelledby="deviationLabel"></div></div></div><select id="deviation" hidden><option value="">Selecione um desvio...</option></select></div>
 <div><label>Público / vínculo do envolvido</label><select id="person" disabled><option value="">Selecione primeiro o desvio</option></select></div>
-<div><label>Histórico de ocorrência</label><select id="occurrence"><option value="first">1º evento</option><option value="second">1ª reincidência (2º evento)</option><option value="more">Demais reincidências</option></select></div></div>
+<div><label>Histórico de ocorrência</label><select id="occurrence"><option value="first">1º evento</option><option value="second">1ª reincidência</option><option value="more">Demais reincidências</option></select></div></div>
 <div class="actions"><button class="secondary" id="clear">Limpar</button></div><section id="result" class="result" aria-live="polite"></section></div>
 </section>
 <section class="page" id="page-relatorio">
@@ -206,6 +207,7 @@ let hiddenDeviations=[];
 let admin=false;
 let publics=["Empregado mobilizado","Empregado mobilizado Vale","Empregado mobilizado Contratadas","Empregado não mobilizado","Empregado não mobilizado Vale","Empregado não mobilizado Fornecedor","Empregado não mobilizado Visitante","Empregado Vale","Contratada","Particular","Fornecedor","Visitante"];
 function normalizeCommitteeConsequences(){
+ if(databaseAuthoritative)return;
  const normalize=list=>{
   if(!Array.isArray(list))return;
   list.forEach((item,index)=>{
@@ -255,7 +257,8 @@ function addSupplierContractorWarnings(){
  Object.values(groups).forEach(addWarning);
  speedEvents.forEach(addWarning);
 }
-function persist(){normalizeCommitteeConsequences();addSupplierContractorWarnings();localStorage.setItem(KEY,JSON.stringify({groups,speedEvents,publics,hiddenDeviations}))}
+let databaseAuthoritative=localStorage.getItem("matrizBDRev03Seeded1")==="1";
+function persist(){if(!databaseAuthoritative){normalizeCommitteeConsequences();addSupplierContractorWarnings()}localStorage.setItem(KEY,JSON.stringify({groups,speedEvents,publics,hiddenDeviations}))}
 function restore(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x){groups=x.groups||groups;speedEvents=x.speedEvents||speedEvents;publics=x.publics||publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[]}}catch(e){}}
 restore();
 normalizeCommitteeConsequences();
@@ -476,37 +479,40 @@ ensureContinuousFeedbackFirstEvent();
 function printPage(mode){document.body.classList.remove("print-consult","print-report","print-criteria");document.body.classList.add(mode==="consult"?"print-consult":mode==="criteria"?"print-criteria":"print-report");window.print();document.body.classList.remove("print-consult","print-report","print-criteria")}
 function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id==="page-"+page));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
-function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])].sort((a,b)=>a.localeCompare(b,"pt-BR"))}
+function speedDeviationOrder(label){return String(label).includes(">7%")?0:String(label).includes(">20%")?1:String(label).includes(">50%")?2:-1}
+function compareDeviationLabels(a,b){const orderA=speedDeviationOrder(a),orderB=speedDeviationOrder(b);return orderA>=0&&orderB>=0?orderA-orderB:String(a).localeCompare(String(b),"pt-BR")}
+function allUniqueEvents(){return [...new Set([...Object.values(groups).flatMap(g=>g.events),...speedEvents.map(x=>x.label)])].sort(compareDeviationLabels)}
 function uniqueEvents(){return allUniqueEvents().filter(event=>!hiddenDeviations.includes(event))}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function renderConsultOptions(){const d=document.getElementById("deviation"),old=d.value;d.innerHTML='<option value="">Selecione um desvio...</option>'+uniqueEvents().map(x=>{const label=x.length>90?x.slice(0,87)+"…":x;return `<option value="${escapeHtml(x)}">${escapeHtml(label)}</option>`}).join("");if(uniqueEvents().includes(old))d.value=old}
-function matchingGroups(event){return Object.values(groups).filter(g=>g.events.includes(event))}
-const audienceNames={mobilizedVale:"Empregado mobilizado Vale",mobilizedContractor:"Empregado mobilizado Contratadas",nonMobilizedVale:"Empregado não mobilizado Vale",supplier:"Empregado não mobilizado Fornecedor",visitor:"Empregado não mobilizado Visitante"};
-function audiencesForEvent(event){
- const keys=Object.entries(groups).filter(([,g])=>g.events.includes(event)).map(([key])=>key);
- if(keys.some(k=>["A","B","C"].includes(k)))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
- if(keys.includes("D"))return [audienceNames.nonMobilizedVale,"Particular",audienceNames.supplier,audienceNames.visitor];
- if(keys.includes("J")||keys.includes("K"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor].filter(a=>keys.some(k=>groups[k].people.includes(a)));
- if(keys.includes("E")||keys.includes("F"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor].filter(a=>keys.some(k=>groups[k].people.includes(a)));
- if(keys.includes("G"))return ["Particular"];
- if(keys.includes("H")||keys.includes("I"))return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
- const speedRule=speedEvents.find(x=>x.label===event);
- if(speedRule?.potential==="N3")return [audienceNames.nonMobilizedVale,"Particular",audienceNames.supplier,audienceNames.visitor];
- if(speedRule)return [audienceNames.mobilizedVale,audienceNames.mobilizedContractor,audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor];
- return [...new Set(matchingGroups(event).flatMap(g=>g.people))];
+function renderDeviationPicker(){
+ const select=document.getElementById("deviation"),button=document.getElementById("deviationPickerButton"),search=document.getElementById("deviationSearch"),options=document.getElementById("deviationOptions");
+ const selected=select.selectedOptions[0];
+ button.textContent=selected&&selected.value?selected.textContent:"Selecione um desvio...";
+ const query=search.value.trim().toLocaleLowerCase("pt-BR");
+ const matches=uniqueEvents().filter(event=>event.toLocaleLowerCase("pt-BR").includes(query));
+ options.innerHTML=matches.length?matches.map(event=>`<button type="button" role="option" aria-selected="${event===select.value}" data-deviation="${escapeHtml(event)}">${escapeHtml(event)}</button>`).join(""):'<div class="no-options">Nenhum desvio encontrado.</div>';
 }
-function groupForAudience(event,audience){
- const keys=Object.keys(groups).filter(key=>groups[key].events.includes(event));
- if(keys.some(k=>["A","B","C"].includes(k))){
-  if(audience===audienceNames.mobilizedVale)return groups.A;
-  if(audience===audienceNames.mobilizedContractor)return groups.C||groups.A;
-  if([audienceNames.nonMobilizedVale,audienceNames.supplier,audienceNames.visitor,"Particular"].includes(audience))return groups.B||groups.C;
- }
- if((keys.includes("J")||keys.includes("K"))&&["J","K"].some(key=>keys.includes(key)&&groups[key].people.includes(audience)))return groups[["J","K"].find(key=>keys.includes(key)&&groups[key].people.includes(audience))];
- if(audience===audienceNames.mobilizedVale&&keys.includes("E"))return groups.E;
- if(audience===audienceNames.mobilizedContractor&&keys.includes("F"))return groups.F;
- return keys.length?groups[keys[0]]:null;
+function renderConsultOptions(){const d=document.getElementById("deviation"),old=d.value,events=uniqueEvents();d.innerHTML='<option value="">Selecione um desvio...</option>'+events.map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join("");if(events.includes(old))d.value=old;renderDeviationPicker()}
+const deviationPickerButton=document.getElementById("deviationPickerButton"),deviationPickerMenu=document.getElementById("deviationPickerMenu"),deviationOptions=document.getElementById("deviationOptions"),deviationSearch=document.getElementById("deviationSearch");
+deviationPickerButton.addEventListener("click",()=>{const open=deviationPickerMenu.hidden;deviationPickerMenu.hidden=!open;deviationPickerButton.setAttribute("aria-expanded",String(open));if(open){deviationSearch.value="";renderDeviationPicker();deviationSearch.focus()}});
+deviationSearch.addEventListener("input",renderDeviationPicker);
+deviationOptions.addEventListener("click",event=>{const option=event.target.closest("button[data-deviation]");if(!option)return;const select=document.getElementById("deviation");select.value=option.dataset.deviation;select.dispatchEvent(new Event("change",{bubbles:true}));deviationPickerMenu.hidden=true;deviationPickerButton.setAttribute("aria-expanded","false")});
+document.addEventListener("click",event=>{if(!event.target.closest(".deviation-picker")){deviationPickerMenu.hidden=true;deviationPickerButton.setAttribute("aria-expanded","false")}});
+function matchingGroups(event){return Object.values(groups).filter(g=>(g.events||[]).includes(event))}
+const audienceNames={mobilizedVale:"Empregado | veículo mobilizado Vale",mobilizedContractor:"Empregado | veículo mobilizado Contratada",nonMobilizedVale:"Empregado | veículo não mobilizado (Vale | Contratada | Fornecedor)"};
+function canonicalSpeedRule(event,audience){
+ const committee="Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA)";
+ const definitions={
+  "Excesso de velocidade (>7% e <=20%)":{potential:"N5",outcomes:{first:["Advertência Verbal"],second:["Advertência escrita"],more:[committee]}},
+  "Excesso de velocidade (>20% <=50%)":{potential:"N3",outcomes:{first:["Advertência escrita"],second:["Suspensão de RAC"],more:[committee]}},
+  "Excesso de velocidade (>50% e/ou >120km/h)":{potential:"N3",outcomes:{first:[committee],second:[committee],more:[committee]}}
+ };
+ const definition=definitions[event];
+ const audiences=Object.values(audienceNames);
+ return definition&&audiences.includes(audience)?{...definition,id:"canonical-speed-rule",audience,people:[audience]}:null;
 }
+function audiencesForEvent(event){if(canonicalSpeedRule(event,audienceNames.mobilizedVale))return Object.values(audienceNames);return [...new Set([...matchingGroups(event),...speedEvents.filter(rule=>rule.label===event)].flatMap(rule=>rule.people||[]))]}
+function groupForAudience(event,audience){if(canonicalSpeedRule(event,audienceNames.mobilizedVale))return canonicalSpeedRule(event,audience);return matchingGroups(event).find(g=>(g.people||[]).includes(audience))||speedEvents.find(rule=>rule.label===event&&(rule.people||[]).includes(audience))||null}
 function outcomesForAudience(items,audience){
  const a=audience.toLowerCase();
  if(a.includes("contratada"))return items.filter(x=>/sap|contratad|credencial|passaporte|advertência|multa contratual|notificação contratual|comitê pela vida/i.test(x)&&!/vale\)/i.test(x));
@@ -516,35 +522,25 @@ function outcomesForAudience(items,audience){
  if(a.includes("empregado"))return items.filter(x=>/sap|vale|empregado|credencial|passaporte|comitê pela vida|advertência|csp/i.test(x)&&!/fornecedor|visitante|contratad/i.test(x));
  return items;
 }
-document.getElementById("deviation").addEventListener("change",()=>{const val=deviation.value;person.innerHTML='<option value="">Selecione...</option>';person.disabled=!val;result.className="result";result.innerHTML="";if(!val)return;audiencesForEvent(val).forEach(p=>person.add(new Option(p,p)))});
+document.getElementById("deviation").addEventListener("change",()=>{renderDeviationPicker();const val=deviation.value;person.innerHTML='<option value="">Selecione...</option>';person.disabled=!val;result.className="result";result.innerHTML="";if(!val)return;audiencesForEvent(val).forEach(p=>person.add(new Option(p,p)))});
 function renderList(items){return items&&items.length?'<ul>'+items.map(x=>'<li>'+escapeHtml(x)+'</li>').join("")+'</ul>':'<div class="empty">Não há consequência cadastrada para esta combinação. Encaminhe para validação da área responsável.</div>'}
 function consultConsequence(){const ev=deviation.value,p=person.value,occ=occurrence.value;if(!ev||!p)return
-const k=occ==="first"?"first":occ==="second"?"second":"more";let pot="",items=[],aud=p;
-const sp=speedEvents.find(x=>x.label===ev);if(sp){pot=sp.potential;items=sp.potential==="N3"?outcomesForAudience(sp.outcomes[k]||[],p):[...(sp.outcomes[k]||[])];aud=sp.audience||p}else{const g=groupForAudience(ev,p);if(!g){result.className="result show";result.innerHTML='<div class="empty">Regra não localizada para esta combinação.</div>';return}pot=g.potential;items=outcomesForAudience(g.outcomes[k]||[],p);aud=g.audience}
-if(k==="first"&&/contratad|fornecedor/i.test(p)&&!items.some(item=>/advertência formal/i.test(String(item))))items=[...items,"Advertência formal"];
-if(p===audienceNames.nonMobilizedVale&&String(pot).trim().toUpperCase()==="N5"&&k==="first")items=items.filter(item=>!/^advertência formal(?:\s*\(|$)/i.test(String(item).trim()));
-if(p===audienceNames.visitor){
- items=items.filter(item=>!/^advertência escrita$/i.test(String(item).trim()));
- items=items.filter(item=>!/^feedback formal(?:\s*\(|$)/i.test(String(item).trim()));
- items=items.filter(item=>!/^advertência formal(?:\s*\(|$)/i.test(String(item).trim()));
- items.push("Evidência SAP",k==="more"?"Advertência formal":"Feedback formal");
- items=[...new Set(items)];
-}
-const label={first:"1º evento",second:"1ª reincidência (2º evento)",more:"Demais reincidências"}[occ];
+const k=occ,g=groupForAudience(ev,p);if(!g){result.className="result show";result.innerHTML='<div class="empty">Regra não localizada para esta combinação.</div>';return}
+const pot=g.potential,items=[...(g.outcomes[k]||[])],label=k==="first"?"1º evento":k==="second"?"1ª reincidência":"Demais reincidências";
 const potentialClass=pot.trim().toUpperCase()==="N5"?"n5":pot.trim().toUpperCase()==="N3"?"n3":"";
-result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="printPage('consult')">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong class="involved ${potentialClass}">${escapeHtml(p)}</strong></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div><p class="muted">“Demais reincidências” contempla a 2ª reincidência (3º evento) e as seguintes.</p>`}
+result.className="result show";result.innerHTML=`<div class="result-head"><div><h2>Resultado da consulta</h2><strong>${escapeHtml(ev)}</strong><div class="chips"><span class="chip severity ${potentialClass}">Potencial: ${escapeHtml(pot)}</span><span class="chip">${label}</span></div></div><button class="secondary" onclick="printPage('consult')">Imprimir</button></div><div class="outcomes"><div class="outcome"><h3>Envolvido</h3><strong class="involved ${potentialClass}">${escapeHtml(p)}</strong></div><div class="outcome"><h3>Consequências / encaminhamentos</h3>${renderList(items)}</div></div>`}
 document.getElementById("person").addEventListener("change",consultConsequence);
 document.getElementById("occurrence").addEventListener("change",consultConsequence);
-document.getElementById("clear").addEventListener("click",()=>{deviation.value="";person.innerHTML='<option value="">Selecione primeiro o desvio</option>';person.disabled=true;occurrence.value="first";result.className="result";result.innerHTML=""});
+document.getElementById("clear").addEventListener("click",()=>{deviation.value="";renderDeviationPicker();person.innerHTML='<option value="">Selecione primeiro o desvio</option>';person.disabled=true;occurrence.value="first";result.className="result";result.innerHTML=""});
 function requireAdmin(){if(!admin){alert("Acesso restrito. Entre na área administrativa.");go("config");return false}return true}
-function renderAll(){renderConsultOptions();document.getElementById("statDevs").textContent=allUniqueEvents().length;document.getElementById("statGroups").textContent=Object.keys(groups).length+speedEvents.length;document.getElementById("statPublics").textContent=publics.length;document.getElementById("statSpeed").textContent=speedEvents.length;renderReport()}
+function renderAll(){renderConsultOptions();document.getElementById("statDevs").textContent=allUniqueEvents().length;document.getElementById("statGroups").textContent=Object.keys(groups).length+speedEvents.length;document.getElementById("statPublics").textContent=publics.length;document.getElementById("statSpeed").textContent=allUniqueEvents().filter(event=>/^Excesso de velocidade/i.test(event)).length;renderReport()}
 function renderReport(){
  const excludedReportDeviations=["Circular pelas ciclovias de acesso às portarias Vale com ciclomotores convencionais ou elétricos","Não utilização de capacete","No Show App Comitê de Trânsito"];
  const ruleRows=[];
  Object.values(groups).forEach(g=>(g.events||[]).forEach(ev=>ruleRows.push({ev,a:g.audience||((g.people||[]).join(", ")),p:g.potential,o:g.outcomes||{},people:g.people||[]})));
  speedEvents.forEach(s=>ruleRows.push({ev:s.label,a:s.audience||((s.people||[]).join(", "))||"Todos os públicos cadastrados",p:s.potential,o:s.outcomes||{},people:s.people||[]}));
  const visibleRuleRows=ruleRows.filter(r=>!excludedReportDeviations.includes(r.ev));
- visibleRuleRows.sort((a,b)=>a.ev.localeCompare(b.ev,"pt-BR")||a.a.localeCompare(b.a,"pt-BR"));
+ visibleRuleRows.sort((a,b)=>compareDeviationLabels(a.ev,b.ev)||a.a.localeCompare(b.a,"pt-BR"));
  const allOutcomes=r=>[...(r.o.first||[]),...(r.o.second||[]),...(r.o.more||[])];
  fillSelect("reportDeviation","Todos os desvios",[...new Set(visibleRuleRows.map(r=>r.ev))]);
  fillSelect("reportPublic","Todos os públicos",[...new Set(visibleRuleRows.flatMap(r=>r.people))]);
@@ -568,7 +564,7 @@ function renderDeviationTable(){
  const rows=[];
  Object.entries(groups).forEach(([key,g])=>g.events.forEach(ev=>rows.push({ev,a:g.audience,p:g.potential,groupKey:key})));
  speedEvents.forEach(s=>rows.push({ev:s.label,a:s.audience||"Todos os públicos cadastrados",p:s.potential,speed:true}));
- rows.sort((a,b)=>a.ev.localeCompare(b.ev,"pt-BR"));
+ rows.sort((a,b)=>compareDeviationLabels(a.ev,b.ev));
   document.getElementById("deviationTable").innerHTML='<div class="table-wrap"><table><thead><tr><th>Desvio</th><th>Grupo de aplicação</th><th>Potencial</th><th>Status</th><th>Ações</th></tr></thead><tbody>'+ 
  rows.map((r,i)=>{const hidden=hiddenDeviations.includes(r.ev);return `<tr><td>${escapeHtml(r.ev)}</td><td>${escapeHtml(r.a)}</td><td>${escapeHtml(r.p)}</td><td><span class="badge">${hidden?"Oculto":"Visível"}</span></td><td>${admin?`<button class="secondary small" onclick="toggleDeviationVisibility(${i})">${hidden?"Exibir":"Ocultar"}</button> <button class="secondary small" onclick="editDeviation(${i})">Editar</button> <button class="danger small" onclick="deleteDeviation(${i})">Excluir</button>`:"—"}</td></tr>`}).join("")+'</tbody></table></div>';
  document.getElementById("deviationActions").innerHTML=admin?'<button class="primary" onclick="addDeviation()">+ Adicionar desvio</button>':'';
@@ -660,5 +656,128 @@ function editPublic(i){if(!requireAdmin())return;let old=publics[i],neu=prompt("
 function removePublic(i){if(!requireAdmin())return;if(confirm("Excluir este público da lista geral? As regras já vinculadas não serão apagadas.")){publics.splice(i,1);persist();renderAll()}}
 function exportData(){if(!requireAdmin())return;let blob=new Blob([JSON.stringify({groups,speedEvents,publics,hiddenDeviations},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup_matriz_consequencias.json";a.click();URL.revokeObjectURL(a.href)}
 function importData(e){if(!requireAdmin())return;let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let x=JSON.parse(reader.result);if(!x.groups||!x.speedEvents||!x.publics)throw Error();groups=x.groups;speedEvents=x.speedEvents;publics=x.publics;hiddenDeviations=Array.isArray(x.hiddenDeviations)?x.hiddenDeviations:[];removeRetiredDeviations();persist();renderAll();alert("Backup importado.")}catch(err){alert("Arquivo inválido.")}};reader.readAsText(f)}
+function initializeDatabaseMatrix(){
+ const revision="matrizBDRev03Seeded1";
+ const saved=localStorage.getItem(KEY);
+ if(localStorage.getItem(revision)==="1"&&saved){
+  try{const data=JSON.parse(saved);if(data.groups&&Array.isArray(data.speedEvents)&&Array.isArray(data.publics)){groups=data.groups;speedEvents=data.speedEvents;publics=data.publics;hiddenDeviations=Array.isArray(data.hiddenDeviations)?data.hiddenDeviations:[];databaseAuthoritative=true;return}}catch(e){}
+ }
+ const vale="Empregado | veículo mobilizado Vale";
+ const contractor="Empregado | veículo mobilizado Contratada";
+ const nonMobilized="Empregado | veículo não mobilizado (Vale | Fornecedor | Visitante)";
+ const allPublics="Empregado Vale e Contratada | Fornecedor e Visitante";
+ const n3={
+  [vale]:{
+   first:["Ativar Comitê pela Vida para condutor | passageiro.","Tratar com evidencias os IDs SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).","Ativar Comitê pela Vida para condutor | passageiro.","Tratar com evidencias os IDs SAP (registro|ação)."]
+  },
+  [contractor]:{
+   first:["Ativar Comitê pela Vida para condutor | passageiro.","Notificar empresa contratada.","Tratar com evidencias os IDs SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).","Ativar Comitê pela Vida para condutor | passageiro.","Notificar empresa contratada.","Tratar com evidencias os IDs SAP (registro|ação)."]
+  },
+  [nonMobilized]:{
+   first:["Aplicar registro de feedback continuo(CSP) com o empregado Vale.","Notificar contratualmente Fornecedor.","Formalizar feedback com o Visitante.","Tratar com a respectiva evidencia o ID SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).","Aplicar registro de feedback continuo(CSP) com o empregado Vale.","Notificar contratualmente Fornecedor.","Formalizar feedback com o Visitante."]
+  }
+ };
+ const n5={
+  [vale]:{
+   first:["Aplicar registro de feedback continuo(CSP) com o empregado Vale.","Tratar com a respectiva evidencia o ID SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site até tratar com a respectiva evidencia o ID SAP (registro|ação).","Aplicar registro de feedback continuo(CSP) com o empregado Vale."]
+  },
+  [contractor]:{
+   first:["Notificar contratualmente a empresa contratada.","Tratar com evidencias os IDs SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).","Notificar contratualmente a empresa contratada."]
+  },
+  [nonMobilized]:{
+   first:["Aplicar registro de feedback continuo(CSP) com o empregado Vale.","Notificar contratualmente Fornecedor.","Formalizar feedback com o Visitante.","Tratar com a respectiva evidencia o ID SAP (registro|ação)."],
+   second:["Suspender a credencial de acesso ao site conduzindo veículo até tratar com a respectiva evidencia o ID SAP (registro|ação).","Aplicar registro de feedback continuo(CSP) com o empregado Vale.","Notificar contratualmente Fornecedor.","Formalizar feedback com o Visitante."]
+  }
+ };
+ const eventsN3=[
+  "Condutor/Passageiro em veículo em movimento SEM USO DO CINTO DE SEGURANÇA",
+  "Retirar uma ou as duas mãos do volante para USO DE CELULAR* durante a condução",
+  "Deixar de realizar a parada obrigatória antes da PASSAGEM DE NÍVEL, permanecendo no mínimo 3 segundos com o veículo parado"
+ ];
+ const eventsN5=[
+  "Deixar de realizar o procedimento completo de transposição de PN - vidros abaixados, som desligado e observando ambos os lados",
+  "Conduzir veículo com manutenção preventiva vencida, em mau estado de conservação ou sem os itens de segurança obrigatórios previstos no CTB (como lâmpada queimada, pneus abaixo do TWI, entre outros)",
+  "Não obedecer à sinalização de trânsito",
+  "Direção perigosa, incluindo transportar carga excedente ou com risco potencial sem sinalização adequada",
+  "Deixar de conceder preferência de passagem ao pedestre",
+  "Conduzir veículo com categoria de CNH incompatível com a exigida para o tipo de veículo",
+  "Transitar com o veículo em velocidade incompatível com a via.",
+  "Transitar em marcha ré, exceto para pequenas manobras.",
+  "Conduzir qualquer veículo mobilizado sem a documentação obrigatória exigida pelos procedimentos Vale (ex: selo MEV, Passaporte RAC2)",
+  "Conduzir o veículo sem os documentos obrigatório exigidos pelo CTB - Código de Trânsito Brasileiro;",
+  "Não atender as orientações dos Agentes de Trânsito, recusar apresentação de documentos ou deixar de prestar informações necessárias à identificação do condutor e demais passageiros;",
+  "Transportar carga irregular, incluindo materiais que possam gerar poeira fugitiva sem proteção adequada",
+  "ESTACIONAR OU PARAR VEÍCULO em situações irregulares, como: local proibido; afastado da guia da calçada; na contramão de direção; em área de cruzamento; interrompendo o trânsito; ultrapassando o tempo permitido no estacionamento rotativo; em desacordo com vagas preferenciais ou exclusivas; fora dos pontos indicados para embarque e desembarque; sobre calçadas, faixas de pedestres, canteiros ou divisores de pista."
+ ];
+ const eventsN5All=[
+  "Exposição voluntária ao risco de pisões e de contato com animais peçonhentos, ao permanecer deitado ou sentado no chão e em áreas de circulação.",
+  "Descumprir do fluxo estabelecido para interdição de vias",
+  "Descumprir a restrição de circulação de veículos e equipamentos com velocidade inferior a 20 km/h nos horários: 06h30–08h00, 11h00–13h00 e 15h30–17h00"
+ ];
+ groups={};let index=0;
+ const addRows=(events,potential,categories)=>events.forEach(event=>categories.forEach(category=>{
+  const id="BD"+String(++index).padStart(2,"0"),outcomes=(potential==="N3"?n3:n5)[category];
+  groups[id]={id,potential,classification:potential,audience:category,people:[category],events:[event],outcomes:{first:[...outcomes.first],second:[...outcomes.second],more:[]}};
+ }));
+ addRows(eventsN3,"N3",[vale,contractor,nonMobilized]);
+ addRows(eventsN5,"N5",[vale,contractor,nonMobilized]);
+ addRows(eventsN5All,"N5",[allPublics]);
+ speedEvents=[];publics=[vale,contractor,nonMobilized,allPublics];hiddenDeviations=[];
+ databaseAuthoritative=true;persist();localStorage.setItem(revision,"1");
+}
+initializeDatabaseMatrix();
+function ensureSpeedDeviationRules(){
+ const audiences=[
+  "Empregado | veículo mobilizado Vale",
+  "Empregado | veículo mobilizado Contratada",
+  "Empregado | veículo não mobilizado (Vale | Contratada | Fornecedor)"
+ ];
+ const committee="Aplicar Comitê Pela Vida (PNR-000267 -Gestão de Condutas para SSMA)";
+ const rules=[
+  {event:"Excesso de velocidade (>7% e <=20%)",potential:"N5",first:["Advertência Verbal"],second:["Advertência escrita"],more:[committee]},
+  {event:"Excesso de velocidade (>20% <=50%)",potential:"N3",first:["Advertência escrita"],second:["Suspensão de RAC"],more:[committee]},
+  {event:"Excesso de velocidade (>50% e/ou >120km/h)",potential:"N3",first:[committee],second:[committee],more:[committee]}
+ ];
+ let changed=false;
+ rules.forEach((rule,index)=>{
+  const existing=Object.entries(groups).filter(([,group])=>(group.events||[]).includes(rule.event));
+  existing.forEach(([key])=>{delete groups[key];changed=true});
+  const outcomes={first:[...rule.first],second:[...rule.second],more:[...rule.more]};
+  audiences.forEach((audience,audienceIndex)=>{
+   const id="BD_SPEED_"+String(index+1).padStart(2,"0")+"_"+(audienceIndex+1);
+   groups[id]={id,potential:rule.potential,classification:rule.potential,audience,people:[audience],events:[rule.event],outcomes:{first:[...outcomes.first],second:[...outcomes.second],more:[...outcomes.more]}};
+   changed=true;
+  });
+ });
+ if(changed)persist();
+}
+ensureSpeedDeviationRules();
+function normalizeDatabasePublicNames(){
+ const nonMobilized="Empregado | veículo não mobilizado (Vale | Contratada | Fornecedor)";
+ const allPublics="Empregado Vale e Contratada | Fornecedor e Visitante";
+ const canonicalPublics=["Empregado | veículo mobilizado Vale","Empregado | veículo mobilizado Contratada",nonMobilized,allPublics];
+ const normalize=value=>{
+  const text=String(value||"").trim();
+  if(/^Empregado \| veículo não mobilizado \((?:particular \| fornecedor \| visitante|vale \| fornecedor \| visitante)\)$/i.test(text))return nonMobilized;
+  if(/^Empregado Vale e Contratada \| fornecedor e visitante$/i.test(text))return allPublics;
+  return text;
+ };
+ Object.values(groups).forEach(rule=>{
+  if(rule.audience)rule.audience=normalize(rule.audience);
+  rule.people=(rule.people||[]).map(normalize).filter(person=>canonicalPublics.includes(person));
+ });
+ speedEvents.forEach(rule=>{
+  if(rule.audience)rule.audience=normalize(rule.audience);
+  rule.people=(rule.people||[]).map(normalize).filter(person=>canonicalPublics.includes(person));
+ });
+ publics=canonicalPublics;
+ persist();
+}
+normalizeDatabasePublicNames();
 renderAll();
 </script></body></html>
