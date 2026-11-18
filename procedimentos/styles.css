@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: clamp(20px, 4vw, 52px);
+  background: #f3f6f5;
+  color: #243238;
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+}
+
+.page-header {
+  margin: 0 0 22px;
+}
+
+.eyebrow {
+  color: #26746f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+h1 {
+  margin: 8px 0;
+  color: #123d43;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.page-header p {
+  max-width: 760px;
+  margin: 0;
+  color: #58676b;
+  line-height: 1.6;
+}
+
+.manual-frame {
+  overflow: hidden;
+  border: 1px solid #dce5e3;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgb(25 57 55 / 8%);
+}
+
+.manual-frame iframe {
+  display: block;
+  width: 100%;
+  height: 790px;
+  border: 0;
+}
+
+.sharepoint-note {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border: 1px solid #dce5e3;
+  border-radius: 12px;
+  background: #fff;
+  line-height: 1.55;
+}
+
+.sharepoint-note strong {
+  color: #123d43;
+}
+
+.sharepoint-note p {
+  margin: 8px 0;
+  color: #58676b;
+}
+
+.sharepoint-note pre {
+  overflow-x: auto;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f2f5f4;
+  color: #244c4b;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sharepoint-note code {
+  font-family: Consolas, monospace;
+  font-size: 0.88rem;
+}
+
+.sharepoint-note .note-small {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 20px 14px;
+  }
+
+  .manual-frame iframe {
+    height: 1050px;
+  }
+}

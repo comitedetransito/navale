@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedimento para desvios e tratativas</title>
+    <style>
+      :root { color-scheme: light; font-family: Arial, sans-serif; color: #243238; background: #fff; }
+      * { box-sizing: border-box; }
+      body { max-width: 980px; margin: 0 auto; padding: 34px clamp(20px, 5vw, 58px) 48px; line-height: 1.6; }
+      .label { color: #26746f; font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
+      h1 { margin: 8px 0; color: #123d43; font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; }
+      .intro { margin: 0 0 24px; color: #58676b; font-size: 1.05rem; }
+      .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+      .meta span { border-radius: 999px; background: #edf5f3; color: #245d59; padding: 6px 12px; font-size: .85rem; }
+      .notice { border-left: 4px solid #b28627; background: #fbf7eb; padding: 14px 18px; margin: 24px 0 30px; }
+      .notice p { margin: 4px 0; }
+      h2 { margin: 30px 0 12px; color: #123d43; font-size: 1.35rem; }
+      h3 { margin: 0 0 6px; color: #245d59; font-size: 1.05rem; }
+      .step { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 17px 0; border-bottom: 1px solid #e7eceb; }
+      .number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e7f1ef; color: #17625d; font-weight: 700; }
+      .step p, .role-card p { margin: 0; color: #526166; }
+      .role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .role-card { border: 1px solid #e1e9e7; border-radius: 12px; padding: 18px; }
+      .role-card h3 { margin-bottom: 8px; }
+      .status-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+      .status-list li { padding: 7px 11px; border: 1px solid #dce7e4; border-radius: 8px; font-size: .9rem; }
+      .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e7eceb; color: #68777a; font-size: .85rem; }
+      @media (max-width: 620px) { body { padding-top: 24px; } .role-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="label">GUIA OPERACIONAL</div>
+    <h1>Registro de desvios e tratativas</h1>
+    <p class="intro">Fluxo de referência para identificar, registrar, analisar e acompanhar ocorrências de trânsito.</p>
+    <div class="meta"><span>Responsáveis: Agente de trânsito e Analista</span><span>Modelo: procedimento inicial</span></div>
+
+    <div class="notice">
+      <strong>Importante</strong>
+      <p>Este exemplo deve ser ajustado aos formulários, prazos, critérios de criticidade e canais oficiais da sua operação.</p>
+    </div>
+
+    <h2>1. Procedimento do agente de trânsito</h2>
+    <div class="step"><span class="number">1</span><div><h3>Identificar e avaliar o desvio</h3><p>Verifique o local e a condição observada. Em caso de risco imediato, priorize a segurança, sinalize a área conforme orientação operacional e acione o canal de emergência aplicável.</p></div></div>
+    <div class="step"><span class="number">2</span><div><h3>Registrar a ocorrência</h3><p>Cadastre data e hora, local ou referência, tipo de desvio, descrição objetiva, impacto observado e ação imediata adotada. Evite incluir dados pessoais desnecessários.</p></div></div>
+    <div class="step"><span class="number">3</span><div><h3>Anexar evidências e encaminhar</h3><p>Inclua fotos ou documentos permitidos, identificando-os com clareza. Encaminhe o registro à fila da analista ou à área responsável e informe o número do protocolo ao solicitante, quando aplicável.</p></div></div>
+
+    <h2>2. Procedimento da analista</h2>
+    <div class="step"><span class="number">1</span><div><h3>Validar o cadastro</h3><p>Confira se o registro contém informações suficientes, se não há duplicidade e se as evidências correspondem à ocorrência. Solicite complementação ao agente quando necessário.</p></div></div>
+    <div class="step"><span class="number">2</span><div><h3>Classificar e direcionar</h3><p>Atribua categoria e prioridade conforme os critérios internos. Direcione para a área responsável, registrando responsável, data do encaminhamento e prazo definido pela operação.</p></div></div>
+    <div class="step"><span class="number">3</span><div><h3>Acompanhar a tratativa e concluir</h3><p>Monitore o prazo, registre interações e atualize o histórico. Ao receber a resposta, valide a evidência da solução, comunique o resultado aos envolvidos e encerre o registro ou justifique a pendência.</p></div></div>
+
+    <h2>Responsabilidades resumidas</h2>
+    <div class="role-grid">
+      <article class="role-card"><h3>Agente de trânsito</h3><p>Identificar, proteger o local quando necessário, registrar dados completos e evidências, adotar medidas imediatas cabíveis e encaminhar o protocolo.</p></article>
+      <article class="role-card"><h3>Analista</h3><p>Validar, classificar, direcionar, cobrar retorno, manter o histórico atualizado e confirmar a conclusão da tratativa.</p></article>
+    </div>
+
+    <h2>Status sugeridos para acompanhamento</h2>
+    <ul class="status-list"><li>Novo</li><li>Em validação</li><li>Aguardando informação</li><li>Encaminhado</li><li>Em tratativa</li><li>Concluído</li><li>Cancelado / duplicado</li></ul>
+
+    <p class="footer">Controle do documento: defina proprietário, versão, data de revisão, prazos e contatos oficiais antes de publicar como procedimento vigente.</p>
+  </body>
+</html>
