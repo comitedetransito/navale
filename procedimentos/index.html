@@ -3,32 +3,347 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#123d43" />
-    <title>Manual de Procedimentos | Trânsito</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Procedimento para desvios e tratativas</title>
+    <style>
+      :root { color-scheme: light; font-family: Arial, sans-serif; color: #243238; background: #fff; }
+      * { box-sizing: border-box; }
+      body { max-width: 980px; margin: 0 auto; padding: 34px clamp(20px, 5vw, 58px) 48px; line-height: 1.6; }
+      .label { color: #26746f; font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
+      h1 { margin: 8px 0; color: #123d43; font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; }
+      .intro { margin: 0 0 24px; color: #58676b; font-size: 1.05rem; }
+      .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+      .meta span { border-radius: 999px; background: #edf5f3; color: #245d59; padding: 6px 12px; font-size: .85rem; }
+      .notice { border-left: 4px solid #b28627; background: #fbf7eb; padding: 14px 18px; margin: 24px 0 30px; }
+      .notice p { margin: 4px 0; }
+      h2 { margin: 30px 0 12px; color: #123d43; font-size: 1.35rem; }
+      h3 { margin: 0 0 6px; color: #245d59; font-size: 1.05rem; }
+      .step { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 17px 0; border-bottom: 1px solid #e7eceb; }
+      .number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e7f1ef; color: #17625d; font-weight: 700; }
+      .step p, .role-card p { margin: 0; color: #526166; }
+      .role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .role-card { border: 1px solid #e1e9e7; border-radius: 12px; padding: 18px; }
+      .role-card h3 { margin-bottom: 8px; }
+      .status-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+      .status-list li { padding: 7px 11px; border: 1px solid #dce7e4; border-radius: 8px; font-size: .9rem; }
+      body { max-width: none; margin: 0; padding: 0 0 48px; }
+      .banner { width: 100%; background: #fff; }
+      .banner img { display: block; width: 100%; max-width: 100%; height: auto; }
+      .content { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 24px; max-width: 1240px; margin: 0 auto; padding: 34px clamp(20px, 5vw, 58px) 0; }
+      .sidebar { padding: 0; border: 0; border-radius: 0; background: transparent; }
+      .sidebar-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+      .page-content { min-width: 0; }
+      .procedure-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; }
+      .sidebar-link, .procedure-link { display: flex; min-width: 0; min-height: 112px; flex-direction: column; align-items: center; justify-content: center; gap: 9px; padding: 14px 10px; border: 0; color: #fff; font-size: .76rem; font-weight: 700; line-height: 1.3; text-align: center; text-decoration: none; overflow-wrap: anywhere; }
+      .sidebar-link:nth-child(1) { background: #438fb5; }
+      .sidebar-link:nth-child(2) { background: #63b6cf; }
+      .sidebar-link:nth-child(3) { background: #77bd78; }
+      .procedure-link { background: #d2c943; color: #354e38; }
+      .sidebar-link:hover, .sidebar-link:focus-visible, .procedure-link:hover, .procedure-link:focus-visible { filter: brightness(.92); text-decoration: underline; }
+      .sidebar-link:focus-visible, .procedure-link:focus-visible { position: relative; z-index: 1; outline: 3px solid #123d43; outline-offset: -4px; }
+      .sidebar-link[aria-current="location"] { box-shadow: inset 0 -5px 0 rgb(18 61 67 / 40%); }
+      .sidebar-link svg, .procedure-link svg { flex: 0 0 28px; width: 28px; height: 28px; opacity: .85; }
+      .link-target { margin-top: 30px; }
+      .link-target p, .link-target li { color: #526166; }
+      .link-target li + li { margin-top: 8px; }
+      .diary-table-wrap { overflow-x: auto; margin-top: 14px; border: 1px solid #dce7e4; border-radius: 8px; }
+      .diary-table { width: 100%; min-width: 680px; border-collapse: collapse; background: #fff; text-align: left; }
+      .diary-table th, .diary-table td { padding: 11px 12px; border-bottom: 1px solid #e7eceb; vertical-align: top; }
+      .diary-table th { background: #edf5f3; color: #245d59; font-size: .9rem; }
+      .diary-table tbody tr:last-child td { border-bottom: 0; }
+      .standardizer { padding: 22px; border: 1px solid #dce7e4; border-radius: 12px; background: #f8fbfa; }
+      .standardizer h2 { margin-top: 0; }
+      .form-intro { color: #526166; }
+      .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .question { display: flex; flex-direction: column; gap: 6px; }
+      .question label { color: #243238; font-weight: 700; }
+      .question input, .question select, .question textarea { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #aebfbb; border-radius: 7px; font: inherit; }
+      .question textarea { min-height: 112px; resize: vertical; }
+      .question input:focus, .question select:focus, .question textarea:focus { outline: 3px solid rgb(0 126 114 / 18%); border-color: #007e72; }
+      #padronize-evento[hidden] { display: none; }
+      .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+      .primary-button, .copy-button { min-height: 44px; padding: 10px 16px; border: 0; border-radius: 7px; background: #007e72; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+      .primary-button:hover, .copy-button:hover { background: #00665c; }
+      .copy-button:disabled { background: #82918f; cursor: not-allowed; }
+      .form-status { min-height: 1.5em; color: #245d59; }
+      .output-panel { margin-top: 24px; }
+      .output-panel[hidden] { display: none; }
+      .output-panel textarea { display: block; width: 100%; min-height: 340px; margin-top: 10px; padding: 14px; border: 1px solid #aebfbb; border-radius: 8px; font:  .95rem/1.5 Consolas, monospace; white-space: pre-wrap; }
+      #sap-title-output { min-height: 72px; }
+      .output-item + .output-item { margin-top: 24px; }
+      @media (max-width: 760px) { .content { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; } .procedure-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sidebar-link, .procedure-link { min-height: 100px; } .role-grid, .question-grid { grid-template-columns: 1fr; } .standardizer { padding: 16px; } }
+      @media (max-width: 420px) { body { padding-bottom: 32px; } .content { padding-right: 14px; padding-left: 14px; } .procedure-links { gap: 1px; } .sidebar-link, .procedure-link { min-height: 92px; padding: 10px 7px; font-size: .7rem; } .sidebar-link svg, .procedure-link svg { flex-basis: 24px; width: 24px; height: 24px; } h1 { overflow-wrap: anywhere; } }
+    </style>
   </head>
   <body>
-    <main class="page">
-      <header class="page-header">
-        <div class="eyebrow">COMITÊ DE TRÂNSITO</div>
-        <h1>Manual de procedimentos</h1>
-        <p>Orientações para agentes de trânsito e analistas no registro de desvios e acompanhamento das tratativas.</p>
-      </header>
-
-      <section class="manual-frame" aria-label="Manual de procedimentos incorporado">
-        <iframe
-          src="manual.html"
-          title="Manual de procedimentos para registro de desvios e tratativas"
-          loading="lazy"
-        ></iframe>
-      </section>
-
-      <aside class="sharepoint-note">
-        <strong>Para incorporar no SharePoint</strong>
-        <p>Antes de inserir no SharePoint, publique o arquivo do manual em um endereço HTTPS acessível. O exemplo abaixo é apenas um modelo: substitua o valor de <code>src</code> pela URL real e completa do arquivo publicado — não cole o texto de exemplo sem essa alteração.</p>
-        <pre><code>&lt;iframe src="https://SEU-DOMINIO-APROVADO/manual.html" title="Manual de procedimentos" width="100%" height="800"&gt;&lt;/iframe&gt;</code></pre>
-        <p class="note-small">Se o aviso continuar mesmo com a URL correta, confirme que ela abre sem autenticação incompatível e que o servidor permite exibição em iframe. O administrador do SharePoint também pode precisar liberar o domínio.</p>
+    <header class="banner">
+      <img src="Banner - procedimentos Comitê (7).png" alt="Comitê de Trânsito Tubarão — Mais que estrutura, um instrumento de disciplina operacional." />
+    </header>
+    <main class="content">
+      <aside class="sidebar" aria-label="Menu lateral">
+        <p class="sidebar-title">Navegação da página</p>
+        <nav class="procedure-links" aria-label="Navegação da página">
+          <a class="sidebar-link" href="#inicio" aria-current="location">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m3.5 10 8.5-7 8.5 7v10.5h-6v-6h-5v6h-6V10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+            <span>Comece por aqui</span>
+          </a>
+          <a class="sidebar-link" href="#procedimentos-agente">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 3.5h14v17H5zM8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <span>Procedimentos Agente de trânsito</span>
+          </a>
+          <a class="sidebar-link" href="#procedimentos-analista">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M4 5.5h16v15H4zM8 3.5v4M16 3.5v4M4 10h16M8 14h3M8 17h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <span>Procedimentos Analista do Comitê de trânsito</span>
+          </a>
+          <a class="procedure-link" href="#padronize-evento" aria-controls="padronize-evento" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M14 3.75v4h4M8.5 12h7M8.5 15.5h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Padronize um evento para registro no SAP</span>
+          </a>
+        </nav>
       </aside>
+      <div class="page-content" id="inicio">
+        <div class="label">GUIA OPERACIONAL</div>
+        <h1>Procedimentos</h1>
+        <p class="intro">Orientações operacionais para os agentes de trânsito e a analista.</p>
+        <section class="link-target" id="procedimentos-agente" aria-labelledby="agente-title">
+          <h2 id="agente-title">Procedimentos Agente de trânsito</h2>
+        </section>
+        <section class="link-target" id="procedimentos-analista" aria-labelledby="analista-title">
+          <h2 id="analista-title">Procedimentos Analista do Comitê de trânsito</h2>
+          <p>As atividades da analista incluem organizar e acompanhar os registros do Comitê de Trânsito, conferir se as informações e evidências estão completas e manter o andamento das tratativas documentado.</p>
+          <ol>
+            <li>Receber e conferir os dados do desvio, identificando informações ausentes ou inconsistentes.</li>
+            <li>Verificar se as evidências e os documentos relacionados estão disponíveis e vinculados ao registro correspondente no SAP.</li>
+            <li>Padronizar a descrição do incidente conforme a matriz e revisar o título e os dados antes do registro ou da atualização.</li>
+            <li>Registrar o andamento e as tratativas, direcionando pendências às pessoas responsáveis.</li>
+            <li>Quando houver informações pessoais ou sensíveis, encaminhá-las conforme o procedimento aplicável, usando o ID do registro SAP e respeitando a LGPD.</li>
+          </ol>
+          <h3>Diário de bordo — horários e locais de atuação</h3>
+          <p>Registre cada atividade com o horário e o local efetivamente realizados. Os campos abaixo são um modelo para preenchimento, não uma escala fixa.</p>
+          <div class="diary-table-wrap" tabindex="0" aria-label="Tabela de diário de bordo; em telas pequenas, deslize para ver todas as colunas">
+            <table class="diary-table">
+              <thead>
+                <tr><th scope="col">Data</th><th scope="col">Horário</th><th scope="col">Local de atuação</th><th scope="col">Atividade / procedimento</th><th scope="col">Registro ou encaminhamento</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Preencher</td><td>Preencher</td><td>Preencher</td><td>Descrever a atividade realizada</td><td>Informar ID SAP, resultado ou pendência</td></tr>
+                <tr><td>Preencher</td><td>Preencher</td><td>Preencher</td><td>Descrever a atividade realizada</td><td>Informar ID SAP, resultado ou pendência</td></tr>
+                <tr><td>Preencher</td><td>Preencher</td><td>Preencher</td><td>Descrever a atividade realizada</td><td>Informar ID SAP, resultado ou pendência</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="link-target standardizer" id="padronize-evento" aria-labelledby="form-title" hidden>
+      <h2 id="form-title">Padronização da descrição do incidente</h2>
+      <p class="form-intro">Responda às perguntas abaixo. O texto será montado no padrão do Excel, sem campos em branco e com espaços extras removidos. Confira os dados antes de copiar para o SAP.</p>
+      <form id="incident-form">
+        <div class="question-grid">
+          <div class="question">
+            <label for="deviation">1. Descrição do desvio (matriz)</label>
+            <textarea id="deviation" name="deviation" rows="4" autocomplete="off" required></textarea>
+          </div>
+          <div class="question">
+            <label for="person">2. Condutor/passageiro (iniciais ou NI)</label>
+            <input id="person" name="person" type="text" placeholder="Iniciais ou NI" autocomplete="off" required />
+          </div>
+          <div class="question">
+            <label for="registration">3. Matrícula do condutor/passageiro</label>
+            <input id="registration" name="registration" type="text" autocomplete="off" required />
+          </div>
+          <div class="question">
+            <label for="rfid">4. RFID do crachá (verso do crachá)</label>
+            <input id="rfid" name="rfid" type="text" autocomplete="off" required />
+          </div>
+          <div class="question">
+            <label for="company">5. Empresa do condutor/passageiro</label>
+            <input id="company" name="company" type="text" autocomplete="organization" required />
+          </div>
+          <div class="question">
+            <label for="plate">6. Placa do veículo abordado</label>
+            <input id="plate" name="plate" type="text" autocomplete="off" required />
+          </div>
+          <div class="question">
+            <label for="vehicle-company">7. Empresa/locadora do veículo abordado</label>
+            <input id="vehicle-company" name="vehicleCompany" type="text" autocomplete="organization" required />
+          </div>
+          <div class="question">
+            <label for="sap-title">8. Título padrão do SAP</label>
+            <select id="sap-title" name="sapTitle" required>
+              <option value="">Selecione uma opção</option>
+              <option>01. [COMITÊ DE TRÂNSITO] Condutor sem cinto de segurança em veículo em movimento.</option>
+              <option>02. [COMITÊ DE TRÂNSITO] Passageiro sem cinto de segurança em veículo em movimento.</option>
+              <option>03. [COMITÊ DE TRÂNSITO] Uso de celular durante a condução.</option>
+              <option>04. [COMITÊ DE TRÂNSITO] Não realizar parada obrigatória antes da PN.</option>
+              <option>05. [COMITÊ DE TRÂNSITO] Não cumprir procedimento de transposição de PN.</option>
+              <option>06. [COMITÊ DE TRÂNSITO] Conduzir veículo sem condições adequadas de segurança.</option>
+              <option>07. [COMITÊ DE TRÂNSITO] Descumprir a sinalização de trânsito.</option>
+              <option>08. [COMITÊ DE TRÂNSITO] Direção perigosa ou transporte irregular de carga.</option>
+              <option>09. [COMITÊ DE TRÂNSITO] Não conceder preferência ao pedestre.</option>
+              <option>10. [COMITÊ DE TRÂNSITO] Conduzir veículo com CNH incompatível.</option>
+              <option>11. [COMITÊ DE TRÂNSITO] Transitar em velocidade incompatível com a via.</option>
+              <option>12. [COMITÊ DE TRÂNSITO] Transitar em marcha ré de forma indevida.</option>
+              <option>13. [COMITÊ DE TRÂNSITO] Conduzir veículo mobilizado sem documentação Vale obrigatória.</option>
+              <option>14. [COMITÊ DE TRÂNSITO] Conduzir veículo sem documentação obrigatória do CTB.</option>
+              <option>15. [COMITÊ DE TRÂNSITO] Não atender agentes de trânsito ou recusar identificação.</option>
+              <option>16. [COMITÊ DE TRÂNSITO] Transportar carga de forma irregular.</option>
+              <option>17. [COMITÊ DE TRÂNSITO] Estacionar ou parar veículo em desacordo com as regras.</option>
+              <option>18. [COMITÊ DE TRÂNSITO] Condição ou comportamento inseguro.</option>
+              <option>19. [COMITÊ DE TRÂNSITO] Descumprir fluxo de interdição de vias.</option>
+              <option>20. [COMITÊ DE TRÂNSITO] Descumprir restrição de circulação em horários críticos.</option>
+              <option>21. [COMITÊ DE TRÂNSITO] Excesso de velocidade superior a 7% e até 20%.</option>
+              <option>22. [COMITÊ DE TRÂNSITO] Excesso de velocidade superior a 20% e até 50%.</option>
+              <option>23. [COMITÊ DE TRÂNSITO] Excesso de velocidade superior a 50% ou acima de 120 km/h.</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="primary-button" type="submit">Gerar descrição para o SAP</button>
+          <span class="form-status" id="form-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+      <div class="output-panel" id="output-panel" hidden>
+        <div class="output-item">
+          <label for="sap-title-output"><strong>Título padrão do SAP — copie para o campo de título</strong></label>
+          <textarea id="sap-title-output" readonly spellcheck="false" rows="2"></textarea>
+          <div class="form-actions">
+            <button class="copy-button" id="copy-title-button" type="button">Copiar título</button>
+            <span class="form-status" id="copy-title-status" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="output-item">
+          <label for="sap-output"><strong>Descrição padronizada — revise e copie para o SAP</strong></label>
+          <textarea id="sap-output" readonly spellcheck="false"></textarea>
+          <div class="form-actions">
+            <button class="copy-button" id="copy-button" type="button">Copiar descrição</button>
+            <span class="form-status" id="copy-status" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+        </section>
+      </div>
     </main>
+    <script>
+      const navigationLinks = document.querySelectorAll('.sidebar-link, .procedure-link');
+      const pageSections = ['procedimentos-agente', 'procedimentos-analista', 'padronize-evento']
+        .map((id) => document.getElementById(id));
+      const homeContent = document.querySelectorAll('#inicio > .label, #inicio > h1, #inicio > .intro');
+
+      function showPage(targetId) {
+        homeContent.forEach((element) => {
+          element.hidden = targetId !== 'inicio';
+        });
+        pageSections.forEach((section) => {
+          section.hidden = section.id !== targetId;
+        });
+        navigationLinks.forEach((link) => {
+          const isCurrent = link.getAttribute('href') === `#${targetId}`;
+          if (isCurrent) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+          if (link.classList.contains('procedure-link')) {
+            link.setAttribute('aria-expanded', String(isCurrent));
+          }
+        });
+      }
+
+      navigationLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const targetId = link.getAttribute('href').slice(1);
+          showPage(targetId);
+          history.replaceState(null, '', `#${targetId}`);
+          document.querySelector('.page-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      showPage('inicio');
+      const procedureSection = document.getElementById('padronize-evento');
+
+      const incidentForm = document.getElementById('incident-form');
+      const fieldNames = ['deviation', 'person', 'registration', 'rfid', 'company', 'plate', 'vehicle-company', 'sap-title'];
+      const outputPanel = document.getElementById('output-panel');
+      const output = document.getElementById('sap-output');
+      const titleOutput = document.getElementById('sap-title-output');
+      const formStatus = document.getElementById('form-status');
+      const copyStatus = document.getElementById('copy-status');
+      const copyTitleStatus = document.getElementById('copy-title-status');
+
+      function clean(value) {
+        return value.replace(/\s+/g, ' ').trim();
+      }
+
+      fieldNames.forEach((name) => {
+        const field = document.getElementById(name);
+        field.addEventListener('input', () => {
+          field.setCustomValidity(clean(field.value) ? '' : 'Preencha este campo.');
+        });
+      });
+
+      incidentForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const values = {};
+        let firstInvalid = null;
+
+        fieldNames.forEach((name) => {
+          const field = document.getElementById(name);
+          values[name] = clean(field.value);
+          field.setCustomValidity(values[name] ? '' : 'Preencha este campo.');
+          if (!values[name] && !firstInvalid) firstInvalid = field;
+        });
+
+        if (firstInvalid) {
+          firstInvalid.reportValidity();
+          firstInvalid.focus();
+          return;
+        }
+
+        titleOutput.value = values['sap-title'];
+        output.value = [
+          `Descrição do desvio (matriz): ${values.deviation}`,
+          `Condutor/passageiro (iniciais ou NI): ${values.person}`,
+          `Matrícula condutor/passageiro: ${values.registration}`,
+          `RFID do crachá (verso do crachá): ${values.rfid}`,
+          `Empresa do condutor/passageiro: ${values.company}`,
+          `Placa do veículo abordado: ${values.plate}`,
+          `Empresa/locadora veículo abordado: ${values['vehicle-company']}`,
+          'Evidências:',
+          'a) Registros contendo fotos com data e hora ou vídeos, relatórios do veículo estão disponíveis no SAP',
+          'b) Em atendimento a LGPD informações pessoais e sensíveis - dados de documentos pessoais, imagem e vídeos de pessoas são encaminhadas por e-mail com o ID do registro SAP para a liderança Vale responsável pelo empregado Vale ou contratado.'
+        ].join('\n');
+
+        outputPanel.hidden = false;
+        formStatus.textContent = 'Descrição gerada. Revise o conteúdo antes de copiar.';
+        output.focus();
+      });
+
+      document.getElementById('copy-title-button').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(titleOutput.value);
+          copyTitleStatus.textContent = 'Título copiado.';
+        } catch (error) {
+          titleOutput.focus();
+          titleOutput.select();
+          const copied = document.execCommand('copy');
+          copyTitleStatus.textContent = copied
+            ? 'Título copiado.'
+            : 'Não foi possível copiar automaticamente. Selecione e copie o título.';
+        }
+      });
+
+      document.getElementById('copy-button').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(output.value);
+          copyStatus.textContent = 'Informação copiada.';
+        } catch (error) {
+          output.focus();
+          output.select();
+          const copied = document.execCommand('copy');
+          copyStatus.textContent = copied
+            ? 'Informação copiada.'
+            : 'Não foi possível copiar automaticamente. Selecione e copie o texto.';
+        }
+      });
+    </script>
   </body>
 </html>
