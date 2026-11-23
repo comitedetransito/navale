@@ -28,12 +28,12 @@
       body { max-width: none; margin: 0; padding: 0 0 48px; }
       .banner { width: 100%; background: #fff; }
       .banner img { display: block; width: 100%; max-width: 100%; height: auto; }
-      .content { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 24px; max-width: 1240px; margin: 0 auto; padding: 34px clamp(20px, 5vw, 58px) 0; }
-      .sidebar { padding: 0; border: 0; border-radius: 0; background: transparent; }
+      .content { display: grid; grid-template-columns: minmax(190px, 240px) minmax(0, 1fr); align-items: start; gap: 28px; max-width: 1240px; margin: 0 auto; padding: 34px clamp(20px, 5vw, 58px) 0; }
+      .sidebar { position: sticky; top: 20px; min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
       .sidebar-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
       .page-content { min-width: 0; }
-      .procedure-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; }
-      .sidebar-link, .procedure-link { display: flex; min-width: 0; min-height: 112px; flex-direction: column; align-items: center; justify-content: center; gap: 9px; padding: 14px 10px; border: 0; color: #fff; font-size: .76rem; font-weight: 700; line-height: 1.3; text-align: center; text-decoration: none; overflow-wrap: anywhere; }
+      .procedure-links { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin: 0; }
+      .sidebar-link, .procedure-link { display: flex; min-width: 0; min-height: 72px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; padding: 14px; border: 0; color: #fff; font-size: .76rem; font-weight: 700; line-height: 1.3; text-align: left; text-decoration: none; overflow-wrap: anywhere; }
       .sidebar-link:nth-child(1) { background: #438fb5; }
       .sidebar-link:nth-child(2) { background: #63b6cf; }
       .sidebar-link:nth-child(3) { background: #77bd78; }
@@ -70,7 +70,7 @@
       .output-panel textarea { display: block; width: 100%; min-height: 340px; margin-top: 10px; padding: 14px; border: 1px solid #aebfbb; border-radius: 8px; font:  .95rem/1.5 Consolas, monospace; white-space: pre-wrap; }
       #sap-title-output { min-height: 72px; }
       .output-item + .output-item { margin-top: 24px; }
-      @media (max-width: 760px) { .content { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; } .procedure-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sidebar-link, .procedure-link { min-height: 100px; } .role-grid, .question-grid { grid-template-columns: 1fr; } .standardizer { padding: 16px; } }
+      @media (max-width: 760px) { .content { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; } .sidebar { position: static; } .procedure-links { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: #78918d #edf5f3; } .sidebar-link, .procedure-link { flex: 0 0 170px; min-height: 100px; flex-direction: column; justify-content: center; padding: 12px 10px; text-align: center; } .procedure-links::-webkit-scrollbar { height: 8px; } .procedure-links::-webkit-scrollbar-track { background: #edf5f3; border-radius: 999px; } .procedure-links::-webkit-scrollbar-thumb { background: #78918d; border-radius: 999px; } .role-grid, .question-grid { grid-template-columns: 1fr; } .standardizer { padding: 16px; } }
       @media (max-width: 420px) { body { padding-bottom: 32px; } .content { padding-right: 14px; padding-left: 14px; } .procedure-links { gap: 1px; } .sidebar-link, .procedure-link { min-height: 92px; padding: 10px 7px; font-size: .7rem; } .sidebar-link svg, .procedure-link svg { flex-basis: 24px; width: 24px; height: 24px; } h1 { overflow-wrap: anywhere; } }
     </style>
   </head>
@@ -107,19 +107,48 @@
         <div class="label">GUIA OPERACIONAL</div>
         <h1>Procedimentos</h1>
         <p class="intro">Orientações operacionais para os agentes de trânsito e a analista.</p>
+        <section class="link-target" id="responsabilidades" aria-labelledby="responsabilidades-title">
+          <h2 id="responsabilidades-title">Responsabilidades resumidas</h2>
+          <div class="role-grid">
+            <article class="role-card">
+              <h3>Agente de trânsito</h3>
+              <p>Identificar e, quando necessário, proteger o local; registrar dados completos e evidências; adotar medidas imediatas cabíveis; e encaminhar o protocolo.</p>
+            </article>
+            <article class="role-card">
+              <h3>Analista</h3>
+              <p>Validar e classificar o registro, direcionar a tratativa, acompanhar os retornos, manter o histórico atualizado e confirmar a conclusão.</p>
+            </article>
+          </div>
+        </section>
         <section class="link-target" id="procedimentos-agente" aria-labelledby="agente-title">
           <h2 id="agente-title">Procedimentos Agente de trânsito</h2>
+          <div class="step">
+            <span class="number" aria-hidden="true">1</span>
+            <div><h3>Identificar e avaliar o desvio</h3><p>Verifique o local e a condição observada. Em caso de risco imediato, priorize a segurança, sinalize a área conforme orientação operacional e acione o canal de emergência aplicável.</p></div>
+          </div>
+          <div class="step">
+            <span class="number" aria-hidden="true">2</span>
+            <div><h3>Registrar a ocorrência</h3><p>Cadastre data e hora, local ou referência, tipo de desvio, descrição objetiva, impacto observado e ação imediata adotada. Evite incluir dados pessoais desnecessários.</p></div>
+          </div>
+          <div class="step">
+            <span class="number" aria-hidden="true">3</span>
+            <div><h3>Anexar evidências e encaminhar</h3><p>Inclua fotos ou documentos permitidos, identificando-os com clareza. Encaminhe o registro à fila da analista ou à área responsável e informe o número do protocolo.</p></div>
+          </div>
         </section>
         <section class="link-target" id="procedimentos-analista" aria-labelledby="analista-title">
           <h2 id="analista-title">Procedimentos Analista do Comitê de trânsito</h2>
-          <p>As atividades da analista incluem organizar e acompanhar os registros do Comitê de Trânsito, conferir se as informações e evidências estão completas e manter o andamento das tratativas documentado.</p>
-          <ol>
-            <li>Receber e conferir os dados do desvio, identificando informações ausentes ou inconsistentes.</li>
-            <li>Verificar se as evidências e os documentos relacionados estão disponíveis e vinculados ao registro correspondente no SAP.</li>
-            <li>Padronizar a descrição do incidente conforme a matriz e revisar o título e os dados antes do registro ou da atualização.</li>
-            <li>Registrar o andamento e as tratativas, direcionando pendências às pessoas responsáveis.</li>
-            <li>Quando houver informações pessoais ou sensíveis, encaminhá-las conforme o procedimento aplicável, usando o ID do registro SAP e respeitando a LGPD.</li>
-          </ol>
+          <div class="step">
+            <span class="number" aria-hidden="true">1</span>
+            <div><h3>Validar o cadastro</h3><p>Confira se o registro contém informações suficientes, se não há duplicidade e se as evidências correspondem à ocorrência. Solicite complementação ao agente quando necessário.</p></div>
+          </div>
+          <div class="step">
+            <span class="number" aria-hidden="true">2</span>
+            <div><h3>Classificar e direcionar</h3><p>Atribua categoria e prioridade conforme os critérios internos. Direcione para a área responsável, registrando responsável, data do encaminhamento e prazo definido pela operação.</p></div>
+          </div>
+          <div class="step">
+            <span class="number" aria-hidden="true">3</span>
+            <div><h3>Acompanhar a tratativa e concluir</h3><p>Monitore o prazo, registre interações e atualize o histórico. Ao receber a resposta, valide a evidência da solução, comunique o resultado aos envolvidos e encerre o registro ou justifique a pendência.</p></div>
+          </div>
           <h3>Diário de bordo — horários e locais de atuação</h3>
           <p>Registre cada atividade com o horário e o local efetivamente realizados. Os campos abaixo são um modelo para preenchimento, não uma escala fixa.</p>
           <div class="diary-table-wrap" tabindex="0" aria-label="Tabela de diário de bordo; em telas pequenas, deslize para ver todas as colunas">
@@ -228,7 +257,7 @@
       const navigationLinks = document.querySelectorAll('.sidebar-link, .procedure-link');
       const pageSections = ['procedimentos-agente', 'procedimentos-analista', 'padronize-evento']
         .map((id) => document.getElementById(id));
-      const homeContent = document.querySelectorAll('#inicio > .label, #inicio > h1, #inicio > .intro');
+      const homeContent = document.querySelectorAll('#inicio > .label, #inicio > h1, #inicio > .intro, #responsabilidades');
 
       function showPage(targetId) {
         homeContent.forEach((element) => {
