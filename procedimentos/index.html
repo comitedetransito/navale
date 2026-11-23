@@ -21,6 +21,21 @@
       .number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e7f1ef; color: #17625d; font-weight: 700; }
       .step p, .role-card p { margin: 0; color: #526166; }
       .role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .institutional-visual { margin: 28px 0 36px; }
+      .institutional-visual h2 { margin-bottom: 14px; }
+      .connection-map { padding: 20px; border: 1px solid #e1e9e7; border-radius: 14px; background: linear-gradient(135deg, #f7fbfa, #fff); }
+      .stakeholder-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 680px; margin: 0 auto; }
+      .stakeholder { padding: 11px 14px; border: 1px solid #dce7e4; border-radius: 9px; background: #fff; color: #526166; font-size: .9rem; font-weight: 700; text-align: center; }
+      .committee-core { position: relative; width: min(420px, 100%); margin: 14px auto; padding: 16px; border-radius: 10px; background: #087e78; color: #fff; font-weight: 700; letter-spacing: .04em; text-align: center; }
+      .committee-core::before, .committee-core::after { position: absolute; left: 50%; width: 2px; height: 14px; background: #d0b323; content: ''; transform: translateX(-50%); }
+      .committee-core::before { bottom: 100%; }
+      .committee-core::after { top: 100%; }
+      .pillar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+      .pillar { min-height: 142px; padding: 16px; border: 1px solid #e1e9e7; border-top: 3px solid #d9b521; border-radius: 10px; background: #fff; }
+      .pillar:nth-child(2n) { border-top-color: #087e78; }
+      .pillar-number { display: inline-grid; width: 28px; height: 28px; place-items: center; margin-bottom: 8px; border-radius: 50%; background: #edf5f3; color: #17625d; font-size: .8rem; font-weight: 700; }
+      .pillar h3 { margin-bottom: 4px; color: #354448; text-transform: uppercase; }
+      .pillar p { margin: 0; color: #526166; font-size: .88rem; line-height: 1.45; }
       .role-card { border: 1px solid #e1e9e7; border-radius: 12px; padding: 18px; }
       .role-card h3 { margin-bottom: 8px; }
       .status-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
@@ -33,15 +48,18 @@
       .sidebar-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
       .page-content { min-width: 0; }
       .procedure-links { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin: 0; }
-      .sidebar-link, .procedure-link { display: flex; min-width: 0; min-height: 72px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; padding: 14px; border: 0; color: #fff; font-size: .76rem; font-weight: 700; line-height: 1.3; text-align: left; text-decoration: none; overflow-wrap: anywhere; }
+      .sidebar-link, .procedure-link, .matrix-link { display: flex; min-width: 0; min-height: 72px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; padding: 14px; border: 0; color: #fff; font-size: .76rem; font-weight: 700; line-height: 1.3; text-align: left; text-decoration: none; overflow-wrap: anywhere; }
       .sidebar-link:nth-child(1) { background: #438fb5; }
       .sidebar-link:nth-child(2) { background: #63b6cf; }
       .sidebar-link:nth-child(3) { background: #77bd78; }
       .procedure-link { background: #d2c943; color: #354e38; }
-      .sidebar-link:hover, .sidebar-link:focus-visible, .procedure-link:hover, .procedure-link:focus-visible { filter: brightness(.92); text-decoration: underline; }
-      .sidebar-link:focus-visible, .procedure-link:focus-visible { position: relative; z-index: 1; outline: 3px solid #123d43; outline-offset: -4px; }
+      .procedure-link[href="#governanca-comite"] { background: #d9dfe0; color: #354448; }
+      .sidebar-link[href="#procedimentos-analista"] { background: #d9c8f0; color: #493b5c; }
+      .matrix-link { background: #edf5f3; color: #245d59; }
+      .sidebar-link:hover, .sidebar-link:focus-visible, .procedure-link:hover, .procedure-link:focus-visible, .matrix-link:hover, .matrix-link:focus-visible { filter: brightness(.92); text-decoration: underline; }
+      .sidebar-link:focus-visible, .procedure-link:focus-visible, .matrix-link:focus-visible { position: relative; z-index: 1; outline: 3px solid #123d43; outline-offset: -4px; }
       .sidebar-link[aria-current="location"] { box-shadow: inset 0 -5px 0 rgb(18 61 67 / 40%); }
-      .sidebar-link svg, .procedure-link svg { flex: 0 0 28px; width: 28px; height: 28px; opacity: .85; }
+      .sidebar-link svg, .procedure-link svg, .matrix-link svg { flex: 0 0 28px; width: 28px; height: 28px; opacity: .85; }
       .link-target { margin-top: 30px; }
       .link-target p, .link-target li { color: #526166; }
       .link-target li + li { margin-top: 8px; }
@@ -53,6 +71,10 @@
       .standardizer { padding: 22px; border: 1px solid #dce7e4; border-radius: 12px; background: #f8fbfa; }
       .standardizer h2 { margin-top: 0; }
       .form-intro { color: #526166; }
+      .evidence-alert { margin: 18px 0; padding: 16px 18px; border: 1px solid #d3ad00; border-radius: 8px; background: #fff2a8; color: #111; font-weight: 700; }
+      .evidence-alert p { margin: 8px 0 0; }
+      .evidence-alert ol { margin: 8px 0 0; padding-left: 24px; }
+      .evidence-alert li + li { margin-top: 6px; }
       .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
       .question { display: flex; flex-direction: column; gap: 6px; }
       .question label { color: #243238; font-weight: 700; }
@@ -70,15 +92,15 @@
       .output-panel textarea { display: block; width: 100%; min-height: 340px; margin-top: 10px; padding: 14px; border: 1px solid #aebfbb; border-radius: 8px; font:  .95rem/1.5 Consolas, monospace; white-space: pre-wrap; }
       #sap-title-output { min-height: 72px; }
       .output-item + .output-item { margin-top: 24px; }
-      @media (max-width: 760px) { .content { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; } .sidebar { position: static; } .procedure-links { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: #78918d #edf5f3; } .sidebar-link, .procedure-link { flex: 0 0 170px; min-height: 100px; flex-direction: row; justify-content: flex-start; padding: 12px 10px; text-align: left; } .procedure-links::-webkit-scrollbar { height: 8px; } .procedure-links::-webkit-scrollbar-track { background: #edf5f3; border-radius: 999px; } .procedure-links::-webkit-scrollbar-thumb { background: #78918d; border-radius: 999px; } .role-grid, .question-grid { grid-template-columns: 1fr; } .standardizer { padding: 16px; } }
-      @media (max-width: 420px) { body { padding-bottom: 32px; } .content { padding-right: 14px; padding-left: 14px; } .procedure-links { gap: 1px; } .sidebar-link, .procedure-link { min-height: 92px; padding: 10px 7px; font-size: .7rem; } .sidebar-link svg, .procedure-link svg { flex-basis: 24px; width: 24px; height: 24px; } h1 { overflow-wrap: anywhere; } }
+      @media (max-width: 760px) { .content { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-top: 24px; } .sidebar { position: static; } .procedure-links { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: #78918d #edf5f3; }         .sidebar-link, .procedure-link, .matrix-link { flex: 0 0 170px; min-height: 100px; flex-direction: row; justify-content: flex-start; padding: 12px 10px; text-align: left; } .procedure-links::-webkit-scrollbar { height: 8px; } .procedure-links::-webkit-scrollbar-track { background: #edf5f3; border-radius: 999px; } .procedure-links::-webkit-scrollbar-thumb { background: #78918d; border-radius: 999px; } .role-grid, .question-grid { grid-template-columns: 1fr; } .pillar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .standardizer { padding: 16px; } }
+      @media (max-width: 420px) { body { padding-bottom: 32px; } .content { padding-right: 14px; padding-left: 14px; } .procedure-links { gap: 1px; } .sidebar-link, .procedure-link { min-height: 92px; padding: 10px 7px; font-size: .7rem; } .sidebar-link svg, .procedure-link svg { flex-basis: 24px; width: 24px; height: 24px; } .pillar-grid { grid-template-columns: 1fr; } .connection-map { padding: 14px; } h1 { overflow-wrap: anywhere; } }
       @media (max-width: 760px) {
-        .sidebar-link, .procedure-link { flex: 0 0 138px; min-height: 64px; gap: 7px; padding: 8px; font-size: .7rem; }
-        .sidebar-link svg, .procedure-link svg { flex-basis: 22px; width: 22px; height: 22px; }
+        .sidebar-link, .procedure-link, .matrix-link { flex: 0 0 138px; min-height: 64px; gap: 7px; padding: 8px; font-size: .7rem; }
+        .sidebar-link svg, .procedure-link svg, .matrix-link svg { flex-basis: 22px; width: 22px; height: 22px; }
       }
       @media (max-width: 420px) {
-        .sidebar-link, .procedure-link { flex-basis: 126px; min-height: 58px; gap: 6px; padding: 7px; font-size: .66rem; }
-        .sidebar-link svg, .procedure-link svg { flex-basis: 20px; width: 20px; height: 20px; }
+        .sidebar-link, .procedure-link, .matrix-link { flex-basis: 126px; min-height: 58px; gap: 6px; padding: 7px; font-size: .66rem; }
+        .sidebar-link svg, .procedure-link svg, .matrix-link svg { flex-basis: 20px; width: 20px; height: 20px; }
       }
     </style>
   </head>
@@ -93,6 +115,10 @@
           <a class="sidebar-link" href="#inicio" aria-current="location">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="m3.5 10 8.5-7 8.5 7v10.5h-6v-6h-5v6h-6V10Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
             <span>Comece por aqui</span>
+          </a>
+          <a class="procedure-link" href="#governanca-comite" aria-controls="governanca-comite" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12h7M12 8.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>Procedimentos Governança Comitê de trânsito</span>
           </a>
           <a class="sidebar-link" href="#procedimentos-agente">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 3.5h14v17H5zM8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -109,13 +135,39 @@
             </svg>
             <span>Padronize um evento para registro no SAP</span>
           </a>
+          <a class="matrix-link" href="https://comitedetransito.github.io/navale/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M4 4h16v16H4zM8 8h3v3H8zM13 8h3M13 11h3M8 14h8M8 17h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <span>Matriz de consequências</span>
+          </a>
         </nav>
       </aside>
       <div class="page-content" id="inicio">
-        <div class="label">GUIA OPERACIONAL</div>
-        <h1>Procedimentos</h1>
-        <p class="intro">Orientações operacionais para os agentes de trânsito e a analista.</p>
-        <section class="link-target" id="responsabilidades" aria-labelledby="responsabilidades-title">
+        <div class="label home-only">GOVERNANÇA DE TRÂNSITO · SITE TUBARÃO</div>
+        <h1 class="home-only">Por que o Comitê de Trânsito existe?</h1>
+        <p class="intro home-only">Com equipe dedicada, indicadores gerenciados e um fluxo de atuação bem definido, o Comitê se tornou o eixo central da governança de trânsito do site, conectando operações, lideranças, segurança e contratadas.</p>
+        <section class="institutional-visual home-only" aria-labelledby="pilares-title">
+          <h2 id="pilares-title">Uma governança que conecta e transforma</h2>
+          <div class="connection-map" role="img" aria-label="O Comitê de Trânsito conecta operações, lideranças, segurança e empresas contratadas.">
+            <div class="stakeholder-row">
+              <div class="stakeholder">Operações</div>
+              <div class="stakeholder">Lideranças</div>
+            </div>
+            <div class="committee-core">COMITÊ DE TRÂNSITO · SITE TUBARÃO</div>
+            <div class="stakeholder-row">
+              <div class="stakeholder">Segurança</div>
+              <div class="stakeholder">Empresas contratadas</div>
+            </div>
+          </div>
+          <div class="pillar-grid" aria-label="Pilares de atuação do Comitê">
+            <article class="pillar"><span class="pillar-number">01</span><h3>Prevenção</h3><p>Reduzir riscos operacionais envolvendo veículos e pedestres.</p></article>
+            <article class="pillar"><span class="pillar-number">02</span><h3>Consciência</h3><p>Fortalecer a percepção de risco nas áreas operacionais.</p></article>
+            <article class="pillar"><span class="pillar-number">03</span><h3>Disciplina</h3><p>Promover uma disciplina operacional consistente.</p></article>
+            <article class="pillar"><span class="pillar-number">04</span><h3>Organização</h3><p>Organizar os fluxos e reduzir congestionamentos, irregularidades e conflitos de tráfego.</p></article>
+            <article class="pillar"><span class="pillar-number">05</span><h3>Transparência</h3><p>Garantir acesso responsável ao site por critérios claros e transparentes.</p></article>
+            <article class="pillar"><span class="pillar-number">06</span><h3>Integração</h3><p>Integrar segurança, liderança e operações em ações coordenadas.</p></article>
+          </div>
+        </section>
+        <section class="link-target home-only" id="responsabilidades" aria-labelledby="responsabilidades-title">
           <h2 id="responsabilidades-title">Responsabilidades resumidas</h2>
           <div class="role-grid">
             <article class="role-card">
@@ -125,6 +177,10 @@
             <article class="role-card">
               <h3>Analista</h3>
               <p>Validar e classificar o registro, direcionar a tratativa, acompanhar os retornos, manter o histórico atualizado e confirmar a conclusão.</p>
+            </article>
+            <article class="role-card">
+              <h3>Governança do Comitê</h3>
+              <p>A Gerência de Serviços Operacionais TU e EFVM, por meio da Coordenação de Transportes, conduz um Comitê representativo das dinâmicas do site. Seus membros deliberam sobre as tratativas, com titulares e suplentes por área, em reuniões mensais com agenda estruturada e decisões formais.</p>
             </article>
           </div>
         </section>
@@ -172,9 +228,23 @@
             </table>
           </div>
         </section>
+        <section class="link-target" id="governanca-comite" aria-labelledby="governanca-title" hidden>
+          <h2 id="governanca-title">Estrutura do Comitê</h2>
+          <p>O responsável desta iniciativa é a Gerência de Serviços Operacionais TU e EFVM, por meio da Coordenação de Transportes.</p>
+          <h2>Representatividade e tomada de decisão</h2>
+          <p>O Comitê foi redesenhado com o objetivo de representar todas as dinâmicas do site. Por isso, conta com membros decisores.</p>
+          <p>Cada área tem titulares e suplentes, garantindo continuidade na discussão. Participam líderes com capacidade de deliberar inclusive financeiramente, garantindo agilidade e responsabilidade nas decisões. As reuniões acontecem mensalmente, sempre na semana 4 ou 5 de cada mês, com agenda estruturada e deliberações formais.</p>
+        </section>
         <section class="link-target standardizer" id="padronize-evento" aria-labelledby="form-title" hidden>
       <h2 id="form-title">Padronização da descrição do incidente</h2>
-      <p class="form-intro">Responda às perguntas abaixo. O texto será montado no padrão do Excel, sem campos em branco e com espaços extras removidos. Confira os dados antes de copiar para o SAP.</p>
+      <p class="form-intro">Para padronizar um registro de desvio de trânsito via SAP, descreva conforme abaixo e gere o texto padrão. Para campos inexistentes, utilize NA. Confira os dados antes de copiar para o SAP.</p>
+      <aside class="evidence-alert" aria-label="Atenção: evidências obrigatórias">
+        <strong>ATENÇÃO — Todo registro precisa de evidência</strong>
+        <ol type="a">
+          <li>Anexar no SAP evidências relacionadas a veículos: fotos com data e hora ou vídeos curtos, relatórios.</li>
+          <li>Enviar por e-mail evidências relacionadas a pessoas: em atendimento à LGPD, informações pessoais e sensíveis — dados de documentos pessoais, imagem e vídeos de pessoas — deverão ser encaminhadas por e-mail com o ID do registro do SAP para a liderança Vale responsável pelo empregado Vale ou contratado.</li>
+        </ol>
+      </aside>
       <form id="incident-form">
         <div class="question-grid">
           <div class="question">
@@ -263,9 +333,9 @@
     </main>
     <script>
       const navigationLinks = document.querySelectorAll('.sidebar-link, .procedure-link');
-      const pageSections = ['procedimentos-agente', 'procedimentos-analista', 'padronize-evento']
+      const pageSections = ['procedimentos-agente', 'procedimentos-analista', 'padronize-evento', 'governanca-comite']
         .map((id) => document.getElementById(id));
-      const homeContent = document.querySelectorAll('#inicio > .label, #inicio > h1, #inicio > .intro, #responsabilidades');
+      const homeContent = document.querySelectorAll('#inicio > .home-only');
 
       function showPage(targetId) {
         homeContent.forEach((element) => {
